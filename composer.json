@@ -1,0 +1,12 @@
+{
+	"name": "myc-sense/php-enum",
+	"type": "library",
+	"description": "PHP Enum implementation",
+	"autoload": {
+		"psr-0": {
+			"Mycsense": "src/"
+		}
+	},
+	"require": {
+	}
+}
