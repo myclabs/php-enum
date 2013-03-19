@@ -51,7 +51,7 @@ abstract class Enum
 
     /**
      * Returns all possible values as an array
-     * @return array
+     * @return array Constant name in key, constant value in value
      */
     public static function toArray()
     {
