@@ -2,6 +2,9 @@
 	"name": "myc-sense/php-enum",
 	"type": "library",
 	"description": "PHP Enum implementation",
+    "keywords": ["enum"],
+    "homepage": "http://github.com/myc-sense/php-enum",
+    "license": "MIT",
 	"autoload": {
 		"psr-0": {
 			"Mycsense": "src/"
