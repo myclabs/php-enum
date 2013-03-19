@@ -56,7 +56,7 @@ $action = new Action(Action::VIEW);
 
 One advantage over using class constants is to be able to type-hint enum values:
 
-```
+```php
 function setAction(Action $action) {
     // ...
 }
