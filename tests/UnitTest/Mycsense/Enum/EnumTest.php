@@ -74,11 +74,11 @@ class EnumTest extends \PHPUnit_Framework_TestCase
     {
         $values = EnumFixture::toArray();
         $this->assertInternalType("array", $values);
-        $expectedValues = [
+        $expectedValues = array(
             "FOO" => EnumFixture::FOO,
             "BAR" => EnumFixture::BAR,
             "NUMBER" => EnumFixture::NUMBER,
-        ];
+        );
         $this->assertEquals($expectedValues, $values);
     }
 
