@@ -1,11 +1,11 @@
 <?php
 /**
- * @link    http://github.com/myc-sense/php-enum
+ * @link    http://github.com/myclabs/php-enum
  * @author  Matthieu Napoli <matthieu@mnapoli.fr>
  * @license http://www.opensource.org/licenses/mit-license.php MIT (see the LICENSE file)
  */
 
-namespace Mycsense\Enum;
+namespace MyCLabs\Enum;
 
 /**
  * Base Enum class

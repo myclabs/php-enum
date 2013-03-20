@@ -1,13 +1,13 @@
 {
-	"name": "myc-sense/php-enum",
+	"name": "myclabs/php-enum",
 	"type": "library",
 	"description": "PHP Enum implementation",
     "keywords": ["enum"],
-    "homepage": "http://github.com/myc-sense/php-enum",
+    "homepage": "http://github.com/myclabs/php-enum",
     "license": "MIT",
 	"autoload": {
 		"psr-0": {
-			"Mycsense": "src/"
+			"MyCLabs": "src/"
 		}
 	},
 	"require": {

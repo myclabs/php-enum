@@ -16,7 +16,7 @@ This Enum class is not intended to replace class constants, but only to be used 
 ## Declaration
 
 ```php
-use Mycsense\Enum\Enum;
+use MyCLabs\Enum\Enum;
 
 /**
  * Action enum

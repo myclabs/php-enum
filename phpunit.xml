@@ -15,7 +15,7 @@
 
     <testsuites>
         <testsuite name="Enum Test Suite">
-            <directory>./tests/UnitTest/Mycsense/Enum</directory>
+            <directory>./tests/UnitTest/MyCLabs/Enum</directory>
         </testsuite>
     </testsuites>
 
