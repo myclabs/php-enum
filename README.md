@@ -3,6 +3,8 @@
 
 ## Why?
 
+First, and mainly, `SplEnum` is not integrated to PHP, you have to install it separately.
+
 Using an enum instead of class constants provides the following advantages:
 
 - You can type-hint: `function setAction(Action $action) {`
