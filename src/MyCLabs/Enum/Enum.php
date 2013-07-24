@@ -61,4 +61,19 @@ abstract class Enum
         return $reflection->getConstants();
     }
 
+    /**
+     * Returns a value when called statically like so: MyEnum::SOME_VALUE() given SOME_VALUE is a class constant
+     * @param string $name
+     * @param array  $arguments
+     * @return static
+     * @throws \BadMethodCallException
+     */
+    public static function __callStatic($name, $arguments)
+    {
+        if (defined("static::$name")) {
+            return new static(constant("static::$name"));
+        }
+        throw new \BadMethodCallException("No static method or enum constant '$name' in class " . get_called_class());
+    }
+
 }

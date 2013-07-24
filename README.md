@@ -27,34 +27,20 @@ class Action extends Enum
 {
     const VIEW = 'view';
     const EDIT = 'edit';
-
-    /**
-     * @return Action
-     */
-    public static function VIEW() {
-        return new Action(self::VIEW);
-    }
-
-    /**
-     * @return Action
-     */
-    public static function EDIT() {
-        return new Action(self::EDIT);
-    }
 }
 ```
-
-Implementing the static methods `VIEW()` and `EDIT()` is optional, it only serves as shortcut to `new Action(Action::VIEW)`.
 
 
 ## Usage
 
 ```php
-$action = Action::VIEW();
+$action = new Action(Action::VIEW);
 
 // or
-$action = new Action(Action::VIEW);
+$action = Action::VIEW();
 ```
+
+As you can see, static methods are automatically implemented to provide quick access to an enum value.
 
 One advantage over using class constants is to be able to type-hint enum values:
 
@@ -70,3 +56,49 @@ function setAction(Action $action) {
 - `__toString()` You can `echo $myValue`, it will display the enum value (value of the constant)
 - `getValue()` Returns the current value of the enum
 - `toArray()` (static) Returns an array of all possible values (constant name in key, constant value in value)
+
+### Static methods
+
+```php
+class Action extends Enum
+{
+    const VIEW = 'view';
+    const EDIT = 'edit';
+}
+
+// Static method:
+$action = Action::VIEW();
+$action = Action::EDIT();
+```
+
+Static method helpers are implemented using [`__callStatic()`](http://www.php.net/manual/en/language.oop5.overloading.php#object.callstatic).
+
+If you care about IDE autocompletion, you can either implement the static methods yourself:
+
+```php
+class Action extends Enum
+{
+    const VIEW = 'view';
+
+    /**
+     * @return Action
+     */
+    public static function VIEW() {
+        return new Action(self::VIEW);
+    }
+}
+```
+
+or you can use phpdoc (this is supported in PhpStorm for example):
+
+```php
+/**
+ * @method static Action VIEW()
+ * @method static Action EDIT()
+ */
+class Action extends Enum
+{
+    const VIEW = 'view';
+    const EDIT = 'edit';
+}
+```

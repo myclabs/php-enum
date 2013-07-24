@@ -84,10 +84,32 @@ class EnumTest extends \PHPUnit_Framework_TestCase
         $this->assertEquals($expectedValues, $values);
     }
 
+    /**
+     * __callStatic()
+     */
+    public function testStaticAccess()
+    {
+        $this->assertEquals(new EnumFixture(EnumFixture::FOO), EnumFixture::FOO());
+        $this->assertEquals(new EnumFixture(EnumFixture::BAR), EnumFixture::BAR());
+        $this->assertEquals(new EnumFixture(EnumFixture::NUMBER), EnumFixture::NUMBER());
+    }
+
+    /**
+     * @expectedException \BadMethodCallException
+     * @expectedExceptionMessage No static method or enum constant 'UNKNOWN' in class UnitTest\MyCLabs\Enum\Enum\EnumFixture
+     */
+    public function testBadStaticAccess()
+    {
+        EnumFixture::UNKNOWN();
+    }
+
 }
 
 /**
  * Fixture class
+ * @method static EnumFixture FOO()
+ * @method static EnumFixture BAR()
+ * @method static EnumFixture NUMBER()
  */
 class EnumFixture extends Enum
 {
