@@ -65,7 +65,7 @@ abstract class Enum
     {
         $calledClass = get_called_class();
         if(!array_key_exists($calledClass, self::$constantsCache)) {
-            $reflectin = new \ReflectionClass($calledClass);
+            $reflection = new \ReflectionClass($calledClass);
             self::$constantsCache[$calledClass] = $reflection->getConstants();
         }
         return self::$constantsCache[$calledClass];
