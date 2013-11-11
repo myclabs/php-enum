@@ -20,6 +20,12 @@ abstract class Enum
      * @var mixed
      */
     protected $value;
+    
+    /**
+     * Store existing constants in a static cache per object.
+     * @var array
+     */
+    private static $constantsCache = array();
 
     /**
      * Creates a new value of some type
@@ -57,8 +63,12 @@ abstract class Enum
      */
     public static function toArray()
     {
-        $reflection = new \ReflectionClass(get_called_class());
-        return $reflection->getConstants();
+        $calledClass = get_called_class();
+        if(!array_key_exists($calledClass, self::$constantsCache)) {
+            $reflection = new \ReflectionClass($calledClass);
+            self::$constantsCache[$calledClass] = $reflection->getConstants();
+        }
+        return self::$constantsCache[$calledClass];
     }
 
     /**
