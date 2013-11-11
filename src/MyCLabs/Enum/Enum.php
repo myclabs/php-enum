@@ -20,6 +20,12 @@ abstract class Enum
      * @var mixed
      */
     protected $value;
+    
+    /**
+     * Store instantiated reflection objects in a static cache.
+     * @var array
+     */
+    protected static $reflectionCache = array();
 
     /**
      * Creates a new value of some type
@@ -57,7 +63,10 @@ abstract class Enum
      */
     public static function toArray()
     {
-        $reflection = new \ReflectionClass(get_called_class());
+        $calledClass = get_called_class();
+        if(!array_key_exists($calledClass, self::$reflectionCache)) {
+            self::$reflectionCache[$calledClass] = new \ReflectionClass($calledClass);
+        }
         return $reflection->getConstants();
     }
 
