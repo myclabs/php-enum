@@ -22,10 +22,10 @@ abstract class Enum
     protected $value;
     
     /**
-     * Store instantiated reflection objects in a static cache.
+     * Store existing constants in a static cache per object.
      * @var array
      */
-    protected static $reflectionCache = array();
+    private static $constantsCache = array();
 
     /**
      * Creates a new value of some type
@@ -64,10 +64,11 @@ abstract class Enum
     public static function toArray()
     {
         $calledClass = get_called_class();
-        if(!array_key_exists($calledClass, self::$reflectionCache)) {
-            self::$reflectionCache[$calledClass] = new \ReflectionClass($calledClass);
+        if(!array_key_exists($calledClass, self::$constantsCache)) {
+            $reflectin = new \ReflectionClass($calledClass);
+            self::$constantsCache[$calledClass] = $reflection->getConstants();
         }
-        return $reflection->getConstants();
+        return self::$constantsCache[$calledClass];
     }
 
     /**
