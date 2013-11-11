@@ -1,5 +1,6 @@
 # PHP Enum implementation inspired from SplEnum
 
+[![Build Status](https://travis-ci.org/myclabs/php-enum.png?branch=master)](https://travis-ci.org/myclabs/php-enum) [![Latest Stable Version](https://poser.pugx.org/myclabs/php-enum/version.png)](https://packagist.org/packages/myclabs/php-enum) [![Total Downloads](https://poser.pugx.org/myclabs/php-enum/downloads.png)](https://packagist.org/packages/myclabs/php-enum)
 
 ## Why?
 
