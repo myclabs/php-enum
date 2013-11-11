@@ -1,15 +1,15 @@
 {
-	"name": "myclabs/php-enum",
-	"type": "library",
-	"description": "PHP Enum implementation",
+    "name": "myclabs/php-enum",
+    "type": "library",
+    "description": "PHP Enum implementation",
     "keywords": ["enum"],
     "homepage": "http://github.com/myclabs/php-enum",
     "license": "MIT",
-	"autoload": {
-		"psr-0": {
-			"MyCLabs": "src/"
-		}
-	},
-	"require": {
-	}
+    "autoload": {
+        "psr-0": {
+            "MyCLabs": "src/"
+        }
+    },
+    "require": {
+    }
 }
