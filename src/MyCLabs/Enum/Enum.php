@@ -1,7 +1,6 @@
 <?php
 /**
  * @link    http://github.com/myclabs/php-enum
- * @author  Matthieu Napoli <matthieu@mnapoli.fr>
  * @license http://www.opensource.org/licenses/mit-license.php MIT (see the LICENSE file)
  */
 
@@ -11,10 +10,11 @@ namespace MyCLabs\Enum;
  * Base Enum class
  *
  * Create an enum by implementing this class and adding class constants.
+ *
+ * @author Matthieu Napoli <matthieu@mnapoli.fr>
  */
 abstract class Enum
 {
-
     /**
      * Enum value
      * @var mixed
@@ -85,5 +85,4 @@ abstract class Enum
         }
         throw new \BadMethodCallException("No static method or enum constant '$name' in class " . get_called_class());
     }
-
 }

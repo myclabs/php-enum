@@ -15,7 +15,6 @@ use MyCLabs\Enum\Enum;
  */
 class EnumTest extends \PHPUnit_Framework_TestCase
 {
-
     /**
      * getValue()
      */
@@ -103,20 +102,18 @@ class EnumTest extends \PHPUnit_Framework_TestCase
     {
         EnumFixture::UNKNOWN();
     }
-
 }
 
 /**
  * Fixture class
+ *
  * @method static EnumFixture FOO()
  * @method static EnumFixture BAR()
  * @method static EnumFixture NUMBER()
  */
 class EnumFixture extends Enum
 {
-
     const FOO = "foo";
     const BAR = "bar";
     const NUMBER = 42;
-
 }
