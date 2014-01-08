@@ -9,7 +9,5 @@
         "psr-0": {
             "MyCLabs": "src/"
         }
-    },
-    "require": {
     }
 }
