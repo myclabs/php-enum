@@ -1,7 +1,6 @@
 <?php
 /**
  * @link    http://github.com/myclabs/php-enum
- * @author  Matthieu Napoli <matthieu@mnapoli.fr>
  * @license http://www.opensource.org/licenses/mit-license.php MIT (see the LICENSE file)
  */
 
@@ -11,6 +10,8 @@ use MyCLabs\Enum\Enum;
 
 /**
  * Enum test
+ *
+ * @author Matthieu Napoli <matthieu@mnapoli.fr>
  */
 class EnumTest extends \PHPUnit_Framework_TestCase
 {

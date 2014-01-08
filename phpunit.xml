@@ -11,11 +11,11 @@
          processIsolation="false"
          stopOnFailure="false"
          syntaxCheck="false"
-         bootstrap="./tests/bootstrap.php">
+         bootstrap="./vendor/autoload.php">
 
     <testsuites>
         <testsuite name="Enum Test Suite">
-            <directory>./tests/UnitTest/MyCLabs/Enum</directory>
+            <directory>./tests</directory>
         </testsuite>
     </testsuites>
 

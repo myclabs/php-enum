@@ -7,7 +7,7 @@
     "license": "MIT",
     "autoload": {
         "psr-0": {
-            "MyCLabs": "src/"
+            "MyCLabs\\Enum\\": "src/"
         }
     }
 }
