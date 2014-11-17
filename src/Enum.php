@@ -39,7 +39,7 @@ abstract class Enum
      */
     public function __construct($value)
     {
-        if (!in_array($value, self::values())) {
+        if (!in_array($value, self::toArray())) {
             throw new \UnexpectedValueException("Value '$value' is not part of the enum " . get_called_class());
         }
 
@@ -79,7 +79,7 @@ abstract class Enum
      */
     public static function keys()
     {
-        return array_keys(static::values());
+        return array_keys(static::toArray());
     }
 
     /**
@@ -87,7 +87,7 @@ abstract class Enum
      *
      * @return array Constant name in key, constant value in value
      */
-    public static function values()
+    public static function toArray()
     {
         $class = get_called_class();
         if (!array_key_exists($class, self::$cache)) {
@@ -96,17 +96,6 @@ abstract class Enum
         }
 
         return self::$cache[$class];
-    }
-
-    /**
-     * An alias method for values()
-     *
-     * @return array
-     * @deprecated
-     */
-    public static function toArray()
-    {
-        return self::values();
     }
 
     /**
@@ -120,7 +109,7 @@ abstract class Enum
      */
     public static function isValid($value)
     {
-        return in_array($value, self::values());
+        return in_array($value, self::toArray());
     }
 
     /**
@@ -148,7 +137,7 @@ abstract class Enum
      */
     public static function search($value)
     {
-        return array_search($value, array_combine(self::keys(), self::values()));
+        return array_search($value, array_combine(self::keys(), self::toArray()));
     }
 
     /**
