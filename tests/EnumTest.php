@@ -9,8 +9,8 @@ namespace MyCLabs\Enum;
 /**
  * Enum test
  *
- * @package MyCLabs\Enum
  * @author Matthieu Napoli <matthieu@mnapoli.fr>
+ * @author Daniel Costa <danielcosta@gmail.com
  */
 class EnumTest extends \PHPUnit_Framework_TestCase
 {

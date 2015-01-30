@@ -11,8 +11,8 @@ namespace MyCLabs\Enum;
  *
  * Create an enum by implementing this class and adding class constants.
  *
- * @package MyCLabs\Enum
  * @author Matthieu Napoli <matthieu@mnapoli.fr>
+ * @author Daniel Costa <danielcosta@gmail.com
  */
 abstract class Enum
 {

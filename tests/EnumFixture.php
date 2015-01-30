@@ -9,10 +9,10 @@ namespace MyCLabs\Enum;
 /**
  * Class EnumFixture
  *
- * @package MyCLabs\Enum
  * @method static EnumFixture FOO()
  * @method static EnumFixture BAR()
  * @method static EnumFixture NUMBER()
+ *
  * @author Daniel Costa <danielcosta@gmail.com
  */
 class EnumFixture extends Enum
