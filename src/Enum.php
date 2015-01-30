@@ -55,7 +55,7 @@ abstract class Enum
     }
 
     /**
-     * Returns the key of the current value on Enum
+     * Returns the enum key (i.e. the constant name).
      *
      * @return mixed
      */
@@ -101,10 +101,7 @@ abstract class Enum
     /**
      * Check if is valid enum value
      *
-     * @static
-     *
      * @param $value
-     *
      * @return bool
      */
     public static function isValid($value)
@@ -114,8 +111,6 @@ abstract class Enum
 
     /**
      * Check if is valid enum key
-     *
-     * @static
      *
      * @param $key
      *
@@ -128,8 +123,6 @@ abstract class Enum
 
     /**
      * Return key for value
-     *
-     * @static
      *
      * @param $value
      *
