@@ -57,10 +57,13 @@ function setAction(Action $action) {
 - `__toString()` You can `echo $myValue`, it will display the enum value (value of the constant)
 - `getValue()` Returns the current value of the enum
 - `getKey()` Returns the key of the current value on Enum
-- `keys()` (@static) Returns the names (keys) of all constants in the Enum class
-- `toArray()` (@static) method Returns all possible values as an array (constant name in key, constant value in value)
-- `isValid()` (@static) Check if tested value is valid on enum set
-- `isValidKey()` (@static) Check if tested key is valid on enum set
+
+Static methods:
+
+- `toArray()` method Returns all possible values as an array (constant name in key, constant value in value)
+- `keys()` Returns the names (keys) of all constants in the Enum class
+- `isValid()` Check if tested value is valid on enum set
+- `isValidKey()` Check if tested key is valid on enum set
 - `search()` Return key for searched value
 
 ### Static methods
