@@ -16,6 +16,11 @@
             "MyCLabs\\Enum\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "MyCLabs\\Tests\\Enum\\": "tests/"
+        }
+    },
     "require": {
         "php": ">=5.3"
     },

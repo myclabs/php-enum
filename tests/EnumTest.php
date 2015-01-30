@@ -4,11 +4,9 @@
  * @license http://www.opensource.org/licenses/mit-license.php MIT (see the LICENSE file)
  */
 
-namespace MyCLabs\Enum;
+namespace MyCLabs\Tests\Enum;
 
 /**
- * Enum test
- *
  * @author Matthieu Napoli <matthieu@mnapoli.fr>
  * @author Daniel Costa <danielcosta@gmail.com
  */
