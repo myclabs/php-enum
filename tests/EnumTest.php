@@ -4,13 +4,12 @@
  * @license http://www.opensource.org/licenses/mit-license.php MIT (see the LICENSE file)
  */
 
-namespace UnitTest\MyCLabs\Enum\Enum;
-
-use MyCLabs\Enum\Enum;
+namespace MyCLabs\Enum;
 
 /**
  * Enum test
  *
+ * @package MyCLabs\Enum
  * @author Matthieu Napoli <matthieu@mnapoli.fr>
  */
 class EnumTest extends \PHPUnit_Framework_TestCase
@@ -31,9 +30,19 @@ class EnumTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * getKey()
+     */
+    public function testGetKey()
+    {
+        $value = new EnumFixture(EnumFixture::FOO);
+        $this->assertEquals('FOO', $value->getKey());
+        $this->assertNotEquals('BA', $value->getKey());
+    }
+
+    /**
      * @expectedException \UnexpectedValueException
      */
-    public function testInvalidValue1()
+    public function testInvalidValueString()
     {
         new EnumFixture("test");
     }
@@ -41,7 +50,7 @@ class EnumTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \UnexpectedValueException
      */
-    public function testInvalidValue2()
+    public function testInvalidValueInt()
     {
         new EnumFixture(1234);
     }
@@ -49,7 +58,7 @@ class EnumTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \UnexpectedValueException
      */
-    public function testInvalidValue3()
+    public function testInvalidValueEmpty()
     {
         new EnumFixture(null);
     }
@@ -67,6 +76,21 @@ class EnumTest extends \PHPUnit_Framework_TestCase
 
         $value = new EnumFixture(EnumFixture::NUMBER);
         $this->assertEquals((string) EnumFixture::NUMBER, (string) $value);
+    }
+
+    /**
+     * keys()
+     */
+    public function testKeys()
+    {
+        $values = EnumFixture::keys();
+        $this->assertInternalType("array", $values);
+        $expectedValues = array(
+            "FOO",
+            "BAR",
+            "NUMBER",
+        );
+        $this->assertEquals($expectedValues, $values);
     }
 
     /**
@@ -96,24 +120,38 @@ class EnumTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException \BadMethodCallException
-     * @expectedExceptionMessage No static method or enum constant 'UNKNOWN' in class UnitTest\MyCLabs\Enum\Enum\EnumFixture
+     * @expectedExceptionMessage No static method or enum constant 'UNKNOWN' in class
+     *                           UnitTest\MyCLabs\Enum\Enum\EnumFixture
      */
     public function testBadStaticAccess()
     {
         EnumFixture::UNKNOWN();
     }
-}
 
-/**
- * Fixture class
- *
- * @method static EnumFixture FOO()
- * @method static EnumFixture BAR()
- * @method static EnumFixture NUMBER()
- */
-class EnumFixture extends Enum
-{
-    const FOO = "foo";
-    const BAR = "bar";
-    const NUMBER = 42;
+    /**
+     * isValid()
+     */
+    public function testIsValid()
+    {
+        $this->assertTrue(EnumFixture::isValid('foo'));
+        $this->assertFalse(EnumFixture::isValid('baz'));
+    }
+
+    /**
+     * ssValidKey()
+     */
+    public function testIsValidKey()
+    {
+        $this->assertTrue(EnumFixture::isValidKey('FOO'));
+        $this->assertFalse(EnumFixture::isValidKey('BAZ'));
+    }
+
+    /**
+     * search()
+     */
+    public function testSearch()
+    {
+        $this->assertEquals('FOO', EnumFixture::search('foo'));
+        $this->assertNotEquals('FOO', EnumFixture::isValidKey('baz'));
+    }
 }

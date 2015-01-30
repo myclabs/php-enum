@@ -12,11 +12,9 @@
          stopOnFailure="false"
          syntaxCheck="false"
          bootstrap="./vendor/autoload.php">
-
     <testsuites>
-        <testsuite name="Enum Test Suite">
-            <directory>./tests</directory>
+        <testsuite name="PHP Enum Test Suite">
+            <directory suffix=".php">./tests</directory>
         </testsuite>
     </testsuites>
-
 </phpunit>
