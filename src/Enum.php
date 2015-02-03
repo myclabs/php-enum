@@ -79,7 +79,7 @@ abstract class Enum
      */
     public static function keys()
     {
-        return array_keys(static::toArray());
+        return array_keys(self::toArray());
     }
 
     /**
@@ -130,7 +130,7 @@ abstract class Enum
      */
     public static function search($value)
     {
-        return array_search($value, array_combine(self::keys(), self::toArray()));
+        return array_search($value, self::toArray());
     }
 
     /**
