@@ -56,10 +56,10 @@ class EnumTest extends \PHPUnit_Framework_TestCase
      * @return array
      */
     public function invalidValueProvider() {
-        return [
+        return array(
             "string" => array('test'),
             "int" => array(1234),
-        ];
+        );
     }
 
     /**
@@ -72,11 +72,11 @@ class EnumTest extends \PHPUnit_Framework_TestCase
     }
 
     public function toStringProvider() {
-        return [
+        return array(
             array(EnumFixture::FOO, new EnumFixture(EnumFixture::FOO)),
             array(EnumFixture::BAR, new EnumFixture(EnumFixture::BAR)),
             array((string) EnumFixture::NUMBER, new EnumFixture(EnumFixture::NUMBER)),
-        ];
+        );
     }
 
     /**
@@ -147,7 +147,7 @@ class EnumTest extends \PHPUnit_Framework_TestCase
     }
 
     public function isValidProvider() {
-        return [
+        return array(
             /**
              * Valid values
              */
@@ -161,7 +161,7 @@ class EnumTest extends \PHPUnit_Framework_TestCase
              * Invalid values
              */
             array('baz', false)
-        ];
+    );
     }
 
     /**
