@@ -59,7 +59,6 @@ class EnumTest extends \PHPUnit_Framework_TestCase
         return [
             "string" => ['test'],
             "int" => [1234],
-            "null" => [null],
         ];
     }
 
@@ -86,13 +85,17 @@ class EnumTest extends \PHPUnit_Framework_TestCase
     public function testKeys()
     {
         $values = EnumFixture::keys();
-        $this->assertInternalType("array", $values);
         $expectedValues = array(
             "FOO",
             "BAR",
             "NUMBER",
+            "PROBLEMATIC_NUMBER",
+            "PROBLEMATIC_NULL",
+            "PROBLEMATIC_EMPTY_STRING",
+            "PROBLEMATIC_BOOLEAN_FALSE",
         );
-        $this->assertEquals($expectedValues, $values);
+
+        $this->assertSame($expectedValues, $values);
     }
 
     /**
@@ -101,13 +104,17 @@ class EnumTest extends \PHPUnit_Framework_TestCase
     public function testToArray()
     {
         $values = EnumFixture::toArray();
-        $this->assertInternalType("array", $values);
         $expectedValues = array(
-            "FOO"    => EnumFixture::FOO,
-            "BAR"    => EnumFixture::BAR,
-            "NUMBER" => EnumFixture::NUMBER,
+            "FOO"                   => EnumFixture::FOO,
+            "BAR"                   => EnumFixture::BAR,
+            "NUMBER"                => EnumFixture::NUMBER,
+            "PROBLEMATIC_NUMBER"    => EnumFixture::PROBLEMATIC_NUMBER,
+            "PROBLEMATIC_NULL"      => EnumFixture::PROBLEMATIC_NULL,
+            "PROBLEMATIC_EMPTY_STRING"    => EnumFixture::PROBLEMATIC_EMPTY_STRING,
+            "PROBLEMATIC_BOOLEAN_FALSE"    => EnumFixture::PROBLEMATIC_BOOLEAN_FALSE,
         );
-        $this->assertEquals($expectedValues, $values);
+
+        $this->assertSame($expectedValues, $values);
     }
 
     /**
@@ -132,11 +139,29 @@ class EnumTest extends \PHPUnit_Framework_TestCase
 
     /**
      * isValid()
+     * @dataProvider isValidProvider
      */
-    public function testIsValid()
+    public function testIsValid($value, $isValid)
     {
-        $this->assertTrue(EnumFixture::isValid('foo'));
-        $this->assertFalse(EnumFixture::isValid('baz'));
+        $this->assertSame($isValid, EnumFixture::isValid($value));
+    }
+
+    public function isValidProvider() {
+        return [
+            /**
+             * Valid values
+             */
+            ['foo', true],
+            [42, true],
+            [null, true],
+            [0, true],
+            ['', true],
+            [false, true],
+            /**
+             * Invalid values
+             */
+            ['baz', false]
+        ];
     }
 
     /**
@@ -154,6 +179,9 @@ class EnumTest extends \PHPUnit_Framework_TestCase
     public function testSearch()
     {
         $this->assertEquals('FOO', EnumFixture::search('foo'));
-        $this->assertNotEquals('FOO', EnumFixture::isValidKey('baz'));
+        /**
+         * @see https://github.com/myclabs/php-enum/issues/9
+         */
+        $this->assertEquals(EnumFixture::PROBLEMATIC_NUMBER, EnumFixture::search(1));
     }
 }

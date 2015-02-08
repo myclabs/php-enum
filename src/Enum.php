@@ -40,7 +40,7 @@ abstract class Enum
      */
     public function __construct($value)
     {
-        if (!in_array($value, self::toArray())) {
+        if (!$this->isValid($value)) {
             throw new \UnexpectedValueException("Value '$value' is not part of the enum " . get_called_class());
         }
 
@@ -95,7 +95,6 @@ abstract class Enum
             $reflection = new \ReflectionClass($class);
             self::$cache[$class] = $reflection->getConstants();
         }
-
         return self::$cache[$class];
     }
 
@@ -107,7 +106,7 @@ abstract class Enum
      */
     public static function isValid($value)
     {
-        return in_array($value, self::toArray());
+        return in_array($value, self::toArray(), true);
     }
 
     /**
@@ -119,7 +118,7 @@ abstract class Enum
      */
     public static function isValidKey($key)
     {
-        return in_array($key, self::keys());
+        return in_array($key, self::keys(), true);
     }
 
     /**
@@ -131,7 +130,8 @@ abstract class Enum
      */
     public static function search($value)
     {
-        return array_search($value, array_combine(self::keys(), self::toArray()));
+        // TODO: Replace combine with self::toArray()
+        return array_search($value, array_combine(self::keys(), self::toArray()), true);
     }
 
     /**
