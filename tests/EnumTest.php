@@ -65,17 +65,19 @@ class EnumTest extends \PHPUnit_Framework_TestCase
 
     /**
      * __toString()
+     * @dataProvider toStringProvider
      */
-    public function testToString()
+    public function testToString($expected, $enumObject)
     {
-        $value = new EnumFixture(EnumFixture::FOO);
-        $this->assertEquals(EnumFixture::FOO, (string) $value);
+        $this->assertSame($expected, (string) $enumObject);
+    }
 
-        $value = new EnumFixture(EnumFixture::BAR);
-        $this->assertEquals(EnumFixture::BAR, (string) $value);
-
-        $value = new EnumFixture(EnumFixture::NUMBER);
-        $this->assertEquals((string) EnumFixture::NUMBER, (string) $value);
+    public function toStringProvider() {
+        return [
+            [EnumFixture::FOO, new EnumFixture(EnumFixture::FOO)],
+            [EnumFixture::BAR, new EnumFixture(EnumFixture::BAR)],
+            [(string) EnumFixture::NUMBER, new EnumFixture(EnumFixture::NUMBER)],
+        ];
     }
 
     /**
