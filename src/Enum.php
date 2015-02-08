@@ -80,7 +80,7 @@ abstract class Enum
      */
     public static function keys()
     {
-        return array_keys(static::toArray());
+        return array_keys(self::toArray());
     }
 
     /**
@@ -95,6 +95,7 @@ abstract class Enum
             $reflection = new \ReflectionClass($class);
             self::$cache[$class] = $reflection->getConstants();
         }
+
         return self::$cache[$class];
     }
 
@@ -130,8 +131,7 @@ abstract class Enum
      */
     public static function search($value)
     {
-        // TODO: Replace combine with self::toArray()
-        return array_search($value, array_combine(self::keys(), self::toArray()), true);
+        return array_search($value, self::toArray());
     }
 
     /**
