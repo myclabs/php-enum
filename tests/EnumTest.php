@@ -57,8 +57,8 @@ class EnumTest extends \PHPUnit_Framework_TestCase
      */
     public function invalidValueProvider() {
         return [
-            "string" => ['test'],
-            "int" => [1234],
+            "string" => array('test'),
+            "int" => array(1234),
         ];
     }
 
@@ -73,9 +73,9 @@ class EnumTest extends \PHPUnit_Framework_TestCase
 
     public function toStringProvider() {
         return [
-            [EnumFixture::FOO, new EnumFixture(EnumFixture::FOO)],
-            [EnumFixture::BAR, new EnumFixture(EnumFixture::BAR)],
-            [(string) EnumFixture::NUMBER, new EnumFixture(EnumFixture::NUMBER)],
+            array(EnumFixture::FOO, new EnumFixture(EnumFixture::FOO)),
+            array(EnumFixture::BAR, new EnumFixture(EnumFixture::BAR)),
+            array((string) EnumFixture::NUMBER, new EnumFixture(EnumFixture::NUMBER)),
         ];
     }
 
@@ -151,16 +151,16 @@ class EnumTest extends \PHPUnit_Framework_TestCase
             /**
              * Valid values
              */
-            ['foo', true],
-            [42, true],
-            [null, true],
-            [0, true],
-            ['', true],
-            [false, true],
+            array('foo', true),
+            array(42, true),
+            array(null, true),
+            array(0, true),
+            array('', true),
+            array(false, true),
             /**
              * Invalid values
              */
-            ['baz', false]
+            array('baz', false)
         ];
     }
 
