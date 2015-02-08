@@ -8,7 +8,8 @@ namespace MyCLabs\Tests\Enum;
 
 /**
  * @author Matthieu Napoli <matthieu@mnapoli.fr>
- * @author Daniel Costa <danielcosta@gmail.com
+ * @author Daniel Costa <danielcosta@gmail.com>
+ * @author Mirosław Filip <mirfilip@gmail.com>
  */
 class EnumTest extends \PHPUnit_Framework_TestCase
 {
@@ -38,27 +39,28 @@ class EnumTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException \UnexpectedValueException
+     * @dataProvider invalidValueProvider
      */
-    public function testInvalidValueString()
+    public function testCreatingEnumWithInvalidValue($value)
     {
-        new EnumFixture("test");
+        $this->setExpectedException(
+            '\UnexpectedValueException',
+            'Value \'' . $value . '\' is not part of the enum MyCLabs\Tests\Enum\EnumFixture'
+        );
+
+        new EnumFixture($value);
     }
 
     /**
-     * @expectedException \UnexpectedValueException
+     * Contains values not existing in EnumFixture
+     * @return array
      */
-    public function testInvalidValueInt()
-    {
-        new EnumFixture(1234);
-    }
-
-    /**
-     * @expectedException \UnexpectedValueException
-     */
-    public function testInvalidValueEmpty()
-    {
-        new EnumFixture(null);
+    public function invalidValueProvider() {
+        return [
+            "string" => ['test'],
+            "int" => [1234],
+            "null" => [null],
+        ];
     }
 
     /**

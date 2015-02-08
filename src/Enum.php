@@ -12,7 +12,8 @@ namespace MyCLabs\Enum;
  * Create an enum by implementing this class and adding class constants.
  *
  * @author Matthieu Napoli <matthieu@mnapoli.fr>
- * @author Daniel Costa <danielcosta@gmail.com
+ * @author Daniel Costa <danielcosta@gmail.com>
+ * @author Mirosław Filip <mirfilip@gmail.com>
  */
 abstract class Enum
 {
@@ -22,7 +23,7 @@ abstract class Enum
      * @var mixed
      */
     protected $value;
-    
+
     /**
      * Store existing constants in a static cache per object.
      *
