@@ -131,7 +131,7 @@ abstract class Enum
      */
     public static function search($value)
     {
-        return array_search($value, self::toArray());
+        return array_search($value, self::toArray(), true);
     }
 
     /**

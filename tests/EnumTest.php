@@ -175,13 +175,23 @@ class EnumTest extends \PHPUnit_Framework_TestCase
 
     /**
      * search()
+     * @see https://github.com/myclabs/php-enum/issues/13
+     * @dataProvider searchProvider
      */
-    public function testSearch()
+    public function testSearch($value, $expected)
     {
-        $this->assertEquals('FOO', EnumFixture::search('foo'));
-        /**
-         * @see https://github.com/myclabs/php-enum/issues/9
-         */
-        $this->assertEquals(EnumFixture::PROBLEMATIC_NUMBER, EnumFixture::search(1));
+        $this->assertSame($expected, EnumFixture::search($value));
+    }
+
+    public function searchProvider() {
+        return array(
+            array('foo', 'FOO'),
+            array(0, 'PROBLEMATIC_NUMBER'),
+            array(null, 'PROBLEMATIC_NULL'),
+            array('', 'PROBLEMATIC_EMPTY_STRING'),
+            array(false, 'PROBLEMATIC_BOOLEAN_FALSE'),
+            array('bar I do not exist', false),
+            array(array(), false),
+        );
     }
 }
