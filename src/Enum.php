@@ -12,7 +12,8 @@ namespace MyCLabs\Enum;
  * Create an enum by implementing this class and adding class constants.
  *
  * @author Matthieu Napoli <matthieu@mnapoli.fr>
- * @author Daniel Costa <danielcosta@gmail.com
+ * @author Daniel Costa <danielcosta@gmail.com>
+ * @author Mirosław Filip <mirfilip@gmail.com>
  */
 abstract class Enum
 {
@@ -22,7 +23,7 @@ abstract class Enum
      * @var mixed
      */
     protected $value;
-    
+
     /**
      * Store existing constants in a static cache per object.
      *
@@ -39,7 +40,7 @@ abstract class Enum
      */
     public function __construct($value)
     {
-        if (!in_array($value, self::toArray())) {
+        if (!$this->isValid($value)) {
             throw new \UnexpectedValueException("Value '$value' is not part of the enum " . get_called_class());
         }
 
@@ -106,7 +107,7 @@ abstract class Enum
      */
     public static function isValid($value)
     {
-        return in_array($value, self::toArray());
+        return in_array($value, self::toArray(), true);
     }
 
     /**
@@ -118,7 +119,7 @@ abstract class Enum
      */
     public static function isValidKey($key)
     {
-        return in_array($key, self::keys());
+        return in_array($key, self::keys(), true);
     }
 
     /**
