@@ -119,7 +119,8 @@ abstract class Enum
      */
     public static function isValidKey($key)
     {
-        return isset(self::toArray()[$key]);
+        $array = self::toArray();
+        return isset($array[$key]);
     }
 
     /**
