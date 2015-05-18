@@ -99,6 +99,25 @@ class EnumTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
+     * values()
+     */
+    public function testValues()
+    {
+        $values = EnumFixture::values();
+        $expectedValues = array(
+            "FOO"                       => new EnumFixture(EnumFixture::FOO),
+            "BAR"                       => new EnumFixture(EnumFixture::BAR),
+            "NUMBER"                    => new EnumFixture(EnumFixture::NUMBER),
+            "PROBLEMATIC_NUMBER"        => new EnumFixture(EnumFixture::PROBLEMATIC_NUMBER),
+            "PROBLEMATIC_NULL"          => new EnumFixture(EnumFixture::PROBLEMATIC_NULL),
+            "PROBLEMATIC_EMPTY_STRING"  => new EnumFixture(EnumFixture::PROBLEMATIC_EMPTY_STRING),
+            "PROBLEMATIC_BOOLEAN_FALSE" => new EnumFixture(EnumFixture::PROBLEMATIC_BOOLEAN_FALSE),
+        );
+
+        $this->assertEquals($expectedValues, $values);
+    }
+
+    /**
      * toArray()
      */
     public function testToArray()

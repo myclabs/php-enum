@@ -84,6 +84,18 @@ abstract class Enum
     }
 
     /**
+     * Returns instances of the Enum class of all Enum constants
+     *
+     * @return array Constant name in key, Enum instance in value
+     */
+    public static function values()
+    {
+        return array_map(function ($value) {
+            return new static($value);
+        }, self::toArray());
+    }
+
+    /**
      * Returns all possible values as an array
      *
      * @return array Constant name in key, constant value in value

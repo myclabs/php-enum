@@ -62,6 +62,7 @@ Static methods:
 
 - `toArray()` method Returns all possible values as an array (constant name in key, constant value in value)
 - `keys()` Returns the names (keys) of all constants in the Enum class
+- `values()` Returns instances of the Enum class of all Enum constants (constant name in key, Enum instance in value)
 - `isValid()` Check if tested value is valid on enum set
 - `isValidKey()` Check if tested key is valid on enum set
 - `search()` Return key for searched value
