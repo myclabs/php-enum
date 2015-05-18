@@ -90,9 +90,13 @@ abstract class Enum
      */
     public static function values()
     {
-        return array_map(function ($value) {
-            return new static($value);
-        }, self::toArray());
+        $values = [];
+
+        foreach (self::toArray() as $key => $value) {
+            $values[$key] = new static($value);
+        }
+
+        return $values;
     }
 
     /**
