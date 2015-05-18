@@ -90,7 +90,7 @@ abstract class Enum
      */
     public static function values()
     {
-        $values = [];
+        $values = array();
 
         foreach (self::toArray() as $key => $value) {
             $values[$key] = new static($value);
