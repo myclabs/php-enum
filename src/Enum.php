@@ -80,7 +80,7 @@ abstract class Enum
      */
     public static function keys()
     {
-        return array_keys(self::toArray());
+        return array_keys(static::toArray());
     }
 
     /**
@@ -92,7 +92,7 @@ abstract class Enum
     {
         $values = array();
 
-        foreach (self::toArray() as $key => $value) {
+        foreach (static::toArray() as $key => $value) {
             $values[$key] = new static($value);
         }
 
@@ -123,7 +123,7 @@ abstract class Enum
      */
     public static function isValid($value)
     {
-        return in_array($value, self::toArray(), true);
+        return in_array($value, static::toArray(), true);
     }
 
     /**
@@ -135,7 +135,7 @@ abstract class Enum
      */
     public static function isValidKey($key)
     {
-        $array = self::toArray();
+        $array = static::toArray();
         return isset($array[$key]);
     }
 
@@ -148,7 +148,7 @@ abstract class Enum
      */
     public static function search($value)
     {
-        return array_search($value, self::toArray(), true);
+        return array_search($value, static::toArray(), true);
     }
 
     /**
