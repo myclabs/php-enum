@@ -70,7 +70,7 @@ abstract class Enum
      */
     public function __toString()
     {
-        return (string) $this->value;
+        return (string)$this->value;
     }
 
     /**
@@ -108,7 +108,7 @@ abstract class Enum
     {
         $class = get_called_class();
         if (!array_key_exists($class, self::$cache)) {
-            $reflection = new \ReflectionClass($class);
+            $reflection          = new \ReflectionClass($class);
             self::$cache[$class] = $reflection->getConstants();
         }
 
@@ -119,6 +119,7 @@ abstract class Enum
      * Check if is valid enum value
      *
      * @param $value
+     *
      * @return bool
      */
     public static function isValid($value)
@@ -136,6 +137,7 @@ abstract class Enum
     public static function isValidKey($key)
     {
         $array = static::toArray();
+
         return isset($array[$key]);
     }
 
@@ -162,8 +164,10 @@ abstract class Enum
      */
     public static function __callStatic($name, $arguments)
     {
-        if (defined("static::$name")) {
-            return new static(constant("static::$name"));
+        if (static::isValidKey($name)) {
+            $array = static::toArray();
+
+            return new static($array[$name]);
         }
 
         throw new \BadMethodCallException("No static method or enum constant '$name' in class " . get_called_class());
