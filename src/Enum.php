@@ -29,7 +29,7 @@ abstract class Enum
      *
      * @var array
      */
-    private static $cache = array();
+    protected static $cache = array();
 
     /**
      * Creates a new value of some type
@@ -62,7 +62,7 @@ abstract class Enum
      */
     public function getKey()
     {
-        return self::search($this->value);
+        return static::search($this->value);
     }
 
     /**
@@ -107,12 +107,12 @@ abstract class Enum
     public static function toArray()
     {
         $class = get_called_class();
-        if (!array_key_exists($class, self::$cache)) {
+        if (!array_key_exists($class, static::$cache)) {
             $reflection          = new \ReflectionClass($class);
-            self::$cache[$class] = $reflection->getConstants();
+            static::$cache[$class] = $reflection->getConstants();
         }
 
-        return self::$cache[$class];
+        return static::$cache[$class];
     }
 
     /**
