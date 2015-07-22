@@ -108,7 +108,7 @@ abstract class Enum
     {
         $class = get_called_class();
         if (!array_key_exists($class, static::$cache)) {
-            $reflection          = new \ReflectionClass($class);
+            $reflection            = new \ReflectionClass($class);
             static::$cache[$class] = $reflection->getConstants();
         }
 
@@ -164,9 +164,8 @@ abstract class Enum
      */
     public static function __callStatic($name, $arguments)
     {
-        if (static::isValidKey($name)) {
-            $array = static::toArray();
-
+        $array = static::toArray();
+        if (isset($array[$name])) {
             return new static($array[$name]);
         }
 
