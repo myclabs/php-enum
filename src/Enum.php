@@ -29,7 +29,7 @@ abstract class Enum
      *
      * @var array
      */
-    private static $cache = array();
+    protected static $cache = array();
 
     /**
      * Creates a new value of some type
@@ -62,7 +62,7 @@ abstract class Enum
      */
     public function getKey()
     {
-        return self::search($this->value);
+        return static::search($this->value);
     }
 
     /**
@@ -70,7 +70,7 @@ abstract class Enum
      */
     public function __toString()
     {
-        return (string) $this->value;
+        return (string)$this->value;
     }
 
     /**
@@ -80,7 +80,7 @@ abstract class Enum
      */
     public static function keys()
     {
-        return array_keys(self::toArray());
+        return array_keys(static::toArray());
     }
 
     /**
@@ -92,7 +92,7 @@ abstract class Enum
     {
         $values = array();
 
-        foreach (self::toArray() as $key => $value) {
+        foreach (static::toArray() as $key => $value) {
             $values[$key] = new static($value);
         }
 
@@ -107,23 +107,24 @@ abstract class Enum
     public static function toArray()
     {
         $class = get_called_class();
-        if (!array_key_exists($class, self::$cache)) {
-            $reflection = new \ReflectionClass($class);
-            self::$cache[$class] = $reflection->getConstants();
+        if (!array_key_exists($class, static::$cache)) {
+            $reflection            = new \ReflectionClass($class);
+            static::$cache[$class] = $reflection->getConstants();
         }
 
-        return self::$cache[$class];
+        return static::$cache[$class];
     }
 
     /**
      * Check if is valid enum value
      *
      * @param $value
+     *
      * @return bool
      */
     public static function isValid($value)
     {
-        return in_array($value, self::toArray(), true);
+        return in_array($value, static::toArray(), true);
     }
 
     /**
@@ -135,7 +136,8 @@ abstract class Enum
      */
     public static function isValidKey($key)
     {
-        $array = self::toArray();
+        $array = static::toArray();
+
         return isset($array[$key]);
     }
 
@@ -148,7 +150,7 @@ abstract class Enum
      */
     public static function search($value)
     {
-        return array_search($value, self::toArray(), true);
+        return array_search($value, static::toArray(), true);
     }
 
     /**
@@ -162,8 +164,9 @@ abstract class Enum
      */
     public static function __callStatic($name, $arguments)
     {
-        if (defined("static::$name")) {
-            return new static(constant("static::$name"));
+        $array = static::toArray();
+        if (isset($array[$name])) {
+            return new static($array[$name]);
         }
 
         throw new \BadMethodCallException("No static method or enum constant '$name' in class " . get_called_class());
