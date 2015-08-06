@@ -112,3 +112,9 @@ class Action extends Enum
     const EDIT = 'edit';
 }
 ```
+
+## Installation
+
+```
+composer require myclabs/php-enum
+```
