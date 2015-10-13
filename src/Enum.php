@@ -128,6 +128,24 @@ abstract class Enum
     }
 
     /**
+     * Check if is all $values are valid.
+     *
+     * @param array $values
+     *
+     * @return bool
+     */
+    public static function isValidArray(array $values)
+    {
+        foreach ($values as $value) {
+            if (!self::isValid($value)) {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    /**
      * Check if is valid enum key
      *
      * @param $key
