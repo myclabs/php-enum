@@ -82,7 +82,7 @@ abstract class Enum implements \JsonSerializable
      */
     function jsonSerialize()
     {
-        return $this->value;
+        return $this->getValue();
     }
 
 
