@@ -71,6 +71,21 @@ class EnumTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($expected, (string) $enumObject);
     }
 
+    public function testJsonEncode()
+    {
+        $value = new EnumFixture(EnumFixture::FOO);
+        $encoded = json_encode($value);
+        $this->assertEquals($encoded, '"'.EnumFixture::FOO.'"');
+
+        $value = new EnumFixture(EnumFixture::BAR);
+        $encoded = json_encode($value);
+        $this->assertEquals($encoded, '"'.EnumFixture::BAR.'"');
+
+        $value = new EnumFixture(EnumFixture::NUMBER);
+        $encoded = json_encode($value);
+        $this->assertEquals($encoded, EnumFixture::NUMBER);
+    }
+
     public function toStringProvider() {
         return array(
             array(EnumFixture::FOO, new EnumFixture(EnumFixture::FOO)),

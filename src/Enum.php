@@ -15,7 +15,7 @@ namespace MyCLabs\Enum;
  * @author Daniel Costa <danielcosta@gmail.com>
  * @author Mirosław Filip <mirfilip@gmail.com>
  */
-abstract class Enum
+abstract class Enum implements \JsonSerializable
 {
     /**
      * Enum value
@@ -72,6 +72,19 @@ abstract class Enum
     {
         return (string)$this->value;
     }
+
+    /**
+     * (PHP 5 &gt;= 5.4.0)<br/>
+     * Specify data which should be serialized to JSON
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @return mixed data which can be serialized by <b>json_encode</b>,
+     * which is a value of any type other than a resource.
+     */
+    function jsonSerialize()
+    {
+        return $this->value;
+    }
+
 
     /**
      * Returns the names (keys) of all constants in the Enum class
