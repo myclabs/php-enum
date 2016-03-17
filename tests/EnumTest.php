@@ -4,7 +4,7 @@
  * @license http://www.opensource.org/licenses/mit-license.php MIT (see the LICENSE file)
  */
 
-namespace MyCLabs\Tests\Enum;
+namespace LTDBeget\Tests\Enum;
 
 /**
  * @author Matthieu Napoli <matthieu@mnapoli.fr>
@@ -77,7 +77,7 @@ class EnumTest extends \PHPUnit_Framework_TestCase
     /**
      * @expectedException \BadMethodCallException
      * @expectedExceptionMessage No static method or enum constant 'UNKNOWN' in class
-     *                           UnitTest\MyCLabs\Enum\Enum\EnumFixture
+     *                           UnitTest\LTDBeget\Enum\Enum\EnumFixture
      */
     public function testBadStaticAccess()
     {

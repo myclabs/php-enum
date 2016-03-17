@@ -14,7 +14,7 @@ Using an enum instead of class constants provides the following advantages:
 ## Declaration
 
 ```php
-use MyCLabs\Enum\Enum;
+use LTDBeget\Enum\Enum;
 
 /**
  * Action enum

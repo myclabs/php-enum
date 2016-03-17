@@ -4,7 +4,7 @@
  * @license http://www.opensource.org/licenses/mit-license.php MIT (see the LICENSE file)
  */
 
-namespace MyCLabs\Enum;
+namespace LTDBeget\Enum;
 
 /**
  * Base Enum class
