@@ -4,7 +4,7 @@
  * @license http://www.opensource.org/licenses/mit-license.php MIT (see the LICENSE file)
  */
 
-namespace MyCLabs\Enum;
+namespace LTDBeget\Enum;
 
 /**
  * Base Enum class
@@ -18,49 +18,36 @@ namespace MyCLabs\Enum;
 abstract class Enum
 {
     /**
-     * Enum value
+     * Returns a value when called statically like so: MyEnum::SOME_VALUE() given SOME_VALUE is a class constant
      *
-     * @var mixed
+     * @param string $key
+     *
+     * @param array $arguments
+     * @return static
      */
-    protected $value;
-
-    /**
-     * Store existing constants in a static cache per object.
-     *
-     * @var array
-     */
-    protected static $cache = array();
-
-    /**
-     * Creates a new value of some type
-     *
-     * @param mixed $value
-     *
-     * @throws \UnexpectedValueException if incompatible type is given.
-     */
-    public function __construct($value)
+    final public static function __callStatic($key, $arguments = [])
     {
-        if (!$this->isValid($value)) {
-            throw new \UnexpectedValueException("Value '$value' is not part of the enum " . get_called_class());
-        }
+        print_r(self::$cache);
+        print_r(self::$enums);
 
-        $this->value = $value;
+        return self::getEnum($key);
     }
 
     /**
-     * @return mixed
-     */
-    public function getValue()
-    {
-        return $this->value;
-    }
-
-    /**
-     * Returns the enum key (i.e. the constant name).
+     * Returns the name of this enum constant, exactly as declared in its
+     * enum declaration.
      *
-     * @return mixed
+     * Most programmers should use the  __toString method in
+     * preference to this one, as the toString method may return
+     * a more user-friendly name.
+     *
+     * This method is designed primarily for
+     * use in specialized situations where correctness depends on getting the
+     * exact name, which will not vary from release to release.
+     *
+     * @return mixed name of this enum constant
      */
-    public function getKey()
+    public function name()
     {
         return static::search($this->value);
     }
@@ -74,6 +61,26 @@ abstract class Enum
     }
 
     /**
+     * Returns true if the specified enum is equal to this
+     *
+     * @param Enum $enum the Enum to be compared for equality with this object.
+     *
+     * @return true if the specified enum is equal to this enum.
+     */
+    public function equals(Enum $enum)
+    {
+        return $this === $enum;
+    }
+
+    /**
+     * @return string
+     */
+    public static function className()
+    {
+        return get_called_class();
+    }
+
+    /**
      * Returns the names (keys) of all constants in the Enum class
      *
      * @return array
@@ -84,19 +91,63 @@ abstract class Enum
     }
 
     /**
-     * Returns instances of the Enum class of all Enum constants
+     * Creates a new value of some type
      *
-     * @return array Constant name in key, Enum instance in value
+     * @param mixed $value
+     *
+     * @throws \UnexpectedValueException if incompatible type is given.
      */
-    public static function values()
+    protected function __construct($value)
     {
-        $values = array();
-
-        foreach (static::toArray() as $key => $value) {
-            $values[$key] = new static($value);
+        echo "constructor called".PHP_EOL;
+        if (!$this->isValid($value)) {
+            throw new \UnexpectedValueException("Value '$value' is not part of the enum " . static::className());
         }
 
-        return $values;
+        $this->value = $value;
+    }
+
+    /**
+     * get enum by key and init if did not init ent
+     *
+     * @param $key
+     *
+     * @return Enum
+     */
+    final static private function getEnum($key)
+    {
+        if(! self::isInit($key)) {
+            $array = static::toArray();
+            if (! array_key_exists($key, $array)) {
+                throw new \BadMethodCallException("No static method or enum constant '{$key}' in class " . self::className());
+            }
+
+            self::$enums[self::getInternalKey($key)] = new static($array[$key]);
+        }
+
+        return self::$enums[self::getInternalKey($key)];
+    }
+
+    /**
+     * checks is Enum already init
+     * @param $key
+     * @return bool
+     */
+    final static private function isInit($key)
+    {
+        return array_key_exists(self::getInternalKey($key), self::$enums);
+    }
+
+    /**
+     * make internal enum key
+     *
+     * @param $key
+     *
+     * @return string
+     */
+    final static private function getInternalKey($key)
+    {
+        return static::className().$key;
     }
 
     /**
@@ -104,9 +155,9 @@ abstract class Enum
      *
      * @return array Constant name in key, constant value in value
      */
-    public static function toArray()
+    final static private function toArray()
     {
-        $class = get_called_class();
+        $class = static::className();
         if (!array_key_exists($class, static::$cache)) {
             $reflection            = new \ReflectionClass($class);
             static::$cache[$class] = $reflection->getConstants();
@@ -122,23 +173,9 @@ abstract class Enum
      *
      * @return bool
      */
-    public static function isValid($value)
+    final private function isValid($value)
     {
         return in_array($value, static::toArray(), true);
-    }
-
-    /**
-     * Check if is valid enum key
-     *
-     * @param $key
-     *
-     * @return bool
-     */
-    public static function isValidKey($key)
-    {
-        $array = static::toArray();
-
-        return isset($array[$key]);
     }
 
     /**
@@ -148,27 +185,28 @@ abstract class Enum
      *
      * @return mixed
      */
-    public static function search($value)
+    final private function search($value)
     {
         return array_search($value, static::toArray(), true);
     }
 
-    /**
-     * Returns a value when called statically like so: MyEnum::SOME_VALUE() given SOME_VALUE is a class constant
-     *
-     * @param string $name
-     * @param array  $arguments
-     *
-     * @return static
-     * @throws \BadMethodCallException
-     */
-    public static function __callStatic($name, $arguments)
-    {
-        $array = static::toArray();
-        if (isset($array[$name])) {
-            return new static($array[$name]);
-        }
 
-        throw new \BadMethodCallException("No static method or enum constant '$name' in class " . get_called_class());
-    }
+    /**
+     * Enum value
+     *
+     * @var mixed
+     */
+    protected $value;
+
+    /**
+     * Store existing constants in a static cache per object.
+     *
+     * @var array
+     */
+    protected static $cache = [];
+
+    /**
+     * @var Enum[]
+     */
+    private static $enums = [];
 }

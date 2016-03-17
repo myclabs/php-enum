@@ -13,12 +13,12 @@
     ],
     "autoload": {
         "psr-4": {
-            "MyCLabs\\Enum\\": "src/"
+            "LTDBeget\\Enum\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "MyCLabs\\Tests\\Enum\\": "tests/"
+            "LTDBeget\\Tests\\Enum\\": "tests/"
         }
     },
     "require": {
