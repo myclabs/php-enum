@@ -51,10 +51,12 @@ abstract class Enum
      * Creates a new value of some type
      *
      * @return mixed
+     *
+     * @throws \UnexpectedValueException if incompatible type is given.
      */
     public static function fromString($value)
     {
-        return new self($value);
+        return new static($value);
     }
 
     /**
