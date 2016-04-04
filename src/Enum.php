@@ -48,6 +48,16 @@ abstract class Enum
     }
 
     /**
+     * Creates a new value of some type
+     *
+     * @return mixed
+     */
+    public static function fromString($value)
+    {
+        return new self($value);
+    }
+
+    /**
      * @return mixed
      */
     public function getValue()
