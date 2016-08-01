@@ -86,7 +86,7 @@ abstract class Enum
     /**
      * Returns instances of the Enum class of all Enum constants
      *
-     * @return array Constant name in key, Enum instance in value
+     * @return static[] Constant name in key, Enum instance in value
      */
     public static function values()
     {
