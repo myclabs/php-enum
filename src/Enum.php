@@ -74,6 +74,16 @@ abstract class Enum
     }
 
     /**
+     * Compares one Enum with another.
+     *
+     * @return bool True if Enums are equal, false if not equal
+     */
+    public function equals(Enum $enum)
+    {
+        return $this->getValue() === $enum->getValue();
+    }
+
+    /**
      * Returns the names (keys) of all constants in the Enum class
      *
      * @return array

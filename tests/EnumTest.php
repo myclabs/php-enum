@@ -213,4 +213,13 @@ class EnumTest extends \PHPUnit_Framework_TestCase
             array(array(), false),
         );
     }
+
+    public function testEquals()
+    {
+        $enum = new EnumFixture(EnumFixture::FOO);
+        $this->assertTrue($enum->equals(EnumFixture::FOO()));
+
+        $enum = new EnumFixture(EnumFixture::PROBLEMATIC_BOOLEAN_FALSE);
+        $this->assertFalse($enum->equals(EnumFixture::PROBLEMATIC_EMPTY_STRING()));
+    }
 }
