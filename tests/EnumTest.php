@@ -184,7 +184,7 @@ class EnumTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * ssValidKey()
+     * isValidKey()
      */
     public function testIsValidKey()
     {
