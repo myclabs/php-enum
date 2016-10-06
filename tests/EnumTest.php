@@ -214,12 +214,17 @@ class EnumTest extends \PHPUnit_Framework_TestCase
         );
     }
 
+    /**
+     * equals()
+     */
     public function testEquals()
     {
-        $enum = new EnumFixture(EnumFixture::FOO);
-        $this->assertTrue($enum->equals(EnumFixture::FOO()));
+        $foo = new EnumFixture(EnumFixture::FOO);
+        $number = new EnumFixture(EnumFixture::NUMBER);
+        $anotherFoo = new EnumFixture(EnumFixture::FOO);
 
-        $enum = new EnumFixture(EnumFixture::PROBLEMATIC_BOOLEAN_FALSE);
-        $this->assertFalse($enum->equals(EnumFixture::PROBLEMATIC_EMPTY_STRING()));
+        $this->assertTrue($foo->equals($foo));
+        $this->assertFalse($foo->equals($number));
+        $this->assertTrue($foo->equals($anotherFoo));
     }
 }
