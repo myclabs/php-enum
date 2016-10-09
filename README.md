@@ -17,6 +17,11 @@ Using an enum instead of class constants provides the following advantages:
 
 This Enum class is not intended to replace class constants, but only to be used when it makes sense.
 
+## Installation
+
+```
+composer require myclabs/php-enum
+```
 
 ## Declaration
 
@@ -114,10 +119,4 @@ class Action extends Enum
     const VIEW = 'view';
     const EDIT = 'edit';
 }
-```
-
-## Installation
-
-```
-composer require myclabs/php-enum
 ```
