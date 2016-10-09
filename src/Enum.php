@@ -78,7 +78,7 @@ abstract class Enum
      *
      * @return bool True if Enums are equal, false if not equal
      */
-    public function equals(Enum $enum)
+    final public function equals(Enum $enum)
     {
         return $this->getValue() === $enum->getValue();
     }
