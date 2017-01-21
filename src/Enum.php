@@ -25,6 +25,13 @@ abstract class Enum
     protected $value;
 
     /**
+     * Enum value instance
+     *
+     * @var mixed
+     */
+    protected static $instances = array();
+
+    /**
      * Store existing constants in a static cache per object.
      *
      * @var array
@@ -177,8 +184,15 @@ abstract class Enum
     public static function __callStatic($name, $arguments)
     {
         $array = static::toArray();
+        $class = get_called_class();
         if (isset($array[$name])) {
-            return new static($array[$name]);
+            if (isset(static::$instances[$class][$name])) {
+                return static::$instances[$class][$name];
+            } else {
+                $result = new static($array[$name]);
+                static::$instances[$class][$name] = $result;
+                return $result;
+            }
         }
 
         throw new \BadMethodCallException("No static method or enum constant '$name' in class " . get_called_class());
