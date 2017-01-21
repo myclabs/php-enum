@@ -166,6 +166,21 @@ abstract class Enum
     }
 
     /**
+     * Returns Enum by key
+     *
+     * @return static
+     */
+    public static function fromKey($name)
+    {
+        $array = static::toArray();
+        if (array_key_exists($name, $array)) {
+            return EnumManager::get(new static($array[$name]));
+        }
+
+        return null;
+    }
+
+    /**
      * Returns a value when called statically like so: MyEnum::SOME_VALUE() given SOME_VALUE is a class constant
      *
      * @param string $name
@@ -176,11 +191,13 @@ abstract class Enum
      */
     public static function __callStatic($name, $arguments)
     {
-        $array = static::toArray();
-        if (isset($array[$name])) {
-            return new static($array[$name]);
+        $result = static::fromKey($name);
+
+        if ($result === null) {
+            $msg = "No static method or enum constant '$name' in class " . get_called_class();
+            throw new \BadMethodCallException($msg);
         }
 
-        throw new \BadMethodCallException("No static method or enum constant '$name' in class " . get_called_class());
+        return $result;
     }
 }
