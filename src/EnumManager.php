@@ -40,4 +40,16 @@ abstract class EnumManager
         self::$instances[$class][$name] = $enum;
         return $enum;
     }
+
+    /**
+     * Returns all possible values as an array
+     *
+     * @return array Constant name in key, constant value in value
+     */
+    public static function constants(Enum $enum)
+    {
+        $reflection = new ReflectionObject($enum);
+        $result = $reflection->getConstants();
+        return $result;
+    }
 }

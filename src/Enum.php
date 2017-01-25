@@ -7,7 +7,6 @@
 namespace MyCLabs\Enum;
 
 use BadMethodCallException;
-use UnexpectedValueException;
 
 /**
  * Base Enum class
@@ -21,32 +20,27 @@ use UnexpectedValueException;
 abstract class Enum
 {
     /**
+     * Enum name
+     *
+     * @var string
+     */
+    private $name;
+
+    /**
      * Enum value
      *
      * @var mixed
      */
-    protected $value;
-
-    /**
-     * Store existing constants in a static cache per object.
-     *
-     * @var array
-     */
-    protected static $cache = array();
+    private $value;
 
     /**
      * Creates a new value of some type
      *
      * @param mixed $value
-     *
-     * @throws UnexpectedValueException if incompatible type is given.
      */
-    public function __construct($value)
+    final private function __construct($name, $value)
     {
-        if (!static::isValid($value)) {
-            throw new UnexpectedValueException("Value '$value' is not part of the enum " . get_called_class());
-        }
-
+        $this->name = $name;
         $this->value = $value;
     }
 
@@ -65,7 +59,7 @@ abstract class Enum
      */
     public function getKey()
     {
-        return static::search($this->value);
+        return $this->name;
     }
 
     /**
@@ -107,8 +101,8 @@ abstract class Enum
     {
         $values = array();
 
-        foreach (static::toArray() as $key => $value) {
-            $values[$key] = new static($value);
+        foreach (static::toArray() as $name => $value) {
+            $values[$name] = EnumManager::get(new static($name, $value));
         }
 
         return $values;
@@ -121,13 +115,7 @@ abstract class Enum
      */
     public static function toArray()
     {
-        $class = get_called_class();
-        if (!array_key_exists($class, static::$cache)) {
-            $reflection            = new \ReflectionClass($class);
-            static::$cache[$class] = $reflection->getConstants();
-        }
-
-        return static::$cache[$class];
+        return EnumManager::constants(new static(null, null));
     }
 
     /**
@@ -169,6 +157,21 @@ abstract class Enum
     }
 
     /**
+     * Returns Enum by value
+     *
+     * @return static
+     */
+    public static function fromValue($value)
+    {
+        $name = static::search($value);
+        if ($name === false) {
+            return null;
+        }
+
+        return EnumManager::get(new static($name, $value));
+    }
+
+    /**
      * Returns Enum by key
      *
      * @return static
@@ -176,8 +179,8 @@ abstract class Enum
     public static function fromKey($name)
     {
         $array = static::toArray();
-        if (array_key_exists($name, $array)) {
-            return EnumManager::get(new static($array[$name]));
+        if (isset($array[$name]) || array_key_exists($name, $array)) {
+            return EnumManager::get(new static($name, $array[$name]));
         }
 
         return null;
