@@ -6,6 +6,9 @@
 
 namespace MyCLabs\Enum;
 
+use BadMethodCallException;
+use UnexpectedValueException;
+
 /**
  * Base Enum class
  *
@@ -36,12 +39,12 @@ abstract class Enum
      *
      * @param mixed $value
      *
-     * @throws \UnexpectedValueException if incompatible type is given.
+     * @throws UnexpectedValueException if incompatible type is given.
      */
     public function __construct($value)
     {
-        if (!$this->isValid($value)) {
-            throw new \UnexpectedValueException("Value '$value' is not part of the enum " . get_called_class());
+        if (!static::isValid($value)) {
+            throw new UnexpectedValueException("Value '$value' is not part of the enum " . get_called_class());
         }
 
         $this->value = $value;
@@ -187,7 +190,7 @@ abstract class Enum
      * @param array  $arguments
      *
      * @return static
-     * @throws \BadMethodCallException
+     * @throws BadMethodCallException
      */
     public static function __callStatic($name, $arguments)
     {
@@ -195,7 +198,7 @@ abstract class Enum
 
         if ($result === null) {
             $msg = "No static method or enum constant '$name' in class " . get_called_class();
-            throw new \BadMethodCallException($msg);
+            throw new BadMethodCallException($msg);
         }
 
         return $result;
