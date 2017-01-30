@@ -42,9 +42,6 @@ class Action extends Enum
 ## Usage
 
 ```php
-$action = new Action(Action::VIEW);
-
-// or
 $action = Action::VIEW();
 ```
 
@@ -58,9 +55,22 @@ function setAction(Action $action) {
 }
 ```
 
+Each Enum instance for a given key is a singleton, so you can use:
+
+```php
+function setAction(Action $action) {
+    if ($action === Action::VIEW()) {
+        //
+    }
+}
+```
+
+**Note** that this is not true, if you `unserialize()` Enums.
+In case another Enum instance already exists,
+an `E_USER_NOTICE` is triggered.
+
 ## Documentation
 
-- `__construct()` The constructor checks that the value exist in the enum
 - `__toString()` You can `echo $myValue`, it will display the enum value (value of the constant)
 - `getValue()` Returns the current value of the enum
 - `getKey()` Returns the key of the current value on Enum
@@ -74,6 +84,8 @@ Static methods:
 - `isValid()` Check if tested value is valid on enum set
 - `isValidKey()` Check if tested key is valid on enum set
 - `search()` Return key for searched value
+- `fromKey()` Return Enum instance for the given key
+- `fromValue()` Return Enum instance for the given value
 
 ### Static methods
 
@@ -91,23 +103,8 @@ $action = Action::EDIT();
 
 Static method helpers are implemented using [`__callStatic()`](http://www.php.net/manual/en/language.oop5.overloading.php#object.callstatic).
 
-If you care about IDE autocompletion, you can either implement the static methods yourself:
-
-```php
-class Action extends Enum
-{
-    const VIEW = 'view';
-
-    /**
-     * @return Action
-     */
-    public static function VIEW() {
-        return new Action(self::VIEW);
-    }
-}
-```
-
-or you can use phpdoc (this is supported in PhpStorm for example):
+If you care about IDE autocompletion,
+you can use phpdoc (this is supported in PhpStorm for example):
 
 ```php
 /**
