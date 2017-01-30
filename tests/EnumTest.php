@@ -250,6 +250,30 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * fromKey()
+     */
+    public function testFromKey()
+    {
+        $number = EnumFixture::BAR();
+        $fromValue = EnumFixture::fromKey('BAR');
+
+        $this->assertSame($number, $fromValue);
+    }
+
+    /**
+     * fromValue()
+     */
+    public function testFromValue()
+    {
+        $enum = EnumFixture::NUMBER();
+        $number = EnumFixture::fromValue(42);
+        $inexistant = EnumFixture::fromValue('inexistant');
+
+        $this->assertSame($enum, $number);
+        $this->assertSame(null, $inexistant);
+    }
+
+    /**
      * __wakeup()
      */
     public function testUnserialize()
