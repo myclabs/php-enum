@@ -248,4 +248,28 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     {
         $this->assertFalse(EnumFixture::FOO()->equals(EnumConflict::FOO()));
     }
+
+    /**
+     * __wakeup()
+     */
+    public function testUnserialize()
+    {
+        $ser = 'O:37:"MyCLabs\Tests\Enum\UnserializeFixture":2:{'
+             . 's:23:"#MyCLabs\Enum\Enum#name";s:4:"ONCE";'
+             . 's:24:"#MyCLabs\Enum\Enum#value";s:2:"OK";}';
+        $once = unserialize(strtr($ser, "#", "\0"));
+
+        $this->assertSame($once, UnserializeFixture::ONCE());
+    }
+
+    /**
+     * @expectedException \PHPUnit_Framework_Error_Notice
+     */
+    public function testUnserializeError()
+    {
+        $ser = 'O:30:"MyCLabs\Tests\Enum\EnumFixture":2:{'
+             . 's:23:"#MyCLabs\Enum\Enum#name";s:3:"FOO";'
+             . 's:24:"#MyCLabs\Enum\Enum#value";s:3:"foo";}';
+        $foo = unserialize(strtr($ser, "#", "\0"));
+    }
 }

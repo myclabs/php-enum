@@ -71,6 +71,17 @@ abstract class Enum
     }
 
     /**
+     * Register object in cache and trigger a notice if it already exists.
+     */
+    public function __wakeup()
+    {
+        $enum = EnumManager::get($this);
+        if ($enum !== $this) {
+            trigger_error("Enum is already initialized", E_USER_NOTICE);
+        }
+    }
+
+    /**
      * Compares one Enum with another.
      *
      * This method is final, for more information read https://github.com/myclabs/php-enum/issues/4
