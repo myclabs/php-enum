@@ -120,3 +120,7 @@ class Action extends Enum
     const EDIT = 'edit';
 }
 ```
+
+## Related projects
+
+- [Doctrine enum mapping](https://github.com/acelaya/doctrine-enum-type)
