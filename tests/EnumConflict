@@ -10,8 +10,8 @@ use MyCLabs\Enum\Enum;
 /**
  * Class EnumConflict
  *
- * @method static EnumFixture FOO()
- * @method static EnumFixture BAR()
+ * @method static EnumConflict FOO()
+ * @method static EnumConflict BAR()
  *
  * @author Daniel Costa <danielcosta@gmail.com>
  * @author Mirosław Filip <mirfilip@gmail.com>
