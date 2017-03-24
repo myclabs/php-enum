@@ -242,4 +242,12 @@ class EnumTest extends \PHPUnit_Framework_TestCase
         $this->assertFalse($emptyString->equals($null));
         $this->assertFalse($null->equals($false));
     }
+
+    /**
+     * equals()
+     */
+    public function testEqualsConflictValues()
+    {
+        $this->assertFalse(EnumFixture::FOO()->equals(EnumConflict::FOO()));
+    }
 }
