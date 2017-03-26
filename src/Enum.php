@@ -48,6 +48,18 @@ abstract class Enum
     }
 
     /**
+     * Creates a new value of some type
+     *
+     * @return mixed
+     *
+     * @throws \UnexpectedValueException if incompatible type is given.
+     */
+    public static function fromString($value)
+    {
+        return new static($value);
+    }
+
+    /**
      * @return mixed
      */
     public function getValue()
