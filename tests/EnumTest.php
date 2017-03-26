@@ -165,6 +165,20 @@ class EnumTest extends \PHPUnit_Framework_TestCase
         $this->assertSame($isValid, EnumFixture::isValid($value));
     }
 
+    public function testIsValidArraySucceed()
+    {
+        $validValues = EnumFixture::toArray();
+
+        $this->assertTrue(EnumFixture::isValidArray($validValues));
+    }
+
+    public function testIsValidArrayFail()
+    {
+        $invalidValues = array('fail', 'value');
+
+        $this->assertFalse(EnumFixture::isValidArray($invalidValues));
+    }
+
     public function isValidProvider() {
         return array(
             /**
