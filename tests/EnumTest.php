@@ -250,4 +250,18 @@ class EnumTest extends \PHPUnit_Framework_TestCase
     {
         $this->assertFalse(EnumFixture::FOO()->equals(EnumConflict::FOO()));
     }
+
+    public function testSerialize()
+    {
+        $this->assertEquals('C:30:"MyCLabs\Tests\Enum\EnumFixture":10:{s:3:"foo";}', serialize(EnumFixture::FOO()));
+    }
+
+    public function testUnserialize()
+    {
+        /* @var $value EnumFixture */
+        $value = unserialize('C:30:"MyCLabs\Tests\Enum\EnumFixture":10:{s:3:"foo";}');
+
+        $this->assertEquals(EnumFixture::FOO, $value->getValue());
+        $this->assertTrue(EnumFixture::FOO()->equals($value));
+    }
 }

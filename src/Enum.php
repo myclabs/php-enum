@@ -15,7 +15,7 @@ namespace MyCLabs\Enum;
  * @author Daniel Costa <danielcosta@gmail.com>
  * @author Mirosław Filip <mirfilip@gmail.com>
  */
-abstract class Enum
+abstract class Enum implements \Serializable
 {
     /**
      * Enum value
@@ -163,6 +163,22 @@ abstract class Enum
     public static function search($value)
     {
         return array_search($value, static::toArray(), true);
+    }
+
+    /**
+     * @return string
+     */
+    public function serialize()
+    {
+        return serialize($this->value);
+    }
+
+    /**
+     * @param string $serialized
+     */
+    public function unserialize($serialized)
+    {
+        $this->value = unserialize($serialized);
     }
 
     /**
