@@ -82,7 +82,7 @@ abstract class Enum implements \Serializable
      */
     final public function equals(Enum $enum)
     {
-        return $this->getValue() === $enum->getValue();
+        return $this->getValue() === $enum->getValue() && get_called_class() == get_class($enum);
     }
 
     /**
