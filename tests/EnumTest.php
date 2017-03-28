@@ -262,7 +262,8 @@ class EnumTest extends \PHPUnit_Framework_TestCase
     public function testUnserialize()
     {
         /* @var $value EnumFixture */
-        $value = unserialize(hex2bin(
+        $value = unserialize(pack(
+            'H*',
             '4f3a33303a224d79434c6162735c54657374735c456e756d5c456e756d46697874757265223a313a7b733a383a22002a0076616c7565223b733a333a22666f6f223b7d'
         ));
 
