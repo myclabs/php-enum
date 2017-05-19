@@ -142,7 +142,7 @@ class EnumTest extends \PHPUnit_Framework_TestCase
     public function testImplode()
     {
         $value = EnumFixture::implode(',');
-        $expectedValue = implode(',', [
+        $expectedValue = implode(',', array(
             EnumFixture::FOO,
             EnumFixture::BAR,
             EnumFixture::NUMBER,
@@ -150,7 +150,7 @@ class EnumTest extends \PHPUnit_Framework_TestCase
             EnumFixture::PROBLEMATIC_NULL,
             EnumFixture::PROBLEMATIC_EMPTY_STRING,
             EnumFixture::PROBLEMATIC_BOOLEAN_FALSE,
-        ]);
+        ));
 
         $this->assertSame($expectedValue, $value);
     }
