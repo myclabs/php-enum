@@ -128,6 +128,18 @@ abstract class Enum
     }
 
     /**
+     * Concatenate all possible values as a string
+     *
+     * @param string $glue
+     *
+     * @return string
+     */
+    public static function implode($glue)
+    {
+        return implode($glue, static::toArray());
+    }
+
+    /**
      * Check if is valid enum value
      *
      * @param $value
