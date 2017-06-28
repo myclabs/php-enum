@@ -11,7 +11,7 @@ namespace MyCLabs\Tests\Enum;
  * @author Daniel Costa <danielcosta@gmail.com>
  * @author Mirosław Filip <mirfilip@gmail.com>
  */
-class EnumTest extends \PHPUnit_Framework_TestCase
+class EnumTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * getValue()
@@ -40,14 +40,11 @@ class EnumTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @dataProvider invalidValueProvider
+     * @expectedException UnexpectedValueException
+     * @expectedExceptionMessage is not part of the enum MyCLabs\Tests\Enum\EnumFixture
      */
     public function testCreatingEnumWithInvalidValue($value)
     {
-        $this->setExpectedException(
-            '\UnexpectedValueException',
-            'Value \'' . $value . '\' is not part of the enum MyCLabs\Tests\Enum\EnumFixture'
-        );
-
         new EnumFixture($value);
     }
 
