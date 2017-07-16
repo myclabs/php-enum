@@ -247,4 +247,34 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     {
         $this->assertFalse(EnumFixture::FOO()->equals(EnumConflict::FOO()));
     }
+
+    /**
+     * getDescription method
+     */
+    public function testGetDescription()
+    {
+        $fooDescription = EnumFixture::FOO();
+        $barDescription = new EnumFixture(EnumFixture::BAR);
+        $wrongNumberDescription = EnumFixture::NUMBER();
+
+        $this->assertTrue($fooDescription->getDescription() === 'Foo description');
+        $this->assertTrue($barDescription->getDescription() === 'Bar Description');
+        $this->expectException(\BadMethodCallException::class);
+        $wrongNumberDescription->getDescription();
+    }
+
+    /**
+     * getCode method
+     */
+    public function testGetCode()
+    {
+        $fooCode = EnumFixture::FOO();
+        $barCode = new EnumFixture(EnumFixture::BAR);
+        $wrongNumberCode = EnumFixture::NUMBER();
+
+        $this->assertTrue($fooCode->getCode() === 'Foo code');
+        $this->assertTrue($barCode->getCode() == 'Bar Code');
+        $this->expectException(\BadMethodCallException::class);
+        $wrongNumberCode->getCode();
+    }
 }

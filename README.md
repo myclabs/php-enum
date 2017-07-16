@@ -64,6 +64,8 @@ function setAction(Action $action) {
 - `__toString()` You can `echo $myValue`, it will display the enum value (value of the constant)
 - `getValue()` Returns the current value of the enum
 - `getKey()` Returns the key of the current value on Enum
+- `getDescription()` Returns content of description annotation or BadMethodCallException if not set
+- `getCode()` Returns content of code annotation or BadMethodCallException if not set
 - `equals()` Tests whether enum instances are equal (returns `true` if enum values are equal, `false` otherwise)
 
 Static methods:
