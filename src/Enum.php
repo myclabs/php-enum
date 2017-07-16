@@ -14,6 +14,7 @@ namespace MyCLabs\Enum;
  * @author Matthieu Napoli <matthieu@mnapoli.fr>
  * @author Daniel Costa <danielcosta@gmail.com>
  * @author Mirosław Filip <mirfilip@gmail.com>
+ * @author Julien Zirnheld <julienzirnheld@gmail.com>
  */
 abstract class Enum
 {
@@ -25,11 +26,27 @@ abstract class Enum
     protected $value;
 
     /**
+     * Enum description
+     *
+     * @var string
+     */
+    protected $description;
+
+    /**
+     * Enum string code
+     *
+     * @var string
+     */
+    protected $code;
+
+    /**
      * Store existing constants in a static cache per object.
      *
      * @var array
      */
     protected static $cache = array();
+
+    #region magical methods
 
     /**
      * Creates a new value of some type
@@ -40,12 +57,52 @@ abstract class Enum
      */
     public function __construct($value)
     {
+        if(!self::isCached()) {
+            self::setCache();
+        }
         if (!$this->isValid($value)) {
             throw new \UnexpectedValueException("Value '$value' is not part of the enum " . get_called_class());
         }
-
+        $className = get_called_class();
         $this->value = $value;
+        $this->description = self::$cache[$className]['annotations'][$value]['description'];
+        $this->code = self::$cache[$className]['annotations'][$value]['code'];
     }
+
+    /**
+     * @return string
+     */
+    public function __toString()
+    {
+        return (string)$this->value;
+    }
+
+    /**
+     * Returns a value when called statically like so: MyEnum::SOME_VALUE() given SOME_VALUE is a class constant
+     *
+     * @param string $name
+     * @param array  $arguments
+     *
+     * @return static
+     * @throws \BadMethodCallException
+     */
+    public static function __callStatic($name, $arguments)
+    {
+        if(!self::isCached()) {
+            self::setCache();
+        }
+        $className = get_called_class();
+        if (array_key_exists($name, self::$cache[$className]['values'])) {
+            return new static(self::$cache[$className]['values'][$name]);
+        }
+        throw new \BadMethodCallException("No static method or enum constant '$name' in class " . $className);
+    }
+
+    #endregion
+
+    #region instance methods
+
+    #region public methods
 
     /**
      * @return mixed
@@ -66,24 +123,58 @@ abstract class Enum
     }
 
     /**
-     * @return string
-     */
-    public function __toString()
-    {
-        return (string)$this->value;
-    }
-
-    /**
      * Compares one Enum with another.
      *
      * This method is final, for more information read https://github.com/myclabs/php-enum/issues/4
      *
+     * @param Enum $enum
      * @return bool True if Enums are equal, false if not equal
      */
     final public function equals(Enum $enum)
     {
         return $this->getValue() === $enum->getValue() && get_called_class() == get_class($enum);
     }
+
+    /**
+     * Get description annotation value
+     *
+     * @return null|string
+     */
+    public function getDescription()
+    {
+        if(is_null($this->description)) {
+            throw new \BadMethodCallException('No description annotation was set for '.get_called_class().' with name '.$this->getKey());
+        }
+        return $this->description;
+    }
+
+    /**
+     * Get code annotation value
+     *
+     * @return string
+     */
+    public function getCode()
+    {
+        if(is_null($this->code)) {
+            throw new \BadMethodCallException('No code annotation was set for '.get_called_class().' with name '.$this->getKey());
+        }
+        return $this->code;
+    }
+
+
+    #endregion public methods
+
+    #region private methods
+
+
+
+    #endregion private methods
+
+    #endregion instance methods
+
+    #region static methods
+
+    #region public methods
 
     /**
      * Returns the names (keys) of all constants in the Enum class
@@ -118,13 +209,7 @@ abstract class Enum
      */
     public static function toArray()
     {
-        $class = get_called_class();
-        if (!array_key_exists($class, static::$cache)) {
-            $reflection            = new \ReflectionClass($class);
-            static::$cache[$class] = $reflection->getConstants();
-        }
-
-        return static::$cache[$class];
+        return self::$cache[get_called_class()]['values'];
     }
 
     /**
@@ -165,22 +250,74 @@ abstract class Enum
         return array_search($value, static::toArray(), true);
     }
 
-    /**
-     * Returns a value when called statically like so: MyEnum::SOME_VALUE() given SOME_VALUE is a class constant
-     *
-     * @param string $name
-     * @param array  $arguments
-     *
-     * @return static
-     * @throws \BadMethodCallException
-     */
-    public static function __callStatic($name, $arguments)
-    {
-        $array = static::toArray();
-        if (isset($array[$name])) {
-            return new static($array[$name]);
-        }
+    #endregion public methods
 
-        throw new \BadMethodCallException("No static method or enum constant '$name' in class " . get_called_class());
+    #region private methods
+
+    /**
+     * Check if enum class is cached
+     *
+     * @return bool
+     */
+    private static function isCached()
+    {
+        return array_key_exists(get_called_class(), static::$cache);
     }
+
+    /**
+     * Set Cache
+     *
+     * @return void
+     */
+    private static function setCache()
+    {
+        $reflection = new \ReflectionClass(get_called_class());
+        $annotations = self::getDescriptionAndCodeAnnotations();
+        $values = array(
+            'values' => $reflection->getConstants()
+        );
+        foreach ($annotations['annotations'] as $key => $value) {
+            $annotations['annotations'][$values['values'][$key]] = $annotations['annotations'][$key];
+            unset($annotations['annotations'][$key]);
+        }
+        $finalAnnotations = array_merge($values, $annotations);
+        static::$cache[get_called_class()] = $finalAnnotations;
+    }
+
+    /**
+     * Get description and code annotations
+     *
+     * @return array
+     */
+    private static function getDescriptionAndCodeAnnotations()
+    {
+        $constAnnotations = ConstAnnotationsParser::parseAndReturnAnnotations(get_called_class());
+        $enumAnnotations = array();
+        foreach ($constAnnotations as $key => $value)
+        {
+            $annotations = array();
+            if(array_key_exists('description', $value)) {
+                $annotations['description'] = $value['description'];
+            } elseif(array_key_exists('Description', $value)){
+                $annotations['description'] = $value['Description'];
+            } else {
+                $annotations['description'] = null;
+            }
+
+            if(array_key_exists('code', $value)) {
+                $annotations['code'] = $value['code'];
+            } elseif(array_key_exists('Code', $value)){
+                $annotations['code'] = $value['Code'];
+            } else {
+                $annotations['code'] = null;
+            }
+            $enumAnnotations[$key] = $annotations;
+        }
+        return array('annotations' => $enumAnnotations);
+    }
+
+    #endregion private methods
+
+    #endregion static methods
+
 }

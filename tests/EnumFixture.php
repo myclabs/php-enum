@@ -25,7 +25,15 @@ use MyCLabs\Enum\Enum;
  */
 class EnumFixture extends Enum
 {
+    /**
+     * @description('Foo description')
+     * @code("Foo code")
+     */
     const FOO = "foo";
+    /**
+     * @Description('Bar Description')
+     * @Code('Bar Code')
+     */
     const BAR = "bar";
     const NUMBER = 42;
 
