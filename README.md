@@ -124,3 +124,4 @@ class Action extends Enum
 ## Related projects
 
 - [Doctrine enum mapping](https://github.com/acelaya/doctrine-enum-type)
+- [Symfony 2/3 ParamConverter integration](https://github.com/Ex3v/MyCLabsEnumParamConverter)
