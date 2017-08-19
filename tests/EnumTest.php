@@ -202,20 +202,6 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * equals()
-     */
-    public function testEquals()
-    {
-        $foo = EnumFixture::FOO();
-        $number = EnumFixture::NUMBER();
-        $anotherFoo = EnumFixture::FOO();
-
-        $this->assertTrue($foo->equals($foo));
-        $this->assertFalse($foo->equals($number));
-        $this->assertTrue($foo->equals($anotherFoo));
-    }
-
-    /**
      * __callStatic()
      */
     public function testSameInstance()
@@ -224,29 +210,6 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $foo2 = EnumFixture::FOO();
 
         $this->assertSame($foo1, $foo2);
-    }
-
-    /**
-     * equals()
-     */
-    public function testEqualsComparesProblematicValuesProperly()
-    {
-        $false = EnumFixture::PROBLEMATIC_BOOLEAN_FALSE();
-        $emptyString = EnumFixture::PROBLEMATIC_EMPTY_STRING();
-        $null = EnumFixture::PROBLEMATIC_NULL();
-
-        $this->assertTrue($false->equals($false));
-        $this->assertFalse($false->equals($emptyString));
-        $this->assertFalse($emptyString->equals($null));
-        $this->assertFalse($null->equals($false));
-    }
-
-    /**
-     * equals()
-     */
-    public function testEqualsConflictValues()
-    {
-        $this->assertFalse(EnumFixture::FOO()->equals(EnumConflict::FOO()));
     }
 
     /**
