@@ -250,13 +250,23 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
-     * @expectedException \PHPUnit_Framework_Error_Notice
+     * __wakeup()
      */
     public function testUnserializeError()
     {
+        $triggered = false;
+        set_error_handler(function () use (&$triggered) {
+            $triggered = true;
+            return true;
+        }, E_USER_NOTICE);
+
         $ser = 'O:30:"MyCLabs\Tests\Enum\EnumFixture":2:{'
              . 's:23:"#MyCLabs\Enum\Enum#name";s:3:"FOO";'
              . 's:24:"#MyCLabs\Enum\Enum#value";s:3:"foo";}';
         $foo = unserialize(strtr($ser, "#", "\0"));
+
+        restore_error_handler();
+
+        $this->assertTrue($triggered);
     }
 }
