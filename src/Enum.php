@@ -6,6 +6,8 @@
 
 namespace MyCLabs\Enum;
 
+use BadMethodCallException;
+
 /**
  * Base Enum class
  *
@@ -18,32 +20,27 @@ namespace MyCLabs\Enum;
 abstract class Enum
 {
     /**
+     * Enum name
+     *
+     * @var string
+     */
+    private $name;
+
+    /**
      * Enum value
      *
      * @var mixed
      */
-    protected $value;
-
-    /**
-     * Store existing constants in a static cache per object.
-     *
-     * @var array
-     */
-    protected static $cache = array();
+    private $value;
 
     /**
      * Creates a new value of some type
      *
      * @param mixed $value
-     *
-     * @throws \UnexpectedValueException if incompatible type is given.
      */
-    public function __construct($value)
+    final private function __construct($name, $value)
     {
-        if (!$this->isValid($value)) {
-            throw new \UnexpectedValueException("Value '$value' is not part of the enum " . get_called_class());
-        }
-
+        $this->name = $name;
         $this->value = $value;
     }
 
@@ -62,7 +59,7 @@ abstract class Enum
      */
     public function getKey()
     {
-        return static::search($this->value);
+        return $this->name;
     }
 
     /**
@@ -74,15 +71,14 @@ abstract class Enum
     }
 
     /**
-     * Compares one Enum with another.
-     *
-     * This method is final, for more information read https://github.com/myclabs/php-enum/issues/4
-     *
-     * @return bool True if Enums are equal, false if not equal
+     * Register object in cache and trigger a notice if it already exists.
      */
-    final public function equals(Enum $enum)
+    public function __wakeup()
     {
-        return $this->getValue() === $enum->getValue() && get_called_class() == get_class($enum);
+        $enum = EnumManager::get($this);
+        if ($enum !== $this) {
+            trigger_error("Enum is already initialized", E_USER_NOTICE);
+        }
     }
 
     /**
@@ -104,8 +100,8 @@ abstract class Enum
     {
         $values = array();
 
-        foreach (static::toArray() as $key => $value) {
-            $values[$key] = new static($value);
+        foreach (static::toArray() as $name => $value) {
+            $values[$name] = EnumManager::get(new static($name, $value));
         }
 
         return $values;
@@ -118,13 +114,7 @@ abstract class Enum
      */
     public static function toArray()
     {
-        $class = get_called_class();
-        if (!array_key_exists($class, static::$cache)) {
-            $reflection            = new \ReflectionClass($class);
-            static::$cache[$class] = $reflection->getConstants();
-        }
-
-        return static::$cache[$class];
+        return EnumManager::constants(new static(null, null));
     }
 
     /**
@@ -166,21 +156,53 @@ abstract class Enum
     }
 
     /**
+     * Returns Enum by value
+     *
+     * @return static
+     */
+    public static function fromValue($value)
+    {
+        $name = static::search($value);
+        if ($name === false) {
+            return null;
+        }
+
+        return EnumManager::get(new static($name, $value));
+    }
+
+    /**
+     * Returns Enum by key
+     *
+     * @return static
+     */
+    public static function fromKey($name)
+    {
+        $array = static::toArray();
+        if (isset($array[$name]) || array_key_exists($name, $array)) {
+            return EnumManager::get(new static($name, $array[$name]));
+        }
+
+        return null;
+    }
+
+    /**
      * Returns a value when called statically like so: MyEnum::SOME_VALUE() given SOME_VALUE is a class constant
      *
      * @param string $name
      * @param array  $arguments
      *
      * @return static
-     * @throws \BadMethodCallException
+     * @throws BadMethodCallException
      */
     public static function __callStatic($name, $arguments)
     {
-        $array = static::toArray();
-        if (isset($array[$name])) {
-            return new static($array[$name]);
+        $result = static::fromKey($name);
+
+        if ($result === null) {
+            $msg = "No static method or enum constant '$name' in class " . get_called_class();
+            throw new BadMethodCallException($msg);
         }
 
-        throw new \BadMethodCallException("No static method or enum constant '$name' in class " . get_called_class());
+        return $result;
     }
 }
