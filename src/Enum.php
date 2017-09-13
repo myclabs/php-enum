@@ -189,7 +189,8 @@ abstract class Enum implements \JsonSerializable
      *
      * @return mixed
      */
-    public function jsonSerialize() {
+    public function jsonSerialize()
+    {
         return $this->value;
     }
 }
