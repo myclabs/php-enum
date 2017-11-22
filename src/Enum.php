@@ -174,8 +174,13 @@ abstract class Enum
     public static function findValue($key)
     {
         $array = static::toArray();
+        $value = null;
 
-        return (isset($array[$key])) ? $array[$key] : null;
+        if (isset($array[$key])) {
+            $value = $array[$key];
+        }
+
+        return $value;
     }
 
     /**
