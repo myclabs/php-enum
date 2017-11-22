@@ -199,6 +199,7 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         foreach ($enums as $key => $value) {
             $this->assertEquals($value, EnumFixture::findValue($key));
         }
+        $this->assertEquals(null, EnumFixture::findValue("invalidKey"));
     }
 
     /**
