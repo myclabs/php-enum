@@ -192,7 +192,7 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     /**
      * findValue($key)
      */
-   /*  public function testFindValue()
+    /* public function testFindValue()
     {
         $enums = EnumFixture::toArray();
 

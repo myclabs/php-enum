@@ -173,7 +173,9 @@ abstract class Enum
      */
     public static function findValue($key)
     {
-        return isset(static::toArray()[$key]) ? static::toArray()[$key] : null;
+        $enumArray = static::toArray();
+
+        return @$enumArray[$key] ?: null;
     }
 
     /**
