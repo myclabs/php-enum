@@ -166,6 +166,17 @@ abstract class Enum
     }
 
     /**
+     * Returns the key's value
+     *
+     * @param $key
+     * @return mixed
+     */
+    public static function findValue($key)
+    {
+        return isset(static::toArray()[$key]) ? static::toArray()[$key] : null;
+    }
+
+    /**
      * Returns a value when called statically like so: MyEnum::SOME_VALUE() given SOME_VALUE is a class constant
      *
      * @param string $name

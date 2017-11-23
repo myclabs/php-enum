@@ -190,6 +190,19 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * findValue($key)
+     */
+    public function testFindValue()
+    {
+        $enums = EnumFixture::toArray();
+
+        foreach ($enums as $key => $value) {
+            $this->assertEquals($value, EnumFixture::findValue($key));
+        }
+        $this->assertEquals(null, EnumFixture::findValue("invalidKey"));
+    }
+
+    /**
      * search()
      * @see https://github.com/myclabs/php-enum/issues/13
      * @dataProvider searchProvider
