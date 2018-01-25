@@ -166,6 +166,27 @@ abstract class Enum
     }
 
     /**
+     * Create a new value of the Enum class by the key of the constants.
+     *
+     * @param string $key
+     *
+     * @return static
+     * @throws \UnexpectedValueException if incompatible key is given.
+     */
+    public static function key($key)
+    {
+        $class = get_called_class();
+        try {
+            $reflection = new \ReflectionClass($class);
+            $value      = $reflection->getConstant($key);
+
+            return new static($value);
+        } catch (\ReflectionException $e) {
+            throw new \UnexpectedValueException("Key '$key' is not part of the enum " . $class);
+        }
+    }
+
+    /**
      * Returns a value when called statically like so: MyEnum::SOME_VALUE() given SOME_VALUE is a class constant
      *
      * @param string $name
