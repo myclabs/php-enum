@@ -247,4 +247,15 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     {
         $this->assertFalse(EnumFixture::FOO()->equals(EnumConflict::FOO()));
     }
+
+    /**
+     * equals()
+     */
+    public function testByKey()
+    {
+        $expected = new EnumFixture(EnumFixture::FOO);
+        $false = new EnumFixture(EnumFixture::BAR);
+        $this->assertTrue($expected->equals(EnumFixture::key("FOO")));
+        $this->assertFalse($false->equals(EnumFixture::key("FOO")));
+    }
 }
