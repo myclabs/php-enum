@@ -247,4 +247,21 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     {
         $this->assertFalse(EnumFixture::FOO()->equals(EnumConflict::FOO()));
     }
+
+    /**
+     * json_encode normally returns the Enum object itself,
+     * but it should return the value of the enum instead
+     */
+    public function testJsonEncode()
+    {
+        $foo = new EnumFixture(EnumFixture::FOO);
+
+        $object = (object)[
+            'myFoo' => $foo
+        ];
+
+        $json = json_encode($object);
+
+        $this->assertEquals($json, '{"myFoo":"foo"}');
+    }
 }
