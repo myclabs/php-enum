@@ -40,7 +40,7 @@ class EnumTest extends \PHPUnit\Framework\TestCase
 
     /**
      * @dataProvider invalidValueProvider
-     * @expectedException UnexpectedValueException
+     * @expectedException \UnexpectedValueException
      * @expectedExceptionMessage is not part of the enum MyCLabs\Tests\Enum\EnumFixture
      */
     public function testCreatingEnumWithInvalidValue($value)
@@ -246,5 +246,19 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     public function testEqualsConflictValues()
     {
         $this->assertFalse(EnumFixture::FOO()->equals(EnumConflict::FOO()));
+    }
+
+    /**
+     * jsonSerialize()
+     */
+    public function testJsonSerialize()
+    {
+        $this->assertJsonStringEqualsJsonString('"foo"', json_encode(new EnumFixture(EnumFixture::FOO)));
+        $this->assertJsonStringEqualsJsonString('"bar"', json_encode(new EnumFixture(EnumFixture::BAR)));
+        $this->assertJsonStringEqualsJsonString('42',    json_encode(new EnumFixture(EnumFixture::NUMBER)));
+        $this->assertJsonStringEqualsJsonString('0',     json_encode(new EnumFixture(EnumFixture::PROBLEMATIC_NUMBER)));
+        $this->assertJsonStringEqualsJsonString('null',  json_encode(new EnumFixture(EnumFixture::PROBLEMATIC_NULL)));
+        $this->assertJsonStringEqualsJsonString('""',    json_encode(new EnumFixture(EnumFixture::PROBLEMATIC_EMPTY_STRING)));
+        $this->assertJsonStringEqualsJsonString('false', json_encode(new EnumFixture(EnumFixture::PROBLEMATIC_BOOLEAN_FALSE)));
     }
 }
