@@ -15,7 +15,7 @@ namespace MyCLabs\Enum;
  * @author Daniel Costa <danielcosta@gmail.com>
  * @author Mirosław Filip <mirfilip@gmail.com>
  */
-abstract class Enum
+abstract class Enum implements \JsonSerializable
 {
     /**
      * Enum value
@@ -182,5 +182,17 @@ abstract class Enum
         }
 
         throw new \BadMethodCallException("No static method or enum constant '$name' in class " . get_called_class());
+    }
+
+    /**
+     * Specify data which should be serialized to JSON. This method returns data that can be serialized by json_encode()
+     * natively.
+     *
+     * @return mixed
+     * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     */
+    public function jsonSerialize()
+    {
+        return $this->getValue();
     }
 }
