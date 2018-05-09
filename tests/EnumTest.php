@@ -223,6 +223,7 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $this->assertTrue($foo->equals($foo));
         $this->assertFalse($foo->equals($number));
         $this->assertTrue($foo->equals($anotherFoo));
+        $this->assertFalse($foo->equals(null));
     }
 
     /**

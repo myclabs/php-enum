@@ -80,9 +80,9 @@ abstract class Enum implements \JsonSerializable
      *
      * @return bool True if Enums are equal, false if not equal
      */
-    final public function equals(Enum $enum)
+    final public function equals(Enum $enum = null)
     {
-        return $this->getValue() === $enum->getValue() && get_called_class() == get_class($enum);
+        return $enum !== null && $this->getValue() === $enum->getValue() && get_called_class() == get_class($enum);
     }
 
     /**
