@@ -178,7 +178,7 @@ abstract class Enum implements \JsonSerializable
     {
         $array = static::toArray();
         if (isset($array[$name])) {
-            $self = new \ReflectionClass(static::class);
+            $self = new \ReflectionClass(get_called_class());
             $arguments = array_merge([$array[$name]], $arguments);
 
             return $self->newInstanceArgs($arguments);
