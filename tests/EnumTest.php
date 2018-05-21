@@ -249,6 +249,15 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse(EnumFixture::FOO()->equals(EnumConflict::FOO()));
     }
 
+    public function testEnumWithMultipleArguments()
+    {
+        $foo = new EnumEnhanced(EnumEnhanced::FOO, 'hello, world!');
+        $this->assertEquals($foo->getDescription(), 'hello, world!');
+
+        $bar = EnumEnhanced::BAR('foo, bar, baz!');
+        $this->assertEquals($bar->getDescription(), 'foo, bar, baz!');
+    }
+
     /**
      * jsonSerialize()
      */

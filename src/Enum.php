@@ -178,7 +178,10 @@ abstract class Enum implements \JsonSerializable
     {
         $array = static::toArray();
         if (isset($array[$name])) {
-            return new static($array[$name]);
+            $self = new \ReflectionClass(static::class);
+            $arguments = array_merge([$array[$name]], $arguments);
+
+            return $self->newInstanceArgs($arguments);
         }
 
         throw new \BadMethodCallException("No static method or enum constant '$name' in class " . get_called_class());
