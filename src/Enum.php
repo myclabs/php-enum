@@ -50,6 +50,8 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
+     * Returns the enum value (i.e. the constant value).
+     *
      * @return mixed
      */
     public function getValue()
@@ -130,7 +132,7 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
-     * Check if is valid enum value
+     * Takes a possible enum value and checks if that value would result in a valid enum
      *
      * @param mixed $value
      *
@@ -142,7 +144,7 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
-     * Check if is valid enum key
+     * Takes a possible enum key (i.e. constant name) and checks if it's valid
      *
      * @param mixed $key
      *
