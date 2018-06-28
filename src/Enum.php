@@ -62,9 +62,9 @@ abstract class Enum implements \JsonSerializable
     /**
      * Returns the enum key (i.e. the constant name).
      *
-     * @return mixed
+     * @return string
      */
-    public function getKey()
+    public function getKey(): string
     {
         return static::search($this->value);
     }
@@ -146,11 +146,11 @@ abstract class Enum implements \JsonSerializable
     /**
      * Takes a possible enum key (i.e. constant name) and checks if it's valid
      *
-     * @param mixed $key
+     * @param string $key
      *
      * @return bool
      */
-    public static function isValidKey($key): bool
+    public static function isValidKey(string $key): bool
     {
         $array = static::toArray();
 
@@ -162,7 +162,7 @@ abstract class Enum implements \JsonSerializable
      *
      * @param mixed $value
      *
-     * @return mixed
+     * @return false|int|string
      */
     public static function search($value)
     {
@@ -178,7 +178,7 @@ abstract class Enum implements \JsonSerializable
      * @return static
      * @throws \BadMethodCallException
      */
-    public static function __callStatic($name, $arguments): self
+    public static function __callStatic(string $name, array $arguments): self
     {
         $array = static::toArray();
         if (isset($array[$name])) {
