@@ -86,7 +86,7 @@ abstract class Enum implements \JsonSerializable
      */
     final public function equals(Enum $enum = null): bool
     {
-        return $enum !== null && $this->getValue() === $enum->getValue() && static::class === get_class($enum);
+        return $enum !== null && $this->getValue() === $enum->getValue() && static::class === \get_class($enum);
     }
 
     /**
@@ -96,7 +96,7 @@ abstract class Enum implements \JsonSerializable
      */
     public static function keys(): array
     {
-        return array_keys(static::toArray());
+        return \array_keys(static::toArray());
     }
 
     /**
@@ -123,7 +123,7 @@ abstract class Enum implements \JsonSerializable
     public static function toArray(): array
     {
         $class = static::class;
-        if (!array_key_exists($class, static::$cache)) {
+        if (!\array_key_exists($class, static::$cache)) {
             $reflection            = new \ReflectionClass($class);
             static::$cache[$class] = $reflection->getConstants();
         }
@@ -140,7 +140,7 @@ abstract class Enum implements \JsonSerializable
      */
     public static function isValid($value): bool
     {
-        return in_array($value, static::toArray(), true);
+        return \in_array($value, static::toArray(), true);
     }
 
     /**
@@ -166,7 +166,7 @@ abstract class Enum implements \JsonSerializable
      */
     public static function search($value)
     {
-        return array_search($value, static::toArray(), true);
+        return \array_search($value, static::toArray(), true);
     }
 
     /**
