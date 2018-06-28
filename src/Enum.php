@@ -4,6 +4,8 @@
  * @license http://www.opensource.org/licenses/mit-license.php MIT (see the LICENSE file)
  */
 
+declare(strict_types=1);
+
 namespace MyCLabs\Enum;
 
 /**
