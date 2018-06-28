@@ -262,4 +262,19 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $this->assertJsonStringEqualsJsonString('""',    json_encode(new EnumFixture(EnumFixture::PROBLEMATIC_EMPTY_STRING)));
         $this->assertJsonStringEqualsJsonString('false', json_encode(new EnumFixture(EnumFixture::PROBLEMATIC_BOOLEAN_FALSE)));
     }
+
+    public function testConstantVisibilityDoesNotMatterForCreation()
+    {
+        $foo = EnumVisibility::FOO();
+        $this->assertEquals('foo', $foo->getValue());
+
+        $bar = EnumVisibility::BAR();
+        $this->assertEquals('bar', $bar->getValue());
+
+        $baz = EnumVisibility::BAZ();
+        $this->assertEquals('baz', $baz->getValue());
+
+        $buz = EnumVisibility::BUZ();
+        $this->assertEquals('buz', $buz->getValue());
+    }
 }
