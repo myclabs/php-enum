@@ -70,7 +70,7 @@ abstract class Enum implements \JsonSerializable
     /**
      * @return string
      */
-    public function __toString()
+    public function __toString(): string
     {
         return (string)$this->value;
     }
@@ -82,7 +82,7 @@ abstract class Enum implements \JsonSerializable
      *
      * @return bool True if Enums are equal, false if not equal
      */
-    final public function equals(Enum $enum = null)
+    final public function equals(Enum $enum = null): bool
     {
         return $enum !== null && $this->getValue() === $enum->getValue() && get_called_class() == get_class($enum);
     }
@@ -92,7 +92,7 @@ abstract class Enum implements \JsonSerializable
      *
      * @return array
      */
-    public static function keys()
+    public static function keys(): array
     {
         return array_keys(static::toArray());
     }
@@ -102,7 +102,7 @@ abstract class Enum implements \JsonSerializable
      *
      * @return static[] Constant name in key, Enum instance in value
      */
-    public static function values()
+    public static function values(): array
     {
         $values = array();
 
@@ -118,7 +118,7 @@ abstract class Enum implements \JsonSerializable
      *
      * @return array Constant name in key, constant value in value
      */
-    public static function toArray()
+    public static function toArray(): array
     {
         $class = get_called_class();
         if (!array_key_exists($class, static::$cache)) {
@@ -132,11 +132,11 @@ abstract class Enum implements \JsonSerializable
     /**
      * Check if is valid enum value
      *
-     * @param $value
+     * @param mixed $value
      *
      * @return bool
      */
-    public static function isValid($value)
+    public static function isValid($value): bool
     {
         return in_array($value, static::toArray(), true);
     }
@@ -144,11 +144,11 @@ abstract class Enum implements \JsonSerializable
     /**
      * Check if is valid enum key
      *
-     * @param $key
+     * @param mixed $key
      *
      * @return bool
      */
-    public static function isValidKey($key)
+    public static function isValidKey($key): bool
     {
         $array = static::toArray();
 
@@ -158,7 +158,7 @@ abstract class Enum implements \JsonSerializable
     /**
      * Return key for value
      *
-     * @param $value
+     * @param mixed $value
      *
      * @return mixed
      */
@@ -176,7 +176,7 @@ abstract class Enum implements \JsonSerializable
      * @return static
      * @throws \BadMethodCallException
      */
-    public static function __callStatic($name, $arguments)
+    public static function __callStatic($name, $arguments): self
     {
         $array = static::toArray();
         if (isset($array[$name])) {
