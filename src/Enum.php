@@ -119,7 +119,7 @@ abstract class Enum implements \JsonSerializable
     public static function toArray()
     {
         $class = \get_called_class();
-        if (!\array_key_exists($class, static::$cache)) {
+        if (!isset(static::$cache[$class])) {
             $reflection            = new \ReflectionClass($class);
             static::$cache[$class] = $reflection->getConstants();
         }
