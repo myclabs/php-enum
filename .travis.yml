@@ -17,7 +17,7 @@ cache:
     - $HOME/.composer/cache
 
 before_script:
-  - composer install -n
+  - travis_retry composer install -n
 
 script:
   - vendor/bin/phpunit
