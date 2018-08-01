@@ -41,7 +41,7 @@ abstract class Enum implements \JsonSerializable
     public function __construct($value)
     {
         if (!$this->isValid($value)) {
-            throw new \UnexpectedValueException("Value '$value' is not part of the enum " . get_called_class());
+            throw new \UnexpectedValueException("Value '$value' is not part of the enum " . \get_called_class());
         }
 
         $this->value = $value;
@@ -82,7 +82,7 @@ abstract class Enum implements \JsonSerializable
      */
     final public function equals(Enum $enum = null)
     {
-        return $enum !== null && $this->getValue() === $enum->getValue() && get_called_class() == get_class($enum);
+        return $enum !== null && $this->getValue() === $enum->getValue() && \get_called_class() === \get_class($enum);
     }
 
     /**
@@ -92,7 +92,7 @@ abstract class Enum implements \JsonSerializable
      */
     public static function keys()
     {
-        return array_keys(static::toArray());
+        return \array_keys(static::toArray());
     }
 
     /**
@@ -118,8 +118,8 @@ abstract class Enum implements \JsonSerializable
      */
     public static function toArray()
     {
-        $class = get_called_class();
-        if (!array_key_exists($class, static::$cache)) {
+        $class = \get_called_class();
+        if (!isset(static::$cache[$class])) {
             $reflection            = new \ReflectionClass($class);
             static::$cache[$class] = $reflection->getConstants();
         }
@@ -136,7 +136,7 @@ abstract class Enum implements \JsonSerializable
      */
     public static function isValid($value)
     {
-        return in_array($value, static::toArray(), true);
+        return \in_array($value, static::toArray(), true);
     }
 
     /**
@@ -162,7 +162,7 @@ abstract class Enum implements \JsonSerializable
      */
     public static function search($value)
     {
-        return array_search($value, static::toArray(), true);
+        return \array_search($value, static::toArray(), true);
     }
 
     /**
@@ -181,7 +181,7 @@ abstract class Enum implements \JsonSerializable
             return new static($array[$name]);
         }
 
-        throw new \BadMethodCallException("No static method or enum constant '$name' in class " . get_called_class());
+        throw new \BadMethodCallException("No static method or enum constant '$name' in class " . \get_called_class());
     }
 
     /**
