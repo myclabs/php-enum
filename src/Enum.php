@@ -110,6 +110,13 @@ abstract class Enum implements \JsonSerializable
 
         return $values;
     }
+    
+    /** Returns only the values of the constants
+     * @return array
+     */
+    public static function getValues(){
+        return \array_values(static::toArray());
+    }
 
     /**
      * Returns all possible values as an array
