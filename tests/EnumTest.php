@@ -262,4 +262,11 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $this->assertJsonStringEqualsJsonString('""',    json_encode(new EnumFixture(EnumFixture::PROBLEMATIC_EMPTY_STRING)));
         $this->assertJsonStringEqualsJsonString('false', json_encode(new EnumFixture(EnumFixture::PROBLEMATIC_BOOLEAN_FALSE)));
     }
+
+    public function testNullableEnum()
+    {
+        $this->assertNull(EnumFixture::PROBLEMATIC_NULL()->getValue());
+        $this->assertNull((new EnumFixture(EnumFixture::PROBLEMATIC_NULL))->getValue());
+        $this->assertNull((new EnumFixture(EnumFixture::PROBLEMATIC_NULL))->jsonSerialize());
+    }
 }
