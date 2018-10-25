@@ -269,4 +269,10 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $this->assertNull((new EnumFixture(EnumFixture::PROBLEMATIC_NULL))->getValue());
         $this->assertNull((new EnumFixture(EnumFixture::PROBLEMATIC_NULL))->jsonSerialize());
     }
+
+    public function testBooleanEnum()
+    {
+        $this->assertFalse(EnumFixture::PROBLEMATIC_BOOLEAN_FALSE()->getValue());
+        $this->assertFalse((new EnumFixture(EnumFixture::PROBLEMATIC_BOOLEAN_FALSE))->jsonSerialize());
+    }
 }
