@@ -177,7 +177,7 @@ abstract class Enum implements \JsonSerializable
     public static function __callStatic($name, $arguments)
     {
         $array = static::toArray();
-        if (isset($array[$name])) {
+        if (isset($array[$name]) || \array_key_exists($name, $array)) {
             return new static($array[$name]);
         }
 
