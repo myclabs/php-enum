@@ -52,7 +52,8 @@ class EnumTest extends \PHPUnit\Framework\TestCase
      * Contains values not existing in EnumFixture
      * @return array
      */
-    public function invalidValueProvider() {
+    public function invalidValueProvider()
+    {
         return array(
             "string" => array('test'),
             "int" => array(1234),
@@ -68,7 +69,8 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, (string) $enumObject);
     }
 
-    public function toStringProvider() {
+    public function toStringProvider()
+    {
         return array(
             array(EnumFixture::FOO, new EnumFixture(EnumFixture::FOO)),
             array(EnumFixture::BAR, new EnumFixture(EnumFixture::BAR)),
@@ -162,7 +164,8 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($isValid, EnumFixture::isValid($value));
     }
 
-    public function isValidProvider() {
+    public function isValidProvider()
+    {
         return array(
             /**
              * Valid values
@@ -177,7 +180,7 @@ class EnumTest extends \PHPUnit\Framework\TestCase
              * Invalid values
              */
             array('baz', false)
-    );
+        );
     }
 
     /**
@@ -199,7 +202,8 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $this->assertSame($expected, EnumFixture::search($value));
     }
 
-    public function searchProvider() {
+    public function searchProvider()
+    {
         return array(
             array('foo', 'FOO'),
             array(0, 'PROBLEMATIC_NUMBER'),
