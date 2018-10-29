@@ -7,6 +7,7 @@ php:
   - 7.0
   - 7.1
   - 7.2
+  - 7.3
   - nightly
 
 matrix:
@@ -17,11 +18,12 @@ cache:
     - $HOME/.composer/cache
 
 before_script:
-  - travis_retry composer install -n
+  - travis_retry composer self-update
+  - travis_retry composer install --no-interaction --prefer-source
 
 script:
-  - vendor/bin/phpunit
-  - vendor/bin/phpcs --standard=PSR2 ./src/
+  - ./vendor/bin/phpcs --standard=PSR2 ./src ./tests
+  - ./vendor/bin/phpunit
 
 # Use Travis' new container-based infrastructure.
 # See http://docs.travis-ci.com/user/migrating-from-legacy/#How-can-I-use-container-based-infrastructure%3F
