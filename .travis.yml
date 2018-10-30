@@ -7,6 +7,7 @@ php:
   - 7.0
   - 7.1
   - 7.2
+  - 7.3
   - nightly
 
 matrix:
@@ -21,7 +22,6 @@ before_script:
 
 script:
   - vendor/bin/phpunit
-  - vendor/bin/phpcs --standard=PSR2 ./src/
 
 # Use Travis' new container-based infrastructure.
 # See http://docs.travis-ci.com/user/migrating-from-legacy/#How-can-I-use-container-based-infrastructure%3F
