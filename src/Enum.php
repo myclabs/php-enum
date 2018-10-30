@@ -150,7 +150,7 @@ abstract class Enum implements \JsonSerializable
     {
         $array = static::toArray();
 
-        return isset($array[$key]);
+        return isset($array[$key]) || \array_key_exists($key, $array);
     }
 
     /**

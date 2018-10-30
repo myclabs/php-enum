@@ -190,6 +190,7 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     {
         $this->assertTrue(EnumFixture::isValidKey('FOO'));
         $this->assertFalse(EnumFixture::isValidKey('BAZ'));
+        $this->assertTrue(EnumFixture::isValidKey('PROBLEMATIC_NULL'));
     }
 
     /**
