@@ -166,21 +166,21 @@ class EnumTest extends \PHPUnit\Framework\TestCase
 
     public function isValidProvider()
     {
-        return array(
+        return [
             /**
              * Valid values
              */
-            array('foo', true),
-            array(42, true),
-            array(null, true),
-            array(0, true),
-            array('', true),
-            array(false, true),
+            ['foo', true],
+            [42, true],
+            [null, true],
+            [0, true],
+            ['', true],
+            [false, true],
             /**
              * Invalid values
              */
-            array('baz', false)
-        );
+            ['baz', false]
+        ];
     }
 
     /**
