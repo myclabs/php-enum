@@ -29,7 +29,7 @@ abstract class Enum implements \JsonSerializable
      *
      * @var array
      */
-    protected static $cache = array();
+    protected static $cache = [];
 
     /**
      * Creates a new value of some type
