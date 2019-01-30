@@ -22,7 +22,8 @@
         }
     },
     "require": {
-        "php": ">=5.4"
+        "php": ">=5.4",
+        "ext-json": "*"
     },
     "require-dev": {
         "phpunit/phpunit": "^4.8.35|^5.7|^6.0",
