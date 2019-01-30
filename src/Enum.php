@@ -40,6 +40,12 @@ abstract class Enum implements \JsonSerializable
      */
     public function __construct($value)
     {
+        if ($value instanceof static) {
+            $this->value = $value->getValue();
+
+            return;
+        }
+
         if (!$this->isValid($value)) {
             throw new \UnexpectedValueException("Value '$value' is not part of the enum " . \get_called_class());
         }
