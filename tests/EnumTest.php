@@ -281,6 +281,15 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $this->assertFalse((new EnumFixture(EnumFixture::PROBLEMATIC_BOOLEAN_FALSE))->jsonSerialize());
     }
 
+    public function testConstructWithSameEnumArgument()
+    {
+        $enum = new EnumFixture(EnumFixture::FOO);
+
+        $enveloped = new EnumFixture($enum);
+
+        $this->assertEquals($enum, $enveloped);
+    }
+
     private function assertJsonEqualsJson($json1, $json2)
     {
         $this->assertJsonStringEqualsJsonString($json1, $json2);
