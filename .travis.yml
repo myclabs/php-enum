@@ -1,26 +1,27 @@
 language: php
 
 php:
-  - 5.3
   - 5.4
   - 5.5
   - 5.6
   - 7.0
   - 7.1
-  - hhvm
+  - 7.2
+  - 7.3
+
+matrix:
+  fast_finish: true
+
+cache:
+  directories:
+    - $HOME/.composer/cache
 
 before_script:
-  - composer install --no-interaction
+  - travis_retry composer install -n
 
 script:
-  - vendor/bin/phpunit --coverage-clover=coverage.clover
-  - vendor/bin/phpcs --standard=PSR2 ./src/
-
-after_script:
-    - wget https://scrutinizer-ci.com/ocular.phar
-    - php ocular.phar code-coverage:upload --format=php-clover coverage.clover
+  - vendor/bin/phpunit
 
 # Use Travis' new container-based infrastructure.
 # See http://docs.travis-ci.com/user/migrating-from-legacy/#How-can-I-use-container-based-infrastructure%3F
 sudo: false
-

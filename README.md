@@ -33,11 +33,12 @@ use MyCLabs\Enum\Enum;
  */
 class Action extends Enum
 {
-    const VIEW = 'view';
-    const EDIT = 'edit';
+    private const VIEW = 'view';
+    private const EDIT = 'edit';
 }
 ```
 
+Note the `private` keyword requires PHP 7.1 or higher, you can omit it on PHP 7.0.
 
 ## Usage
 
@@ -80,8 +81,8 @@ Static methods:
 ```php
 class Action extends Enum
 {
-    const VIEW = 'view';
-    const EDIT = 'edit';
+    private const VIEW = 'view';
+    private const EDIT = 'edit';
 }
 
 // Static method:
@@ -96,7 +97,7 @@ If you care about IDE autocompletion, you can either implement the static method
 ```php
 class Action extends Enum
 {
-    const VIEW = 'view';
+    private const VIEW = 'view';
 
     /**
      * @return Action
@@ -116,11 +117,12 @@ or you can use phpdoc (this is supported in PhpStorm for example):
  */
 class Action extends Enum
 {
-    const VIEW = 'view';
-    const EDIT = 'edit';
+    private const VIEW = 'view';
+    private const EDIT = 'edit';
 }
 ```
 
 ## Related projects
 
 - [Doctrine enum mapping](https://github.com/acelaya/doctrine-enum-type)
+- [Symfony 2/3 ParamConverter integration](https://github.com/Ex3v/MyCLabsEnumParamConverter)
