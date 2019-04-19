@@ -297,19 +297,21 @@ class EnumTest extends \PHPUnit\Framework\TestCase
 
     public function testSerialize()
     {
-        $this->assertEquals(
-            '4f3a33303a224d79434c6162735c54657374735c456e756d5c456e756d46697874757265223a313a7b733a383a22002a0076616c7565223b733a333a22666f6f223b7d',
-            bin2hex(serialize(EnumFixture::FOO()))
-        );
+        // split string for Pretty CI: "Line exceeds 120 characters"
+        $bin = '4f3a33303a224d79434c6162735c54657374735c456e756d5c456e756d4669787'.
+            '4757265223a313a7b733a383a22002a0076616c7565223b733a333a22666f6f223b7d';
+
+        $this->assertEquals($bin, bin2hex(serialize(EnumFixture::FOO())));
     }
 
     public function testUnserialize()
     {
+        // split string for Pretty CI: "Line exceeds 120 characters"
+        $bin = '4f3a33303a224d79434c6162735c54657374735c456e756d5c456e756d4669787'.
+            '4757265223a313a7b733a383a22002a0076616c7565223b733a333a22666f6f223b7d';
+
         /* @var $value EnumFixture */
-        $value = unserialize(pack(
-            'H*',
-            '4f3a33303a224d79434c6162735c54657374735c456e756d5c456e756d46697874757265223a313a7b733a383a22002a0076616c7565223b733a333a22666f6f223b7d'
-        ));
+        $value = unserialize(pack('H*', $bin));
 
         $this->assertEquals(EnumFixture::FOO, $value->getValue());
         $this->assertTrue(EnumFixture::FOO()->equals($value));
