@@ -224,11 +224,15 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $foo = new EnumFixture(EnumFixture::FOO);
         $number = new EnumFixture(EnumFixture::NUMBER);
         $anotherFoo = new EnumFixture(EnumFixture::FOO);
+        $objectOfDifferentClass = new \stdClass();
+        $notAnObject = 'foo';
 
         $this->assertTrue($foo->equals($foo));
         $this->assertFalse($foo->equals($number));
         $this->assertTrue($foo->equals($anotherFoo));
         $this->assertFalse($foo->equals(null));
+        $this->assertFalse($foo->equals($objectOfDifferentClass));
+        $this->assertFalse($foo->equals($notAnObject));
     }
 
     /**
