@@ -87,7 +87,7 @@ abstract class Enum implements \JsonSerializable
      *
      * @return bool
      */
-    final public function equals($variable = null)
+    final public function equals($variable = null): bool
     {
         return $variable instanceof self
             && $this->getValue() === $variable->getValue()

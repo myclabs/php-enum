@@ -38,8 +38,6 @@ class Action extends Enum
 }
 ```
 
-Note the `private` keyword requires PHP 7.1 or higher, you can omit it on PHP 7.0.
-
 ## Usage
 
 ```php
