@@ -6,7 +6,7 @@
 
 ## Why?
 
-First, and mainly, `SplEnum` is not integrated to PHP, you have to install it separately.
+First, and mainly, `SplEnum` is not integrated to PHP, you have to install the extension separately.
 
 Using an enum instead of class constants provides the following advantages:
 
