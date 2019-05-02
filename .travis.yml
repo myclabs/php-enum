@@ -1,13 +1,8 @@
 language: php
 
 php:
-  - 5.4
-  - 5.5
-  - 5.6
-  - 7.0
-  - 7.1
   - 7.2
-  - nightly
+  - 7.3
 
 matrix:
   fast_finish: true
@@ -17,11 +12,10 @@ cache:
     - $HOME/.composer/cache
 
 before_script:
-  - composer install -n
+  - travis_retry composer install -n
 
 script:
   - vendor/bin/phpunit
-  - vendor/bin/phpcs --standard=PSR2 ./src/
 
 # Use Travis' new container-based infrastructure.
 # See http://docs.travis-ci.com/user/migrating-from-legacy/#How-can-I-use-container-based-infrastructure%3F

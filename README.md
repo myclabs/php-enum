@@ -6,7 +6,7 @@
 
 ## Why?
 
-First, and mainly, `SplEnum` is not integrated to PHP, you have to install it separately.
+First, and mainly, `SplEnum` is not integrated to PHP, you have to install the extension separately.
 
 Using an enum instead of class constants provides the following advantages:
 
@@ -37,8 +37,6 @@ class Action extends Enum
     private const EDIT = 'edit';
 }
 ```
-
-Note the `private` keyword requires PHP > 7.1, you can omit it on PHP 7.0.
 
 ## Usage
 
@@ -125,4 +123,5 @@ class Action extends Enum
 ## Related projects
 
 - [Doctrine enum mapping](https://github.com/acelaya/doctrine-enum-type)
-- [Symfony 2/3 ParamConverter integration](https://github.com/Ex3v/MyCLabsEnumParamConverter)
+- [Symfony ParamConverter integration](https://github.com/Ex3v/MyCLabsEnumParamConverter)
+- [PHPStan integration](https://github.com/timeweb/phpstan-enum)
