@@ -24,6 +24,8 @@ final class Comparator extends \SebastianBergmann\Comparator\Comparator
     /**
      * @param Enum $expected
      * @param Enum|null $actual
+     *
+     * @return void
      */
     public function assertEquals($expected, $actual, $delta = 0.0, $canonicalize = false, $ignoreCase = false)
     {
