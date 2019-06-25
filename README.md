@@ -73,6 +73,7 @@ Static methods:
 - `isValid()` Check if tested value is valid on enum set
 - `isValidKey()` Check if tested key is valid on enum set
 - `search()` Return key for searched value
+- `valueOf()` Return Enum for searched key
 
 ### Static methods
 

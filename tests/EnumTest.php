@@ -217,6 +217,37 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * valueOf()
+     * @dataProvider valueOfProvider
+     */
+    public function testValueOf($key, $expected)
+    {
+        $this->assertTrue(EnumFixture::valueOf($key)->equals($expected));
+    }
+
+    public function valueOfProvider()
+    {
+        return array(
+            array('FOO', new EnumFixture('foo')),
+            array('BAR', new EnumFixture('bar')),
+            array('NUMBER', new EnumFixture(42)),
+            array('PROBLEMATIC_NUMBER', new EnumFixture(0)),
+            array('PROBLEMATIC_NULL', new EnumFixture(null)),
+            array('PROBLEMATIC_EMPTY_STRING', new EnumFixture('')),
+            array('PROBLEMATIC_BOOLEAN_FALSE', new EnumFixture(false)),
+        );
+    }
+
+    /**
+     * @expectedException \InvalidArgumentException
+     * @expectedExceptionMessage No enum constant 'NONEXISTENT_KEY' in class MyCLabs\Tests\Enum\EnumFixture
+     */
+    public function testValueOfWithInvalidKey()
+    {
+        EnumFixture::valueOf('NONEXISTENT_KEY');
+    }
+
+    /**
      * equals()
      */
     public function testEquals()

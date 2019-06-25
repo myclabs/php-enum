@@ -175,6 +175,25 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
+     * Return value for key
+     *
+     * @param $key
+     *
+     * @return mixed
+     * @throws \InvalidArgumentException
+     */
+    public static function valueOf($key)
+    {
+        if (!self::isValidKey($key)) {
+            throw new \InvalidArgumentException("No enum constant '$key' in class " . \get_called_class());
+        }
+        $array = static::toArray();
+        $value = $array[$key];
+
+        return new static($value);
+    }
+
+    /**
      * Returns a value when called statically like so: MyEnum::SOME_VALUE() given SOME_VALUE is a class constant
      *
      * @param string $name
