@@ -41,10 +41,12 @@ class Action extends Enum
 ## Usage
 
 ```php
-$action = new Action(Action::VIEW);
-
-// or
 $action = Action::VIEW();
+
+// or with a dynamic key:
+$action = Action::$key();
+// or with a dynamic value:
+$action = new Action($value);
 ```
 
 As you can see, static methods are automatically implemented to provide quick access to an enum value.
