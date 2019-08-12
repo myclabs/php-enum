@@ -41,9 +41,7 @@ abstract class Enum implements \JsonSerializable
     public function __construct($value)
     {
         if ($value instanceof static) {
-            $this->value = $value->getValue();
-
-            return;
+            $value = $value->getValue();
         }
 
         if (!$this->isValid($value)) {
