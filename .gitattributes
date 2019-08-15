@@ -1,6 +1,9 @@
 # Auto detect text files and perform LF normalization
 * text=auto
 
+.gitattributes export-ignore
+.github export-ignore
+.gitignore export-ignore
+.travis.yml export-ignore
 tests/ export-ignore
 phpunit.xml export-ignore
-.travis.yml export-ignore
