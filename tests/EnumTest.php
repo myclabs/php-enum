@@ -320,4 +320,15 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(EnumFixture::FOO, $value->getValue());
         $this->assertTrue(EnumFixture::FOO()->equals($value));
     }
+
+    /**
+     * @see https://github.com/myclabs/php-enum/issues/95
+     */
+    public function testEnumValuesInheritance()
+    {
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage("Value 'value' is not part of the enum MyCLabs\Tests\Enum\EnumFixture");
+        $inheritedEnumFixture = InheritedEnumFixture::VALUE();
+        new EnumFixture($inheritedEnumFixture);
+    }
 }
