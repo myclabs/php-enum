@@ -64,9 +64,18 @@ class EnumTest extends \PHPUnit\Framework\TestCase
      * __toString()
      * @dataProvider toStringProvider
      */
-    public function testToString($expected, $enumObject)
+    public function testMagicToString($expected, $enumObject)
     {
         $this->assertSame($expected, (string) $enumObject);
+    }
+
+    /**
+     * toString()
+     * @dataProvider toStringProvider
+     */
+    public function testToString($expected, $enumObject)
+    {
+        $this->assertSame($expected, $enumObject->toString());
     }
 
     public function toStringProvider()

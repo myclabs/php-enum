@@ -74,6 +74,14 @@ abstract class Enum implements \JsonSerializable
      */
     public function __toString()
     {
+        return $this->toString();
+    }
+
+    /**
+     * @return string
+     */
+    public function toString()
+    {
         return (string)$this->value;
     }
 
