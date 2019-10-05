@@ -70,6 +70,16 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
+     * Returns a title cased label based on the instance bound key name
+     *
+     * return @string
+     */
+    public function getLabel()
+    {
+        return static::keyToTitleCase($this->getKey());
+    }
+
+    /**
      * @return string
      */
     public function __toString()
@@ -173,6 +183,18 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
+     * Returns a title cased label based on a key
+     *
+     * @param mixed $value
+     *
+     * @return string
+     */
+    public static function getLabelForValue($value)
+    {
+        return static::keyToTitleCase(static::search($value));
+    }
+
+    /**
      * Returns a value when called statically like so: MyEnum::SOME_VALUE() given SOME_VALUE is a class constant
      *
      * @param string $name
@@ -189,6 +211,22 @@ abstract class Enum implements \JsonSerializable
         }
 
         throw new \BadMethodCallException("No static method or enum constant '$name' in class " . \get_called_class());
+    }
+
+    /**
+     * Returns a title cased representation of a key
+     *
+     * @param string $key
+     *
+     * @return string
+     */
+    private static function keyToTitleCase($key)
+    {
+        $key_parts = explode('_', $key);
+
+        return implode(' ', array_map(function ($key) {
+            return ucfirst(strtolower($key));
+        }, $key_parts));
     }
 
     /**
