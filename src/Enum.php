@@ -70,6 +70,32 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
+     * Returns a human friendly title cased label based on the key name
+     *
+     * return @string
+     */
+    public function getLabel()
+    {
+        return static::keyToTitleCase($this->getKey());
+    }
+
+    /**
+     * Gets human friendly title cased labels based on all keys
+     *
+     * @return string[]
+     */
+    public static function getLabels()
+    {
+        $labels = [];
+
+        foreach (static::toArray() as $key => $value) {
+            $labels[static::keyToTitleCase($key)] = $value;
+        }
+
+        return $labels;
+    }
+
+    /**
      * @return string
      */
     public function __toString()
@@ -201,5 +227,21 @@ abstract class Enum implements \JsonSerializable
     public function jsonSerialize()
     {
         return $this->getValue();
+    }
+
+    /**
+     * Turns the const Key into title case
+     *
+     * @param string $key
+     *
+     * @return string
+     */
+    private static function keyToTitleCase($key)
+    {
+        $key_parts = explode('_', $key);
+
+        return implode(' ', array_map(function ($key) {
+            return ucfirst(mb_strtolower($key));
+        }, $key_parts));
     }
 }

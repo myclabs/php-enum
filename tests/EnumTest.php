@@ -39,6 +39,37 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * getLabel()
+     */
+    public function testGetLabel()
+    {
+        $foo = new EnumFixture(EnumFixture::FOO);
+        $problematicBooleanFalse = new EnumFixture(EnumFixture::PROBLEMATIC_BOOLEAN_FALSE);
+
+        $this->assertEquals('Foo', $foo->getLabel());
+        $this->assertEquals('Problematic Boolean False', $problematicBooleanFalse->getLabel());
+    }
+
+    /**
+     * getLabels()
+     */
+    public function testGetLabels()
+    {
+        $values = EnumFixture::getLabels();
+        $expectedValues = [
+            "Foo"                       => EnumFixture::FOO,
+            "Bar"                       => EnumFixture::BAR,
+            "Number"                    => EnumFixture::NUMBER,
+            "Problematic Number"        => EnumFixture::PROBLEMATIC_NUMBER,
+            "Problematic Null"          => EnumFixture::PROBLEMATIC_NULL,
+            "Problematic Empty String"  => EnumFixture::PROBLEMATIC_EMPTY_STRING,
+            "Problematic Boolean False" => EnumFixture::PROBLEMATIC_BOOLEAN_FALSE,
+        ];
+
+        $this->assertEquals($expectedValues, $values);
+    }
+
+    /**
      * @dataProvider invalidValueProvider
      * @expectedException \UnexpectedValueException
      * @expectedExceptionMessage is not part of the enum MyCLabs\Tests\Enum\EnumFixture
