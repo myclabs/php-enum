@@ -188,10 +188,18 @@ abstract class Enum implements \JsonSerializable
      * @param mixed $value
      *
      * @return string
+     *
+     * @throws \UnexpectedValueException
      */
     public static function getLabelForValue($value)
     {
-        return static::keyToTitleCase(static::search($value));
+        $key = static::search($value);
+
+        if (!$key) {
+            throw new \UnexpectedValueException("Value '$value' is not part of the enum " . \get_called_class());
+        }
+
+        return static::keyToTitleCase($key);
     }
 
     /**

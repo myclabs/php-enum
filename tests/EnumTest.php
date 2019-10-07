@@ -63,6 +63,19 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * getLabelForValue()
+     */
+    public function testGetLabelForValueThrowsIfUnexpectedValue()
+    {
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage(
+            'Value \'NON_EXISTENT_KEY\' is not part of the enum MyCLabs\Tests\Enum\EnumFixture'
+        );
+
+        EnumFixture::getLabelForValue('NON_EXISTENT_KEY');
+    }
+
+    /**
      * @dataProvider invalidValueProvider
      * @expectedException \UnexpectedValueException
      * @expectedExceptionMessage is not part of the enum MyCLabs\Tests\Enum\EnumFixture
