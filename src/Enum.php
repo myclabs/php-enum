@@ -222,11 +222,7 @@ abstract class Enum implements \JsonSerializable
      */
     private static function keyToTitleCase($key)
     {
-        $key_parts = explode('_', $key);
-
-        return implode(' ', array_map(function ($key) {
-            return ucfirst(strtolower($key));
-        }, $key_parts));
+        return ucwords(strtolower(str_ireplace('_', ' ', $key)));
     }
 
     /**
