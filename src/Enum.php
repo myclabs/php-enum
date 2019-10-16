@@ -77,6 +77,11 @@ abstract class Enum implements \JsonSerializable
         return (string)$this->value;
     }
 
+    public function __invoke()
+    {
+        return $this->getValue();
+    }
+
     /**
      * Determines if Enum should be considered equal with the variable passed as a parameter.
      * Returns false if an argument is an object of different class or not an object.
