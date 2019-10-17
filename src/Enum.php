@@ -169,7 +169,9 @@ abstract class Enum implements \JsonSerializable
      */
     public static function search($value)
     {
-        return \array_search($value, static::toArray(), true);
+        $arrays = \array_flip(static::toArray());
+
+		return $arrays[$value] ?? false;
     }
 
     /**
