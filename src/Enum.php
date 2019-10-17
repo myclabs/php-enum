@@ -171,7 +171,7 @@ abstract class Enum implements \JsonSerializable
     {
         $arrays = \array_flip(static::toArray());
 
-		return $arrays[$value] ?? false;
+	return $arrays[$value] ?? false;
     }
 
     /**
