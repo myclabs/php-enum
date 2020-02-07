@@ -23,7 +23,8 @@
     },
     "require": {
         "php": ">=7.1",
-        "ext-json": "*"
+        "ext-json": "*",
+        "vimeo/psalm": "^3.8"
     },
     "require-dev": {
         "phpunit/phpunit": "^7",
