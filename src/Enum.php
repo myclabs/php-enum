@@ -14,6 +14,9 @@ namespace MyCLabs\Enum;
  * @author Matthieu Napoli <matthieu@mnapoli.fr>
  * @author Daniel Costa <danielcosta@gmail.com>
  * @author Mirosław Filip <mirfilip@gmail.com>
+ *
+ * @template T
+ * @psalm-immutable
  */
 abstract class Enum implements \JsonSerializable
 {
@@ -21,6 +24,7 @@ abstract class Enum implements \JsonSerializable
      * Enum value
      *
      * @var mixed
+     * @psalm-var T
      */
     protected $value;
 
@@ -28,6 +32,7 @@ abstract class Enum implements \JsonSerializable
      * Store existing constants in a static cache per object.
      *
      * @var array
+     * @psalm-var array<class-string, array<string, mixed>>
      */
     protected static $cache = [];
 
@@ -36,6 +41,8 @@ abstract class Enum implements \JsonSerializable
      *
      * @param mixed $value
      *
+     * @psalm-param T $value
+     * @psalm-suppress InvalidCast
      * @throws \UnexpectedValueException if incompatible type is given.
      */
     public function __construct($value)
@@ -53,6 +60,7 @@ abstract class Enum implements \JsonSerializable
 
     /**
      * @return mixed
+     * @psalm-return T
      */
     public function getValue()
     {
@@ -62,6 +70,7 @@ abstract class Enum implements \JsonSerializable
     /**
      * Returns the enum key (i.e. the constant name).
      *
+     * @psalm-pure
      * @return mixed
      */
     public function getKey()
@@ -70,6 +79,7 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
+     * @psalm-suppress InvalidCast
      * @return string
      */
     public function __toString()
@@ -83,6 +93,7 @@ abstract class Enum implements \JsonSerializable
      *
      * This method is final, for more information read https://github.com/myclabs/php-enum/issues/4
      *
+     * @psalm-param mixed $variable
      * @return bool
      */
     final public function equals($variable = null): bool
@@ -121,6 +132,8 @@ abstract class Enum implements \JsonSerializable
     /**
      * Returns all possible values as an array
      *
+     * @psalm-pure
+     * @psalm-return array<string, mixed>
      * @return array Constant name in key, constant value in value
      */
     public static function toArray()
@@ -138,6 +151,7 @@ abstract class Enum implements \JsonSerializable
      * Check if is valid enum value
      *
      * @param $value
+     * @psalm-param mixed $value
      *
      * @return bool
      */
@@ -150,6 +164,7 @@ abstract class Enum implements \JsonSerializable
      * Check if is valid enum key
      *
      * @param $key
+     * @psalm-param string $key
      *
      * @return bool
      */
@@ -165,6 +180,8 @@ abstract class Enum implements \JsonSerializable
      *
      * @param $value
      *
+     * @psalm-param mixed $value
+     * @psalm-pure
      * @return mixed
      */
     public static function search($value)
