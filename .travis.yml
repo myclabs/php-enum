@@ -18,6 +18,7 @@ before_script:
 
 script:
   - vendor/bin/phpunit
+  - vendor/bin/psalm --shepherd
 
 # Use Travis' new container-based infrastructure.
 # See http://docs.travis-ci.com/user/migrating-from-legacy/#How-can-I-use-container-based-infrastructure%3F
