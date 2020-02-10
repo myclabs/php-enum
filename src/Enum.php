@@ -41,12 +41,13 @@ abstract class Enum implements \JsonSerializable
      *
      * @param mixed $value
      *
-     * @psalm-param T $value
+     * @psalm-param static<T>|T $value
      * @throws \UnexpectedValueException if incompatible type is given.
      */
     public function __construct($value)
     {
         if ($value instanceof static) {
+           /** @psalm-var T */
             $value = $value->getValue();
         }
 
@@ -55,6 +56,7 @@ abstract class Enum implements \JsonSerializable
             throw new \UnexpectedValueException("Value '$value' is not part of the enum " . static::class);
         }
 
+        /** @psalm-var T */
         $this->value = $value;
     }
 
