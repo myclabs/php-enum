@@ -128,6 +128,7 @@ abstract class Enum implements \JsonSerializable
     {
         $values = array();
 
+        /** @psalm-var T $value */
         foreach (static::toArray() as $key => $value) {
             $values[$key] = new static($value);
         }
