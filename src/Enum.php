@@ -109,6 +109,7 @@ abstract class Enum implements \JsonSerializable
      * Returns the names (keys) of all constants in the Enum class
      *
      * @psalm-external-mutation-free
+     * @psalm-return list<string>
      * @return array
      */
     public static function keys()
@@ -120,6 +121,7 @@ abstract class Enum implements \JsonSerializable
      * Returns instances of the Enum class of all Enum constants
      *
      * @psalm-external-mutation-free
+     * @psalm-return array<string, static>
      * @return static[] Constant name in key, Enum instance in value
      */
     public static function values()
