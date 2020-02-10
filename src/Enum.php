@@ -70,7 +70,7 @@ abstract class Enum implements \JsonSerializable
     /**
      * Returns the enum key (i.e. the constant name).
      *
-     * @psalm-pure
+     * @psalm-external-mutation-free
      * @return mixed
      */
     public function getKey()
@@ -106,6 +106,7 @@ abstract class Enum implements \JsonSerializable
     /**
      * Returns the names (keys) of all constants in the Enum class
      *
+     * @psalm-external-mutation-free
      * @return array
      */
     public static function keys()
@@ -116,6 +117,7 @@ abstract class Enum implements \JsonSerializable
     /**
      * Returns instances of the Enum class of all Enum constants
      *
+     * @psalm-external-mutation-free
      * @return static[] Constant name in key, Enum instance in value
      */
     public static function values()
@@ -132,7 +134,7 @@ abstract class Enum implements \JsonSerializable
     /**
      * Returns all possible values as an array
      *
-     * @psalm-pure
+     * @psalm-external-mutation-free
      * @psalm-return array<string, mixed>
      * @return array Constant name in key, constant value in value
      */
@@ -153,7 +155,7 @@ abstract class Enum implements \JsonSerializable
      *
      * @param $value
      * @psalm-param mixed $value
-     *
+     * @psalm-external-mutation-free
      * @return bool
      */
     public static function isValid($value)
@@ -166,7 +168,7 @@ abstract class Enum implements \JsonSerializable
      *
      * @param $key
      * @psalm-param string $key
-     *
+     * @psalm-external-mutation-free
      * @return bool
      */
     public static function isValidKey($key)
@@ -182,7 +184,7 @@ abstract class Enum implements \JsonSerializable
      * @param $value
      *
      * @psalm-param mixed $value
-     * @psalm-pure
+     * @psalm-external-mutation-free
      * @return mixed
      */
     public static function search($value)
@@ -197,6 +199,7 @@ abstract class Enum implements \JsonSerializable
      * @param array  $arguments
      *
      * @return static
+     * @psalm-external-mutation-free
      * @throws \BadMethodCallException
      */
     public static function __callStatic($name, $arguments)
