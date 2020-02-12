@@ -31,6 +31,8 @@ abstract class Enum implements \JsonSerializable
     /**
      * Store existing constants in a static cache per object.
      *
+     * @psalm-pure
+     *
      * @var array
      * @psalm-var array<class-string, array<string, mixed>>
      */
@@ -39,6 +41,7 @@ abstract class Enum implements \JsonSerializable
     /**
      * Creates a new value of some type
      *
+     * @psalm-pure
      * @param mixed $value
      *
      * @psalm-param static<T>|T $value
@@ -61,6 +64,7 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
+     * @psalm-pure
      * @return mixed
      * @psalm-return T
      */
@@ -72,7 +76,7 @@ abstract class Enum implements \JsonSerializable
     /**
      * Returns the enum key (i.e. the constant name).
      *
-     * @psalm-external-mutation-free
+     * @psalm-pure
      * @return mixed
      */
     public function getKey()
@@ -81,6 +85,7 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
+     * @psalm-pure
      * @psalm-suppress InvalidCast
      * @return string
      */
@@ -95,6 +100,7 @@ abstract class Enum implements \JsonSerializable
      *
      * This method is final, for more information read https://github.com/myclabs/php-enum/issues/4
      *
+     * @psalm-pure
      * @psalm-param mixed $variable
      * @return bool
      */
@@ -108,7 +114,7 @@ abstract class Enum implements \JsonSerializable
     /**
      * Returns the names (keys) of all constants in the Enum class
      *
-     * @psalm-external-mutation-free
+     * @psalm-pure
      * @psalm-return list<string>
      * @return array
      */
@@ -120,7 +126,7 @@ abstract class Enum implements \JsonSerializable
     /**
      * Returns instances of the Enum class of all Enum constants
      *
-     * @psalm-external-mutation-free
+     * @psalm-pure
      * @psalm-return array<string, static>
      * @return static[] Constant name in key, Enum instance in value
      */
@@ -139,7 +145,8 @@ abstract class Enum implements \JsonSerializable
     /**
      * Returns all possible values as an array
      *
-     * @psalm-external-mutation-free
+     * @psalm-pure
+     *
      * @psalm-return array<string, mixed>
      * @return array Constant name in key, constant value in value
      */
@@ -160,7 +167,7 @@ abstract class Enum implements \JsonSerializable
      *
      * @param $value
      * @psalm-param mixed $value
-     * @psalm-external-mutation-free
+     * @psalm-pure
      * @return bool
      */
     public static function isValid($value)
@@ -173,7 +180,7 @@ abstract class Enum implements \JsonSerializable
      *
      * @param $key
      * @psalm-param string $key
-     * @psalm-external-mutation-free
+     * @psalm-pure
      * @return bool
      */
     public static function isValidKey($key)
@@ -189,7 +196,7 @@ abstract class Enum implements \JsonSerializable
      * @param $value
      *
      * @psalm-param mixed $value
-     * @psalm-external-mutation-free
+     * @psalm-pure
      * @return mixed
      */
     public static function search($value)
@@ -204,7 +211,7 @@ abstract class Enum implements \JsonSerializable
      * @param array  $arguments
      *
      * @return static
-     * @psalm-external-mutation-free
+     * @psalm-pure
      * @throws \BadMethodCallException
      */
     public static function __callStatic($name, $arguments)
@@ -223,6 +230,7 @@ abstract class Enum implements \JsonSerializable
      *
      * @return mixed
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
+     * @psalm-pure
      */
     public function jsonSerialize()
     {
