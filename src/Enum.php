@@ -31,7 +31,6 @@ abstract class Enum implements \JsonSerializable
     /**
      * Store existing constants in a static cache per object.
      *
-     * @psalm-pure
      *
      * @var array
      * @psalm-var array<class-string, array<string, mixed>>
