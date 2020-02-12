@@ -146,6 +146,7 @@ abstract class Enum implements \JsonSerializable
      * Returns all possible values as an array
      *
      * @psalm-pure
+     * @psalm-suppress ImpureStaticProperty
      *
      * @psalm-return array<string, mixed>
      * @return array Constant name in key, constant value in value
