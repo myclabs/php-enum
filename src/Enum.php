@@ -15,7 +15,7 @@ namespace MyCLabs\Enum;
  * @author Daniel Costa <danielcosta@gmail.com>
  * @author Mirosław Filip <mirfilip@gmail.com>
  *
- * @template T
+ * @psalm-template T
  * @psalm-immutable
  */
 abstract class Enum implements \JsonSerializable
