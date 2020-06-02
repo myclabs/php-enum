@@ -40,6 +40,21 @@ class Action extends Enum
     private const EDIT = 'edit';
 }
 ```
+### Or value-less
+```php
+use MyCLabs\Enum\{Enum, Type};
+
+/**
+ * Action enum
+ */
+class Action extends Enum
+{
+    use Type {
+        T as VIEW;
+        T as EDIT;
+    }
+}
+```
 
 ## Usage
 
