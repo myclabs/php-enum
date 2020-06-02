@@ -105,9 +105,8 @@ abstract class Enum implements \JsonSerializable
      */
     final public function equals($variable = null): bool
     {
-        return $variable instanceof self
-            && $this->getValue() === $variable->getValue()
-            && static::class === \get_class($variable);
+        return $variable instanceof static
+            && $this->getValue() === $variable->getValue();
     }
 
     /**
