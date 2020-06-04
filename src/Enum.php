@@ -125,7 +125,7 @@ abstract class Enum implements \JsonSerializable
      * Returns instances of the Enum class of all Enum constants
      *
      * @psalm-pure
-     * @psalm-return array<string, static>
+     * @psalm-return array<string, self>
      * @return static[] Constant name in key, Enum instance in value
      */
     public static function values()
@@ -145,6 +145,7 @@ abstract class Enum implements \JsonSerializable
      *
      * @psalm-pure
      * @psalm-suppress ImpureStaticProperty
+     * @psalm-suppress ImpureMethodCall
      *
      * @psalm-return array<string, mixed>
      * @return array Constant name in key, constant value in value
@@ -160,6 +161,10 @@ abstract class Enum implements \JsonSerializable
         return static::$cache[$class];
     }
 
+    /**
+     * @psalm-return array<string, mixed>
+     * @return array
+     */
     protected static function inspectTypes()
     {
         $reflection = new \ReflectionClass(static::class);

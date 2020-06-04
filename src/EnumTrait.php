@@ -6,7 +6,7 @@
 
 namespace MyCLabs\Enum;
 
-trait Type
+trait EnumTrait
 {
     protected static function inspectTypes()
     {
@@ -22,7 +22,7 @@ trait Type
     /**
      * @return static
      */
-    public static function T()
+    public static function type()
     {
         $name = debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 1)[0]['function'];
 

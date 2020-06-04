@@ -42,16 +42,13 @@ class Action extends Enum
 ```
 ### Or value-less
 ```php
-use MyCLabs\Enum\{Enum, Type};
+use MyCLabs\Enum\{Enum, EnumTrait};
 
-/**
- * Action enum
- */
 class Action extends Enum
 {
-    use Type {
-        T as VIEW;
-        T as EDIT;
+    use EnumTrait {
+        type as VIEW;
+        type as EDIT;
     }
 }
 ```

@@ -7,13 +7,13 @@
 namespace MyCLabs\Tests\Enum;
 
 use MyCLabs\Enum\Enum;
-use MyCLabs\Enum\Type;
+use MyCLabs\Enum\EnumTrait;
 
 class EnumTypeFixture extends Enum
 {
-    use Type {
-        T as FOO;
-        T as BAR;
-        T as BAZ;
+    use EnumTrait {
+        type as FOO;
+        type as BAR;
+        type as BAZ;
     }
 }
