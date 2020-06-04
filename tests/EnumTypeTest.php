@@ -48,5 +48,4 @@ class EnumTypeTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals('FOO', $value->getKey());
         $this->assertNotEquals('BAR', $value->getKey());
     }
-
 }
