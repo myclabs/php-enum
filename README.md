@@ -13,7 +13,8 @@ First, and mainly, `SplEnum` is not integrated to PHP, you have to install the e
 
 Using an enum instead of class constants provides the following advantages:
 
-- You can type-hint: `function setAction(Action $action) {`
+- You can use an enum as a parameter type: `function setAction(Action $action) {`
+- You can use an enum as a return type: `function getAction() : Action {`
 - You can enrich the enum with methods (e.g. `format`, `parse`, …)
 - You can extend the enum to add new values (make your enum `final` to prevent it)
 - You can get a list of all the possible values (see below)
@@ -54,7 +55,7 @@ $action = new Action($value);
 
 As you can see, static methods are automatically implemented to provide quick access to an enum value.
 
-One advantage over using class constants is to be able to type-hint enum values:
+One advantage over using class constants is to be able to use enum as a paramter type:
 
 ```php
 function setAction(Action $action) {
