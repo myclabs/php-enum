@@ -55,7 +55,7 @@ $action = new Action($value);
 
 As you can see, static methods are automatically implemented to provide quick access to an enum value.
 
-One advantage over using class constants is to be able to use enum as a paramter type:
+One advantage over using class constants is to be able to use an enum as a parameter type:
 
 ```php
 function setAction(Action $action) {
