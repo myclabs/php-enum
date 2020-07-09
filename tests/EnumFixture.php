@@ -20,6 +20,8 @@ use MyCLabs\Enum\Enum;
  * @method static EnumFixture PROBLEMATIC_EMPTY_STRING()
  * @method static EnumFixture PROBLEMATIC_BOOLEAN_FALSE()
  *
+ * @method static EnumFixture SCOPE_PROTECTED()
+ *
  * @author Daniel Costa <danielcosta@gmail.com>
  * @author Mirosław Filip <mirfilip@gmail.com>
  */
@@ -36,4 +38,7 @@ class EnumFixture extends Enum
     const PROBLEMATIC_NULL = null;
     const PROBLEMATIC_EMPTY_STRING = '';
     const PROBLEMATIC_BOOLEAN_FALSE = false;
+
+    protected const SCOPE_PROTECTED = "protected";
+    private const SCOPE_PRIVATE = "private";
 }

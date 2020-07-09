@@ -41,10 +41,13 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     /**
      * @dataProvider invalidValueProvider
      * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage is not part of the enum MyCLabs\Tests\Enum\EnumFixture
      */
     public function testCreatingEnumWithInvalidValue($value)
     {
+        $this->expectExceptionMessage(sprintf(
+            "Value '%s' is not part of the enum MyCLabs\\Tests\\Enum\\EnumFixture",
+            $value
+        ));
         new EnumFixture($value);
     }
 
@@ -57,6 +60,7 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         return array(
             "string" => array('test'),
             "int" => array(1234),
+            "private" => array("private"), // exists, but in private scope
         );
     }
 
@@ -92,6 +96,7 @@ class EnumTest extends \PHPUnit\Framework\TestCase
             "PROBLEMATIC_NULL",
             "PROBLEMATIC_EMPTY_STRING",
             "PROBLEMATIC_BOOLEAN_FALSE",
+            "SCOPE_PROTECTED",
         );
 
         $this->assertSame($expectedValues, $values);
@@ -111,6 +116,7 @@ class EnumTest extends \PHPUnit\Framework\TestCase
             "PROBLEMATIC_NULL"          => new EnumFixture(EnumFixture::PROBLEMATIC_NULL),
             "PROBLEMATIC_EMPTY_STRING"  => new EnumFixture(EnumFixture::PROBLEMATIC_EMPTY_STRING),
             "PROBLEMATIC_BOOLEAN_FALSE" => new EnumFixture(EnumFixture::PROBLEMATIC_BOOLEAN_FALSE),
+            "SCOPE_PROTECTED"           => new EnumFixture('protected'),
         );
 
         $this->assertEquals($expectedValues, $values);
@@ -130,6 +136,7 @@ class EnumTest extends \PHPUnit\Framework\TestCase
             "PROBLEMATIC_NULL"      => EnumFixture::PROBLEMATIC_NULL,
             "PROBLEMATIC_EMPTY_STRING"    => EnumFixture::PROBLEMATIC_EMPTY_STRING,
             "PROBLEMATIC_BOOLEAN_FALSE"    => EnumFixture::PROBLEMATIC_BOOLEAN_FALSE,
+            "SCOPE_PROTECTED"       => "protected",
         );
 
         $this->assertSame($expectedValues, $values);
@@ -137,22 +144,49 @@ class EnumTest extends \PHPUnit\Framework\TestCase
 
     /**
      * __callStatic()
+     *
+     * @dataProvider staticAccessProvider
      */
-    public function testStaticAccess()
+    public function testStaticAccess(
+        $value,
+        string $staticMethod
+    ) {
+        $this->assertEquals(
+            new EnumFixture($value),
+            EnumFixture::$staticMethod()
+        );
+    }
+
+    public function staticAccessProvider()
     {
-        $this->assertEquals(new EnumFixture(EnumFixture::FOO), EnumFixture::FOO());
-        $this->assertEquals(new EnumFixture(EnumFixture::BAR), EnumFixture::BAR());
-        $this->assertEquals(new EnumFixture(EnumFixture::NUMBER), EnumFixture::NUMBER());
+        return [
+            'foo' => [EnumFixture::FOO, 'FOO'],
+            'bar' => [EnumFixture::BAR, 'BAR'],
+            'number' => [EnumFixture::NUMBER, 'NUMBER'],
+            'protected' => ['protected', 'SCOPE_PROTECTED'],
+        ];
     }
 
     /**
+     * @dataProvider badStaticAccessProvider
      * @expectedException \BadMethodCallException
-     * @expectedExceptionMessage No static method or enum constant 'UNKNOWN' in class
-     *                           UnitTest\MyCLabs\Enum\Enum\EnumFixture
      */
-    public function testBadStaticAccess()
+    public function testBadStaticAccess(string $method)
     {
-        EnumFixture::UNKNOWN();
+        $this->expectExceptionMessage(sprintf(
+            "No static method or enum constant '%s' in class MyCLabs\\Tests\\Enum\\EnumFixture",
+            $method
+        ));
+
+        EnumFixture::$method();
+    }
+
+    public function badStaticAccessProvider()
+    {
+        return [
+            'UNKNOWN' => ['UNKNOWN'],
+            'SCOPE_PRIVATE' => ['SCOPE_PRIVATE'],
+        ];
     }
 
     /**

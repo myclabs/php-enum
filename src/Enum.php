@@ -155,8 +155,14 @@ abstract class Enum implements \JsonSerializable
         $class = static::class;
 
         if (!isset(static::$cache[$class])) {
-            $reflection            = new \ReflectionClass($class);
-            static::$cache[$class] = $reflection->getConstants();
+            static::$cache[$class] = [];
+            $reflection = new \ReflectionClass($class);
+
+            foreach ($reflection->getReflectionConstants() as $constant) {
+                if (!$constant->isPrivate()) {
+                    static::$cache[$class][$constant->getName()] = $constant->getValue();
+                }
+            }
         }
 
         return static::$cache[$class];
