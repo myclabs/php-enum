@@ -83,9 +83,8 @@ abstract class Enum implements \JsonSerializable
      * Returns the enum key (i.e. the constant name).
      *
      * @psalm-pure
-     * @return mixed
      */
-    public function getKey()
+    public function getKey(): string
     {
         return static::search($this->value);
     }
@@ -200,11 +199,11 @@ abstract class Enum implements \JsonSerializable
     /**
      * Return key for value
      *
-     * @param $value
+     * @param mixed $value
      *
      * @psalm-param mixed $value
      * @psalm-pure
-     * @return mixed
+     * @return string|false
      */
     public static function search($value)
     {
