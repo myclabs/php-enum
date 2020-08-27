@@ -17,6 +17,7 @@ namespace MyCLabs\Enum;
  *
  * @psalm-template T
  * @psalm-immutable
+ * @psalm-consistent-constructor
  */
 abstract class Enum implements \JsonSerializable
 {
@@ -40,7 +41,6 @@ abstract class Enum implements \JsonSerializable
     /**
      * Creates a new value of some type
      *
-     * @psalm-pure
      * @param mixed $value
      *
      * @psalm-param static<T>|T $value
@@ -53,7 +53,7 @@ abstract class Enum implements \JsonSerializable
             $value = $value->getValue();
         }
 
-        if (!$this->isValid($value)) {
+        if (!static::isValid($value)) {
             /** @psalm-suppress InvalidCast */
             throw new \UnexpectedValueException("Value '$value' is not part of the enum " . static::class);
         }
@@ -63,7 +63,6 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
-     * @psalm-pure
      * @return mixed
      * @psalm-return T
      */
@@ -75,7 +74,6 @@ abstract class Enum implements \JsonSerializable
     /**
      * Returns the enum key (i.e. the constant name).
      *
-     * @psalm-pure
      * @return mixed
      */
     public function getKey()
@@ -84,7 +82,6 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
-     * @psalm-pure
      * @psalm-suppress InvalidCast
      * @return string
      */
@@ -99,7 +96,6 @@ abstract class Enum implements \JsonSerializable
      *
      * This method is final, for more information read https://github.com/myclabs/php-enum/issues/4
      *
-     * @psalm-pure
      * @psalm-param mixed $variable
      * @return bool
      */
@@ -126,7 +122,7 @@ abstract class Enum implements \JsonSerializable
      * Returns instances of the Enum class of all Enum constants
      *
      * @psalm-pure
-     * @psalm-return array<string, static>
+     * @psalm-return array<string, mixed>
      * @return static[] Constant name in key, Enum instance in value
      */
     public static function values()
@@ -146,6 +142,7 @@ abstract class Enum implements \JsonSerializable
      *
      * @psalm-pure
      * @psalm-suppress ImpureStaticProperty
+     * @psalm-suppress ImpureMethodCall
      *
      * @psalm-return array<string, mixed>
      * @return array Constant name in key, constant value in value
@@ -230,7 +227,6 @@ abstract class Enum implements \JsonSerializable
      *
      * @return mixed
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
-     * @psalm-pure
      */
     public function jsonSerialize()
     {
