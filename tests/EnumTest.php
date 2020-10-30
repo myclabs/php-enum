@@ -143,6 +143,7 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $this->assertEquals(new EnumFixture(EnumFixture::FOO), EnumFixture::FOO());
         $this->assertEquals(new EnumFixture(EnumFixture::BAR), EnumFixture::BAR());
         $this->assertEquals(new EnumFixture(EnumFixture::NUMBER), EnumFixture::NUMBER());
+        $this->assertNotSame(EnumFixture::NUMBER(), EnumFixture::NUMBER());
     }
 
     /**

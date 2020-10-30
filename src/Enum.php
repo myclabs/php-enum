@@ -232,7 +232,7 @@ abstract class Enum implements \JsonSerializable
             }
             return self::$instances[$class][$name] = new static($array[$name]);
         }
-        return self::$instances[$class][$name];
+        return clone self::$instances[$class][$name];
     }
 
     /**
