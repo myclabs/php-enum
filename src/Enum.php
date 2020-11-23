@@ -62,7 +62,6 @@ abstract class Enum implements \JsonSerializable
         }
 
         if (!$this->isValid($value)) {
-            /** @psalm-suppress InvalidCast */
             throw new \UnexpectedValueException("Value '$value' is not part of the enum " . static::class);
         }
 
