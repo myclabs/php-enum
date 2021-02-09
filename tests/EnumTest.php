@@ -49,6 +49,18 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     }
 
     /**
+     * @dataProvider invalidValueProvider
+     * @param mixed $value
+     */
+    public function testFailToCreateEnumWithInvalidValueThroughNamedConstructor($value): void
+    {
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage('is not part of the enum MyCLabs\Tests\Enum\EnumFixture');
+
+        EnumFixture::from($value);
+    }
+
+    /**
      * Contains values not existing in EnumFixture
      * @return array
      */
@@ -331,5 +343,20 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $this->expectExceptionMessage("Value 'value' is not part of the enum MyCLabs\Tests\Enum\EnumFixture");
         $inheritedEnumFixture = InheritedEnumFixture::VALUE();
         new EnumFixture($inheritedEnumFixture);
+    }
+
+    /**
+     * @dataProvider isValidProvider
+     */
+    public function testAssertValidValue($value, $isValid): void
+    {
+        if (!$isValid) {
+            $this->expectException(\UnexpectedValueException::class);
+            $this->expectExceptionMessage("Value '$value' is not part of the enum " . EnumFixture::class);
+        }
+
+        EnumFixture::assertValidValue($value);
+
+        self::assertTrue(EnumFixture::isValid($value));
     }
 }
