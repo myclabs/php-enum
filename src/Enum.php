@@ -38,6 +38,14 @@ abstract class Enum implements \JsonSerializable
     protected static $cache = [];
 
     /**
+     * Cache of instances of the Enum class
+     *
+     * @var array
+     * @psalm-var array<class-string, array<string, static>>
+     */
+    protected static $instances = [];
+
+    /**
      * Creates a new value of some type
      *
      * @psalm-pure
@@ -53,13 +61,22 @@ abstract class Enum implements \JsonSerializable
             $value = $value->getValue();
         }
 
-        if (!$this->isValid($value)) {
-            /** @psalm-suppress InvalidCast */
-            throw new \UnexpectedValueException("Value '$value' is not part of the enum " . static::class);
-        }
+        static::assertValidValue($value);
 
         /** @psalm-var T */
         $this->value = $value;
+    }
+
+    /**
+     * @param mixed $value
+     * @return static
+     * @psalm-return static<T>
+     */
+    public static function from($value): self
+    {
+        static::assertValidValue($value);
+
+        return new static($value);
     }
 
     /**
@@ -167,11 +184,25 @@ abstract class Enum implements \JsonSerializable
      * @param $value
      * @psalm-param mixed $value
      * @psalm-pure
+     * @psalm-assert-if-true T $value
      * @return bool
      */
     public static function isValid($value)
     {
         return \in_array($value, static::toArray(), true);
+    }
+
+    /**
+     * Asserts valid enum value
+     *
+     * @psalm-pure
+     * @psalm-assert T $value
+     */
+    public static function assertValidValue($value): void
+    {
+        if (!static::isValid($value)) {
+            throw new \UnexpectedValueException("Value '$value' is not part of the enum " . static::class);
+        }
     }
 
     /**
@@ -210,17 +241,20 @@ abstract class Enum implements \JsonSerializable
      * @param array  $arguments
      *
      * @return static
-     * @psalm-pure
      * @throws \BadMethodCallException
      */
     public static function __callStatic($name, $arguments)
     {
-        $array = static::toArray();
-        if (isset($array[$name]) || \array_key_exists($name, $array)) {
-            return new static($array[$name]);
+        $class = static::class;
+        if (!isset(self::$instances[$class][$name])) {
+            $array = static::toArray();
+            if (!isset($array[$name]) && !\array_key_exists($name, $array)) {
+                $message = "No static method or enum constant '$name' in class " . static::class;
+                throw new \BadMethodCallException($message);
+            }
+            return self::$instances[$class][$name] = new static($array[$name]);
         }
-
-        throw new \BadMethodCallException("No static method or enum constant '$name' in class " . static::class);
+        return clone self::$instances[$class][$name];
     }
 
     /**
