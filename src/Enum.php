@@ -29,6 +29,13 @@ abstract class Enum implements \JsonSerializable
     protected $value;
 
     /**
+     * Enum key, the constant name
+     *
+     * @var string
+     */
+    private $key;
+
+    /**
      * Store existing constants in a static cache per object.
      *
      *
@@ -61,7 +68,7 @@ abstract class Enum implements \JsonSerializable
             $value = $value->getValue();
         }
 
-        static::assertValidValue($value);
+        $this->key = static::assertValidValue($value);
 
         /** @psalm-var T */
         $this->value = $value;
@@ -94,9 +101,9 @@ abstract class Enum implements \JsonSerializable
      *
      * @psalm-pure
      */
-    public function getKey(): string
+    public function getKey()
     {
-        return static::search($this->value);
+        return $this->key ?? ($this->key = static::search($this->value));
     }
 
     /**
@@ -198,11 +205,13 @@ abstract class Enum implements \JsonSerializable
      * @psalm-pure
      * @psalm-assert T $value
      */
-    private static function assertValidValue($value): void
+    private static function assertValidValue($value): string
     {
-        if (!static::isValid($value)) {
+        if (false === ($key = static::search($value))) {
             throw new \UnexpectedValueException("Value '$value' is not part of the enum " . static::class);
         }
+
+        return $key;
     }
 
     /**

@@ -324,7 +324,8 @@ class EnumTest extends \PHPUnit\Framework\TestCase
     {
         // split string for Pretty CI: "Line exceeds 120 characters"
         $bin = '4f3a33303a224d79434c6162735c54657374735c456e756d5c456e756d4669787'.
-            '4757265223a313a7b733a383a22002a0076616c7565223b733a333a22666f6f223b7d';
+            '4757265223a323a7b733a383a22002a0076616c7565223b733a333a22666f6f223b73'.
+            '3a32323a22004d79434c6162735c456e756d5c456e756d006b6579223b733a333a22464f4f223b7d';
 
         $this->assertEquals($bin, bin2hex(serialize(EnumFixture::FOO())));
     }
