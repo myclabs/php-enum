@@ -198,7 +198,7 @@ abstract class Enum implements \JsonSerializable
      * @psalm-pure
      * @psalm-assert T $value
      */
-    public static function assertValidValue($value): void
+    private static function assertValidValue($value): void
     {
         if (!static::isValid($value)) {
             throw new \UnexpectedValueException("Value '$value' is not part of the enum " . static::class);
