@@ -51,6 +51,8 @@ $action = Action::VIEW();
 $action = Action::$key();
 // or with a dynamic value:
 $action = Action::from($value);
+// or
+$action = new Action($value);
 ```
 
 As you can see, static methods are automatically implemented to provide quick access to an enum value.
