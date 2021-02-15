@@ -17,6 +17,7 @@ namespace MyCLabs\Enum;
  *
  * @psalm-template T
  * @psalm-immutable
+ * @psalm-consistent-constructor
  */
 abstract class Enum implements \JsonSerializable
 {
@@ -58,7 +59,7 @@ abstract class Enum implements \JsonSerializable
      * @psalm-pure
      * @param mixed $value
      *
-     * @psalm-param static<T>|T $value
+     * @psalm-param T $value
      * @throws \UnexpectedValueException if incompatible type is given.
      */
     public function __construct($value)
@@ -186,7 +187,9 @@ abstract class Enum implements \JsonSerializable
         $class = static::class;
 
         if (!isset(static::$cache[$class])) {
+            /** @psalm-suppress ImpureMethodCall this reflection API usage has no side-effects here */
             $reflection            = new \ReflectionClass($class);
+            /** @psalm-suppress ImpureMethodCall this reflection API usage has no side-effects here */
             static::$cache[$class] = $reflection->getConstants();
         }
 
@@ -270,6 +273,8 @@ abstract class Enum implements \JsonSerializable
      *
      * @return static
      * @throws \BadMethodCallException
+     *
+     * @psalm-pure
      */
     public static function __callStatic($name, $arguments)
     {

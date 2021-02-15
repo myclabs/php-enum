@@ -38,13 +38,12 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $this->assertNotEquals('BA', $value->getKey());
     }
 
-    /**
-     * @dataProvider invalidValueProvider
-     * @expectedException \UnexpectedValueException
-     * @expectedExceptionMessage is not part of the enum MyCLabs\Tests\Enum\EnumFixture
-     */
+    /** @dataProvider invalidValueProvider */
     public function testCreatingEnumWithInvalidValue($value)
     {
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage('is not part of the enum ' . EnumFixture::class);
+
         new EnumFixture($value);
     }
 
@@ -166,13 +165,11 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $this->assertNotSame(EnumFixture::NUMBER(), EnumFixture::NUMBER());
     }
 
-    /**
-     * @expectedException \BadMethodCallException
-     * @expectedExceptionMessage No static method or enum constant 'UNKNOWN' in class
-     *                           UnitTest\MyCLabs\Enum\Enum\EnumFixture
-     */
     public function testBadStaticAccess()
     {
+        $this->expectException(\BadMethodCallException::class);
+        $this->expectExceptionMessage('No static method or enum constant \'UNKNOWN\' in class ' . EnumFixture::class);
+
         EnumFixture::UNKNOWN();
     }
 
