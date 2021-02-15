@@ -68,7 +68,7 @@ abstract class Enum implements \JsonSerializable
             $value = $value->getValue();
         }
 
-        $this->key = static::assertValidValue($value);
+        $this->key = static::assertValidValueReturningKey($value);
 
         /** @psalm-var T */
         $this->value = $value;
@@ -213,7 +213,18 @@ abstract class Enum implements \JsonSerializable
      * @psalm-pure
      * @psalm-assert T $value
      */
-    private static function assertValidValue($value): string
+    public static function assertValidValue($value): void
+    {
+        self::assertValidValueReturningKey($value);
+    }
+
+    /**
+     * Asserts valid enum value
+     *
+     * @psalm-pure
+     * @psalm-assert T $value
+     */
+    private static function assertValidValueReturningKey($value): string
     {
         if (false === ($key = static::search($value))) {
             throw new \UnexpectedValueException("Value '$value' is not part of the enum " . static::class);

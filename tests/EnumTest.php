@@ -369,4 +369,19 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         $inheritedEnumFixture = InheritedEnumFixture::VALUE();
         new EnumFixture($inheritedEnumFixture);
     }
+
+    /**
+     * @dataProvider isValidProvider
+     */
+    public function testAssertValidValue($value, $isValid): void
+    {
+        if (!$isValid) {
+            $this->expectException(\UnexpectedValueException::class);
+            $this->expectExceptionMessage("Value '$value' is not part of the enum " . EnumFixture::class);
+        }
+
+        EnumFixture::assertValidValue($value);
+
+        self::assertTrue(EnumFixture::isValid($value));
+    }
 }
