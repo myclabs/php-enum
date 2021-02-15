@@ -35,7 +35,7 @@ use MyCLabs\Enum\Enum;
 /**
  * Action enum
  */
-class Action extends Enum
+final class Action extends Enum
 {
     private const VIEW = 'view';
     private const EDIT = 'edit';
@@ -50,6 +50,8 @@ $action = Action::VIEW();
 // or with a dynamic key:
 $action = Action::$key();
 // or with a dynamic value:
+$action = Action::from($value);
+// or
 $action = new Action($value);
 ```
 
@@ -73,17 +75,19 @@ function setAction(Action $action) {
 
 Static methods:
 
+- `from()` Creates an Enum instance, checking that the value exist in the enum
 - `toArray()` method Returns all possible values as an array (constant name in key, constant value in value)
 - `keys()` Returns the names (keys) of all constants in the Enum class
 - `values()` Returns instances of the Enum class of all Enum constants (constant name in key, Enum instance in value)
 - `isValid()` Check if tested value is valid on enum set
 - `isValidKey()` Check if tested key is valid on enum set
+- `assertValidValue()` Assert the value is valid on enum set, throwing exception otherwise
 - `search()` Return key for searched value
 
 ### Static methods
 
 ```php
-class Action extends Enum
+final class Action extends Enum
 {
     private const VIEW = 'view';
     private const EDIT = 'edit';
@@ -99,7 +103,7 @@ Static method helpers are implemented using [`__callStatic()`](http://www.php.ne
 If you care about IDE autocompletion, you can either implement the static methods yourself:
 
 ```php
-class Action extends Enum
+final class Action extends Enum
 {
     private const VIEW = 'view';
 
@@ -119,7 +123,7 @@ or you can use phpdoc (this is supported in PhpStorm for example):
  * @method static Action VIEW()
  * @method static Action EDIT()
  */
-class Action extends Enum
+final class Action extends Enum
 {
     private const VIEW = 'view';
     private const EDIT = 'edit';
