@@ -29,6 +29,13 @@ abstract class Enum implements \JsonSerializable
     protected $value;
 
     /**
+     * Enum key, the constant name
+     *
+     * @var string
+     */
+    private $key;
+
+    /**
      * Store existing constants in a static cache per object.
      *
      *
@@ -61,10 +68,17 @@ abstract class Enum implements \JsonSerializable
             $value = $value->getValue();
         }
 
-        static::assertValidValue($value);
+        $this->key = static::assertValidValueReturningKey($value);
 
         /** @psalm-var T */
         $this->value = $value;
+    }
+
+    public function __wakeup()
+    {
+        if ($this->key === null) {
+            $this->key = static::search($this->value);
+        }
     }
 
     /**
@@ -74,9 +88,9 @@ abstract class Enum implements \JsonSerializable
      */
     public static function from($value): self
     {
-        static::assertValidValue($value);
+        $key = static::assertValidValueReturningKey($value);
 
-        return new static($value);
+        return self::__callStatic($key, []);
     }
 
     /**
@@ -93,11 +107,11 @@ abstract class Enum implements \JsonSerializable
      * Returns the enum key (i.e. the constant name).
      *
      * @psalm-pure
-     * @return mixed
+     * @return string
      */
     public function getKey()
     {
-        return static::search($this->value);
+        return $this->key;
     }
 
     /**
@@ -201,9 +215,22 @@ abstract class Enum implements \JsonSerializable
      */
     public static function assertValidValue($value): void
     {
-        if (!static::isValid($value)) {
+        self::assertValidValueReturningKey($value);
+    }
+
+    /**
+     * Asserts valid enum value
+     *
+     * @psalm-pure
+     * @psalm-assert T $value
+     */
+    private static function assertValidValueReturningKey($value): string
+    {
+        if (false === ($key = static::search($value))) {
             throw new \UnexpectedValueException("Value '$value' is not part of the enum " . static::class);
         }
+
+        return $key;
     }
 
     /**
@@ -224,11 +251,11 @@ abstract class Enum implements \JsonSerializable
     /**
      * Return key for value
      *
-     * @param $value
+     * @param mixed $value
      *
      * @psalm-param mixed $value
      * @psalm-pure
-     * @return mixed
+     * @return string|false
      */
     public static function search($value)
     {
