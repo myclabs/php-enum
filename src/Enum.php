@@ -88,9 +88,9 @@ abstract class Enum implements \JsonSerializable
      */
     public static function from($value): self
     {
-        static::assertValidValue($value);
+        $key = static::assertValidValueReturningKey($value);
 
-        return new static($value);
+        return self::__callStatic($key, []);
     }
 
     /**
