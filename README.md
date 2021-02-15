@@ -81,6 +81,7 @@ Static methods:
 - `values()` Returns instances of the Enum class of all Enum constants (constant name in key, Enum instance in value)
 - `isValid()` Check if tested value is valid on enum set
 - `isValidKey()` Check if tested key is valid on enum set
+- `assertValidValue()` Assert the value is valid on enum set, throwing exception otherwise
 - `search()` Return key for searched value
 
 ### Static methods
