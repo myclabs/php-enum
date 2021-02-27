@@ -1,14 +1,17 @@
 <?php
 
+
 namespace MyCLabs\Tests\Enum;
+
+use MyCLabs\Enum\Enum;
 
 /**
  * Class InheritedEnumFixture.
  * @package MyCLabs\Tests\Enum
  *
- * @method static InheritedEnumFixture VALUE()
+ * @method static NotFinalEnumFixture VALUE()
  */
-class InheritedEnumFixture extends EnumFixture
+class NotFinalEnumFixture extends Enum
 {
     const VALUE = 'value';
 }
