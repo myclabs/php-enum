@@ -16,6 +16,7 @@ namespace MyCLabs\Enum;
  * @author Mirosław Filip <mirfilip@gmail.com>
  * @author Alexandru Pătrănescu <drealecs@gmail.com>
  *
+ * @psalm-template T
  * @psalm-immutable
  * @psalm-consistent-constructor
  */
@@ -23,52 +24,60 @@ abstract class Enum implements \JsonSerializable
 {
     /**
      * Enum value
+     *
+     * @var mixed
+     * @psalm-var T
      */
-    private int|string $value;
+    private $value;
 
     /**
      * Enum key, the constant name
+     *
+     * @var string
      */
-    private string $key;
+    private $key;
 
     /**
      * Store existing constants in a static cache per object.
      *
-     * @psalm-var array<class-string, array<string, int|string>>
-     */
-    private static array $cache = [];
-
-    /**
-     * Store existing constants in a static cache per object.
      *
-     * @psalm-var array<class-string, array<int|string, string>>
+     * @var array
+     * @psalm-var array<class-string, array<string, mixed>>
      */
-    private static array $reverseCache = [];
-
-    /**
-     * Store type of value, int or string. null value is for empty enums
-     *
-     * @psalm-var array<class-string, 'int'|'string'|'empty'>
-     */
-    private static array $typeCache = [];
+    private static $cache = [];
 
     /**
      * Cache of instances of the Enum class
      *
+     * @var array
      * @psalm-var array<class-string, array<string, static>>
      */
-    private static array $instances = [];
+    private static $instances = [];
 
-    final private function __construct(string $key, int|string $value)
+    /**
+     * Creates a new value of some type
+     *
+     * @psalm-pure
+     * @param string $key
+     * @param mixed $value
+     *
+     * @psalm-param T $value
+     */
+    final private function __construct(string $key, $value)
     {
         $this->key = $key;
         $this->value = $value;
     }
 
     /**
+     * The single place where the instance is created, other than unserialize
+     *
      * @psalm-pure
+     * @param string $key
+     * @param mixed $value
+     * @return static
      */
-    private static function getInstance(string $key, int|string $value): static
+    private static function getInstance(string $key, $value): self
     {
         if (!isset(self::$instances[static::class][$key])) {
             return self::$instances[static::class][$key] = new static($key, $value);
@@ -78,15 +87,27 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
-     * @param int|string $value
+     * @param mixed $value
      * @return static
+     * @psalm-return static<T>
      */
-    final public static function from(int|string $value): static
+    final public static function from($value): self
     {
-        return self::tryFrom($value) ?? throw new \UnexpectedValueException("Value '{$value}' is not part of the enum " . static::class);
+        $key = self::search($value);
+
+        if ($key === false) {
+            throw new \UnexpectedValueException("Value '{$value}' is not part of the enum " . static::class);
+        }
+
+        return self::getInstance($key, $value);
     }
 
-    final public static function tryFrom(int|string $value): ?static
+    /**
+     * @param mixed $value
+     * @return static|null
+     * @psalm-return static<T>|null
+     */
+    final public static function tryFrom($value): ?self
     {
         $key = self::search($value);
 
@@ -97,16 +118,32 @@ abstract class Enum implements \JsonSerializable
         return self::getInstance($key, $value);
     }
 
-    final public function getValue(): int|string
+    /**
+     * @psalm-pure
+     * @return mixed
+     * @psalm-return T
+     */
+    final public function getValue()
     {
         return $this->value;
     }
 
+    /**
+     * Returns the enum key (i.e. the constant name).
+     *
+     * @psalm-pure
+     * @return string
+     */
     final public function getKey(): string
     {
         return $this->key;
     }
 
+    /**
+     * @psalm-pure
+     * @psalm-suppress InvalidCast
+     * @return string
+     */
     final public function __toString(): string
     {
         return (string)$this->value;
@@ -134,7 +171,7 @@ abstract class Enum implements \JsonSerializable
      * @psalm-pure
      * @psalm-return list<string>
      */
-    public static function keys(): array
+    final public static function keys(): array
     {
         return \array_keys(self::toArray());
     }
@@ -146,7 +183,7 @@ abstract class Enum implements \JsonSerializable
      * @psalm-return array<string, static>
      * @return static[] Constant name in key, Enum instance in value
      */
-    public static function values(): array
+    final public static function values(): array
     {
         $values = [];
 
@@ -163,120 +200,49 @@ abstract class Enum implements \JsonSerializable
      * @psalm-pure
      * @psalm-suppress ImpureStaticProperty
      *
-     * @psalm-return array<string, int|string>
+     * @psalm-return array<string, mixed>
      * @return array Constant name in key, constant value in value
      */
     final public static function toArray(): array
     {
-        if (!isset(self::$cache[static::class])) {
-            self::computeCache();
-        }
+        $class = static::class;
 
-        return self::$cache[static::class];
-    }
-
-    /**
-     * @psalm-pure
-     * @psalm-suppress ImpureStaticProperty
-     *
-     * @psalm-return array<int|string, string>
-     * @return string[] Constant value in key, constant name in value
-     */
-    private static function toReverseArray(): array
-    {
-        if (!isset(self::$reverseCache[static::class])) {
-            self::computeCache();
-        }
-
-        return self::$reverseCache[static::class];
-    }
-
-    /**
-     * @psalm-pure
-     * @psalm-suppress ImpureStaticProperty
-     *
-     * @psalm-return 'int'|'string'|'empty'
-     */
-    private static function getType(): string
-    {
-        if (!isset(self::$typeCache[static::class])) {
-            self::computeCache();
-        }
-
-        return self::$typeCache[static::class];
-    }
-
-    /**
-     * @psalm-pure
-     * @psalm-suppress ImpureStaticProperty
-     *
-     * Compute cached values for the class using reflection
-     */
-    private static function computeCache(): void
-    {
-        /** @psalm-suppress ImpureMethodCall this reflection API usage has no side-effects here */
-        $reflection = new \ReflectionClass(static::class);
-        /** @psalm-suppress ImpureMethodCall this reflection API usage has no side-effects here */
-        $constantsDefinition = $reflection->getConstants();
-        /** @psalm-suppress ImpureMethodCall this reflection API usage has no side-effects here */
-        if (!$reflection->isFinal()) {
-            throw new \ParseError("Class " . static::class . " is not declared final");
-        }
-
-        $type = null;
-        $reverseConstantsDefinition = [];
-        /** @psalm-assert array<string, int|string> $constantsDefinition */
-        foreach ($constantsDefinition as $key => $value) {
-            if (is_int($value)) {
-                if (!isset($type)) {
-                    $type = 'int';
-                } elseif ($type !== 'int') {
-                    throw new \ParseError("Value for constant '{$key}' in class " . static::class . " is not int, even if previous value is int");
-                }
-            } elseif (is_string($value)) {
-                if (!isset($type)) {
-                    $type = 'string';
-                } elseif ($type !== 'string') {
-                    throw new \ParseError("Value for constant '{$key}' in class " . static::class . " is not string, even if previous value is string");
-                }
-            } else {
-                throw new \ParseError("Value for constant '{$key}' is not int or string.");
+        if (!isset(self::$cache[$class])) {
+            /** @psalm-suppress ImpureMethodCall this reflection API usage has no side-effects here */
+            $reflection = new \ReflectionClass($class);
+            /** @psalm-suppress ImpureMethodCall this reflection API usage has no side-effects here */
+            if (!$reflection->isFinal()) {
+                throw new \ParseError("Class " . $class . " is not declared final");
             }
-
-            if (\array_key_exists($value, $reverseConstantsDefinition)) {
-                throw new \ParseError("Value '{$value}' is duplicated in the enum definition of class " . static::class);
-            }
-
-            $reverseConstantsDefinition[$value] = $key;
+            /** @psalm-suppress ImpureMethodCall this reflection API usage has no side-effects here */
+            self::$cache[$class] = $reflection->getConstants();
         }
 
-        /** @psalm-suppress MixedPropertyTypeCoercion assert exists already of array<string, int|string> on $constantsDefinition */
-        self::$cache[static::class] = $constantsDefinition;
-        self::$reverseCache[static::class] = $reverseConstantsDefinition;
-        self::$typeCache[static::class] = $type ?? 'empty';
+        return self::$cache[$class];
     }
 
     /**
      * Check if is valid enum value
      *
-     * @param int|string $value
+     * @param $value
+     * @psalm-param mixed $value
      * @psalm-pure
+     * @psalm-assert-if-true T $value
      * @return bool
      */
-    public static function isValid(int|string $value): bool
+    final public static function isValid($value): bool
     {
-        $reverseArray = self::toReverseArray();
-
-        return isset($reverseArray[$value]);
+        return \in_array($value, static::toArray(), true);
     }
 
     /**
      * Asserts valid enum value
      *
      * @psalm-pure
-     * @param int|string $value
+     * @psalm-assert T $value
+     * @param mixed $value
      */
-    public static function assertValidValue(int|string $value): void
+    final public static function assertValidValue($value): void
     {
         if (!self::isValid($value)) {
             throw new \UnexpectedValueException("Value '$value' is not part of the enum " . static::class);
@@ -295,7 +261,7 @@ abstract class Enum implements \JsonSerializable
     {
         $array = self::toArray();
 
-        return isset($array[$key]);
+        return isset($array[$key]) || \array_key_exists($key, $array);
     }
 
     /**
@@ -307,23 +273,9 @@ abstract class Enum implements \JsonSerializable
      * @psalm-pure
      * @return string|false
      */
-    final public static function search(int|string $value): string|false
+    final public static function search($value)
     {
-        $type = self::getType();
-        if (
-            ($type === 'int' && !is_int($value))
-            ||
-            ($type === 'string' && !is_string($value))
-            ||
-            ($type === 'empty')
-        ) {
-            return false;
-        }
-
-        $reverseArray = self::toReverseArray();
-
-        /** @psalm-suppress MixedArrayOffset this is already validated at this point */
-        return $reverseArray[$value] ?? false;
+        return \array_search($value, static::toArray(), true);
     }
 
     /**
@@ -340,7 +292,7 @@ abstract class Enum implements \JsonSerializable
     public static function __callStatic($name, $arguments)
     {
         $array = self::toArray();
-        if (!isset($array[$name])) {
+        if (!isset($array[$name]) && !\array_key_exists($name, $array)) {
             $message = "No static method or enum constant '$name' in class " . static::class;
             throw new \BadMethodCallException($message);
         }

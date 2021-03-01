@@ -1,6 +1,5 @@
 <?php
 
-
 namespace MyCLabs\Tests\Enum;
 
 use MyCLabs\Enum\Enum;

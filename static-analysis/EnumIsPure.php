@@ -11,6 +11,8 @@ use MyCLabs\Enum\Enum;
  * @method static PureEnum C()
  *
  * @psalm-immutable
+ * @psalm-template T of 'A'|'B'
+ * @template-extends Enum<T>
  */
 final class PureEnum extends Enum
 {
