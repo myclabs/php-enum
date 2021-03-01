@@ -51,8 +51,6 @@ $action = Action::VIEW();
 $action = Action::$key();
 // or with a dynamic value:
 $action = Action::from($value);
-// or
-$action = new Action($value);
 ```
 
 As you can see, static methods are automatically implemented to provide quick access to an enum value.
@@ -67,7 +65,6 @@ function setAction(Action $action) {
 
 ## Documentation
 
-- `__construct()` The constructor checks that the value exist in the enum
 - `__toString()` You can `echo $myValue`, it will display the enum value (value of the constant)
 - `getValue()` Returns the current value of the enum
 - `getKey()` Returns the key of the current value on Enum
@@ -111,7 +108,7 @@ final class Action extends Enum
      * @return Action
      */
     public static function VIEW() {
-        return new Action(self::VIEW);
+        return self::from(self::VIEW);
     }
 }
 ```
