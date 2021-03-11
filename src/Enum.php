@@ -95,7 +95,7 @@ abstract class Enum implements \JsonSerializable
     /**
      * @param mixed $value
      * @return static
-     * @psalm-return static<T>
+     * @psalm-return static
      */
     public static function from($value): self
     {
@@ -212,7 +212,6 @@ abstract class Enum implements \JsonSerializable
      * @param $value
      * @psalm-param mixed $value
      * @psalm-pure
-     * @psalm-assert-if-true T $value
      * @return bool
      */
     public static function isValid($value)
@@ -224,7 +223,6 @@ abstract class Enum implements \JsonSerializable
      * Asserts valid enum value
      *
      * @psalm-pure
-     * @psalm-assert T $value
      * @param mixed $value
      */
     public static function assertValidValue($value): void
@@ -236,7 +234,6 @@ abstract class Enum implements \JsonSerializable
      * Asserts valid enum value
      *
      * @psalm-pure
-     * @psalm-assert T $value
      * @param mixed $value
      * @return string
      */
