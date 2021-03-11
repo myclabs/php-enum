@@ -93,6 +93,7 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
+     * @psalm-pure
      * @param mixed $value
      * @return static
      * @psalm-return static
