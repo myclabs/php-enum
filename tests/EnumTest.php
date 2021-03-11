@@ -6,6 +6,8 @@
 
 namespace MyCLabs\Tests\Enum;
 
+use MyCLabs\Enum\Enum;
+
 /**
  * @author Matthieu Napoli <matthieu@mnapoli.fr>
  * @author Daniel Costa <danielcosta@gmail.com>
@@ -59,12 +61,38 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         EnumFixture::from($value);
     }
 
+    /**
+     * @dataProvider invalidValueProvider
+     * @param mixed $value
+     */
+    public function testRejectInvalidEnumValueWhenAssertingOnIt($value): void
+    {
+        $this->expectException(\UnexpectedValueException::class);
+        $this->expectExceptionMessage('is not part of the enum MyCLabs\Tests\Enum\EnumFixture');
+
+        Enum::assertValidEnumValue(EnumFixture::class, $value);
+    }
+
+    /**
+     * @dataProvider invalidValueProvider
+     * @param mixed $value
+     */
+    public function testReportsFalseOnNonValidEnumValueUponChecking($value): void
+    {
+        self::assertFalse(Enum::isValidEnumValue(EnumFixture::class, $value));
+    }
+
     public function testFailToCreateEnumWithEnumItselfThroughNamedConstructor(): void
     {
         $this->expectException(\UnexpectedValueException::class);
         $this->expectExceptionMessage("Value 'foo' is not part of the enum " . EnumFixture::class);
 
         EnumFixture::from(EnumFixture::FOO());
+    }
+
+    public function testCreateEnumWithValidEnumValueThroughNamedConstructor(): void
+    {
+        self::assertEquals(EnumFixture::FOO(), EnumFixture::from('foo'));
     }
 
     /**
@@ -179,7 +207,8 @@ class EnumTest extends \PHPUnit\Framework\TestCase
      */
     public function testIsValid($value, $isValid)
     {
-        $this->assertSame($isValid, EnumFixture::isValid($value));
+        self::assertSame($isValid, EnumFixture::isValid($value));
+        self::assertSame($isValid, Enum::isValidEnumValue(EnumFixture::class, $value));
     }
 
     public function isValidProvider()
@@ -380,5 +409,20 @@ class EnumTest extends \PHPUnit\Framework\TestCase
         EnumFixture::assertValidValue($value);
 
         self::assertTrue(EnumFixture::isValid($value));
+    }
+
+    /**
+     * @dataProvider isValidProvider
+     */
+    public function testAssertValidValueWithTypedApi($value, $isValid): void
+    {
+        if (!$isValid) {
+            $this->expectException(\UnexpectedValueException::class);
+            $this->expectExceptionMessage("Value '$value' is not part of the enum " . EnumFixture::class);
+        }
+
+        Enum::assertValidEnumValue(EnumFixture::class, $value);
+
+        self::assertTrue(Enum::isValidEnumValue(EnumFixture::class, $value));
     }
 }

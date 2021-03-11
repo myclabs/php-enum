@@ -212,6 +212,8 @@ abstract class Enum implements \JsonSerializable
      * @psalm-param mixed $value
      * @psalm-pure
      * @return bool
+     *
+     * deprecated use {@see Enum::isValidEnumValue()} instead
      */
     public static function isValid($value)
     {
@@ -222,11 +224,41 @@ abstract class Enum implements \JsonSerializable
      * Asserts valid enum value
      *
      * @psalm-pure
+     * @psalm-template CheckedValueType
+     * @psalm-param class-string<self<CheckedValueType>> $enumType
      * @param mixed $value
+     * @psalm-assert-if-true CheckedValueType $value
+     */
+    public static function isValidEnumValue(string $enumType, $value): bool
+    {
+        return $enumType::isValid($value);
+    }
+
+    /**
+     * Asserts valid enum value
+     *
+     * @psalm-pure
+     * @param mixed $value
+     *
+     * deprecated use {@see Enum::assertValidEnumValue()} instead
      */
     public static function assertValidValue($value): void
     {
         self::assertValidValueReturningKey($value);
+    }
+
+    /**
+     * Asserts valid enum value
+     *
+     * @psalm-pure
+     * @psalm-template ValueType
+     * @psalm-param class-string<self<ValueType>> $enumType
+     * @param mixed $value
+     * @psalm-assert ValueType $value
+     */
+    public static function assertValidEnumValue(string $enumType, $value): void
+    {
+        $enumType::assertValidValue($value);
     }
 
     /**
