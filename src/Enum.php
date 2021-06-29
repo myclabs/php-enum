@@ -93,9 +93,10 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
+     * @psalm-pure
      * @param mixed $value
      * @return static
-     * @psalm-return static<T>
+     * @psalm-return static
      */
     public static function from($value): self
     {
@@ -127,7 +128,6 @@ abstract class Enum implements \JsonSerializable
 
     /**
      * @psalm-pure
-     * @psalm-suppress InvalidCast
      * @return string
      */
     public function __toString()
@@ -187,7 +187,6 @@ abstract class Enum implements \JsonSerializable
      * Returns all possible values as an array
      *
      * @psalm-pure
-     * @psalm-suppress ImpureStaticProperty
      *
      * @psalm-return array<string, mixed>
      * @return array Constant name in key, constant value in value
@@ -212,8 +211,9 @@ abstract class Enum implements \JsonSerializable
      * @param $value
      * @psalm-param mixed $value
      * @psalm-pure
-     * @psalm-assert-if-true T $value
      * @return bool
+     *
+     * deprecated use {@see Enum::isValidEnumValue()} instead
      */
     public static function isValid($value)
     {
@@ -224,8 +224,23 @@ abstract class Enum implements \JsonSerializable
      * Asserts valid enum value
      *
      * @psalm-pure
-     * @psalm-assert T $value
+     * @psalm-template CheckedValueType
+     * @psalm-param class-string<self<CheckedValueType>> $enumType
      * @param mixed $value
+     * @psalm-assert-if-true CheckedValueType $value
+     */
+    public static function isValidEnumValue(string $enumType, $value): bool
+    {
+        return $enumType::isValid($value);
+    }
+
+    /**
+     * Asserts valid enum value
+     *
+     * @psalm-pure
+     * @param mixed $value
+     *
+     * deprecated use {@see Enum::assertValidEnumValue()} instead
      */
     public static function assertValidValue($value): void
     {
@@ -236,7 +251,20 @@ abstract class Enum implements \JsonSerializable
      * Asserts valid enum value
      *
      * @psalm-pure
-     * @psalm-assert T $value
+     * @psalm-template ValueType
+     * @psalm-param class-string<self<ValueType>> $enumType
+     * @param mixed $value
+     * @psalm-assert ValueType $value
+     */
+    public static function assertValidEnumValue(string $enumType, $value): void
+    {
+        $enumType::assertValidValue($value);
+    }
+
+    /**
+     * Asserts valid enum value
+     *
+     * @psalm-pure
      * @param mixed $value
      * @return string
      */
