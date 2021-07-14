@@ -130,6 +130,29 @@ final class Action extends Enum
 }
 ```
 
+## Comparison
+
+```php
+// returns false
+if ($action === Action::VIEW()) {
+  // ...
+}
+```
+
+```php
+// returns true
+if ($action == Action::VIEW()) {
+  // ...
+}
+
+// true
+if ($action->equals(Action::VIEW())) {
+  // ...
+}
+```
+
+php-enums are not singletons so when doing strict comparison, you are comparing equality of _objects_, not values.
+
 ## Related projects
 
 - [Doctrine enum mapping](https://github.com/acelaya/doctrine-enum-type)
