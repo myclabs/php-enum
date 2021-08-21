@@ -1,9 +1,9 @@
 # PHP Enum implementation inspired from SplEnum
 
-[![Build Status](https://travis-ci.org/myclabs/php-enum.png?branch=master)](https://travis-ci.org/myclabs/php-enum)
+[![GitHub Actions][GA Image]][GA Link]
 [![Latest Stable Version](https://poser.pugx.org/myclabs/php-enum/version.png)](https://packagist.org/packages/myclabs/php-enum)
 [![Total Downloads](https://poser.pugx.org/myclabs/php-enum/downloads.png)](https://packagist.org/packages/myclabs/php-enum)
-[![psalm](https://shepherd.dev/github/myclabs/php-enum/coverage.svg)](https://shepherd.dev/github/myclabs/php-enum)
+[![Psalm Shepherd][Psalm Shepherd Image]][Psalm Shepherd Link]
 
 Maintenance for this project is [supported via Tidelift](https://tidelift.com/subscription/pkg/packagist-myclabs-php-enum?utm_source=packagist-myclabs-php-enum&utm_medium=referral&utm_campaign=readme).
 
@@ -136,3 +136,12 @@ final class Action extends Enum
 - [Symfony ParamConverter integration](https://github.com/Ex3v/MyCLabsEnumParamConverter)
 - [PHPStan integration](https://github.com/timeweb/phpstan-enum)
 - [Yii2 enum mapping](https://github.com/KartaviK/yii2-enum)
+
+
+[GA Image]: https://github.com/myclabs/php-enum/workflows/CI/badge.svg
+
+[GA Link]: https://github.com/myclabs/php-enum/actions?query=workflow%3A%22CI%22+branch%3Amaster
+
+[Shepherd Image]: https://shepherd.dev/github/myclabs/php-enum/coverage.svg
+
+[Shepherd Link]: https://shepherd.dev/github/myclabs/php-enum

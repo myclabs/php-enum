@@ -1,0 +1,31 @@
+name: "Static Analysis"
+
+on:
+  pull_request:
+  push:
+    branches:
+      - "master"
+
+jobs:
+  static-analysis-psalm:
+    name: "Static Analysis with Psalm"
+    runs-on: "ubuntu-20.04"
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Psalm
+        uses: docker://vimeo/psalm-github-actions:4.9.3
+        with:
+          args: --shepherd
+          composer_ignore_platform_reqs: true
+          composer_require_dev: true
+          security_analysis: true
+          report_file: results.sarif
+        env:
+          CHECK_PLATFORM_REQUIREMENTS: "false"
+      - name: Upload Security Analysis results to GitHub
+        uses: github/codeql-action/upload-sarif@v1
+        with:
+          sarif_file: results.sarif
