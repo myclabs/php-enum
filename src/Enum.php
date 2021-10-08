@@ -183,6 +183,18 @@ abstract class Enum implements \JsonSerializable
     }
 
     /**
+     * Returns raw constant values as an array
+     *
+     * @psalm-pure
+     * @psalm-return array<int, mixed>
+     * @return array
+     */
+    public static function constants()
+    {
+        return array_values(static::toArray());
+    }
+
+    /**
      * Returns all possible values as an array
      *
      * @psalm-pure
