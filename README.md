@@ -136,8 +136,8 @@ If your project is running PHP 8.1+ or your library has it as a minimum requirem
 
 When migrating from `myclabs/php-enum`, the effort should be small if the usage was in the recommended way:
 - private constants
-- final class without extending the enum class
-- no static method overridden
+- final classes
+- no method overridden
 
 Changes for migration:
 - Class definition should be changed from
