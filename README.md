@@ -132,7 +132,7 @@ final class Action extends Enum
 
 ## Native enums and migration
 Native enum arrived to PHP in version 8.1: https://www.php.net/enumerations  
-If your project is running PHP 8.1+ or your library have it as a minimum requirement you should use it instead of this library.
+If your project is running PHP 8.1+ or your library has it as a minimum requirement you should use it instead of this library.
 
 When migrating from `myclabs/php-enum`, the effort should be small if the usage was in the recommended way:
 - private constants
