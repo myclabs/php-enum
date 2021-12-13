@@ -130,8 +130,56 @@ final class Action extends Enum
 }
 ```
 
+## Native enums and migration
+Native enum arrived to PHP in version 8.1: https://www.php.net/enumerations  
+If your project is running PHP 8.1+ or your library has it as a minimum requirement you should use it instead of this library.
+
+When migrating from `myclabs/php-enum`, the effort should be small if the usage was in the recommended way:
+- private constants
+- final classes
+- no method overridden
+
+Changes for migration:
+- Class definition should be changed from
+```php
+/**
+ * @method static Action VIEW()
+ * @method static Action EDIT()
+ */
+final class Action extends Enum
+{
+    private const VIEW = 'view';
+    private const EDIT = 'edit';
+}
+```
+ to
+```php
+enum Action: string
+{
+    case VIEW = 'view';
+    case EDIT = 'edit';
+}
+```
+All places where the class was used as a type will continue to work.
+
+Usages and the change needed:
+
+| Operation                                                      | myclabs/php-enum                                                           | native enum                                                                                                                                                                                                                              |
+|----------------------------------------------------------------|----------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Obtain an instance will change from                            | `$enumCase = Action::VIEW()`                                               | `$enumCase = Action::VIEW`                                                                                                                                                                                                               |
+| Create an enum from a backed value                             | `$enumCase = new Action('view')`                                           | `$enumCase = Action::from('view')`                                                                                                                                                                                                       |
+| Get the backed value of the enum instance                      | `$enumCase->getValue()`                                                    | `$enumCase->value`                                                                                                                                                                                                                       |
+| Compare two enum instances                                     | `$enumCase1 == $enumCase2` <br/> or <br/> `$enumCase1->equals($enumCase2)` | `$enumCase1 === $enumCase2`                                                                                                                                                                                                              |
+| Get the key/name of the enum instance                          | `$enumCase->getKey()`                                                      | `$enumCase->name`                                                                                                                                                                                                                        |
+| Get a list of all the possible instances of the enum           | `Action::values()`                                                         | `Action::cases()`                                                                                                                                                                                                                        |
+| Get a map of possible instances of the enum mapped by name     | `Action::values()`                                                         | `array_combine(array_map(fn($case) => $case->name, Action::cases()), Action::cases())` <br/> or <br/> `(new ReflectionEnum(Action::class))->getConstants()`                                                                              |
+| Get a list of all possible names of the enum                   | `Action::keys()`                                                           | `array_map(fn($case) => $case->name, Action::cases())`                                                                                                                                                                                   |
+| Get a list of all possible backed values of the enum           | `Action::toArray()`                                                        | `array_map(fn($case) => $case->value, Action::cases())`                                                                                                                                                                                  |
+| Get a map of possible backed values of the enum mapped by name | `Action::toArray()`                                                        | `array_combine(array_map(fn($case) => $case->name, Action::cases()), array_map(fn($case) => $case->value, Action::cases()))` <br/> or <br/> `array_map(fn($case) => $case->value, (new ReflectionEnum(Action::class))->getConstants()))` |
+
 ## Related projects
 
+- [PHP 8.1+ native enum](https://www.php.net/enumerations)
 - [Doctrine enum mapping](https://github.com/acelaya/doctrine-enum-type)
 - [Symfony ParamConverter integration](https://github.com/Ex3v/MyCLabsEnumParamConverter)
 - [PHPStan integration](https://github.com/timeweb/phpstan-enum)
