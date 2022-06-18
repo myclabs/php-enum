@@ -183,7 +183,6 @@ Usages and the change needed:
 - [Doctrine enum mapping](https://github.com/acelaya/doctrine-enum-type)
 - [Symfony ParamConverter integration](https://github.com/Ex3v/MyCLabsEnumParamConverter)
 - [PHPStan integration](https://github.com/timeweb/phpstan-enum)
-- [Yii2 enum mapping](https://github.com/KartaviK/yii2-enum)
 
 
 [GA Image]: https://github.com/myclabs/php-enum/workflows/CI/badge.svg
