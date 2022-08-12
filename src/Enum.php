@@ -289,17 +289,17 @@ abstract class Enum implements \JsonSerializable, \Stringable
     public static function __callStatic($name, $arguments)
     {
         $class = static::class;
-        if (!isset(self::$instances[$class][$name])) {
+        if (!isset(static::$instances[$class][$name])) {
             $array = static::toArray();
             if (!isset($array[$name]) && !\array_key_exists($name, $array)) {
                 $message = "No static method or enum constant '$name' in class " . static::class;
                 throw new \BadMethodCallException($message);
             }
 
-            return self::$instances[$class][$name] = new static($array[$name]);
+            return static::$instances[$class][$name] = new static($array[$name]);
         }
 
-        return clone self::$instances[$class][$name];
+        return clone static::$instances[$class][$name];
     }
 
     /**
