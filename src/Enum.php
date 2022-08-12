@@ -34,7 +34,7 @@ abstract class Enum implements \JsonSerializable, \Stringable
      *
      * @var string
      */
-    private $key;
+    protected $key;
 
     /**
      * Store existing constants in a static cache per object.
@@ -74,6 +74,26 @@ abstract class Enum implements \JsonSerializable, \Stringable
 
         /** @psalm-var T $value */
         $this->value = $value;
+    }
+
+    /**
+     * This method exists only for the compatibility reason when deserializing a previously serialized version
+     * that didn't have the key property
+     *
+     * @param array<string,mixed> $data
+     */
+    public function __unserialize(array $data): void
+    {
+        $zeroChar = \chr(0);
+        foreach ($data as $key => $value) {
+            if (false !== strpos($key, $zeroChar)) {
+                $parts = explode($zeroChar, $key);
+                $key = $parts[array_key_last($parts)];
+            }
+            $this->{$key} = $value;
+        }
+
+        $this->__wakeup();
     }
 
     /**
