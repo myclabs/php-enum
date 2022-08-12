@@ -101,7 +101,7 @@ abstract class Enum implements \JsonSerializable, \Stringable
     {
         $key = static::assertValidValueReturningKey($value);
 
-        return self::__callStatic($key, []);
+        return static::__callStatic($key, []);
     }
 
     /**
