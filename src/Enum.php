@@ -241,7 +241,7 @@ abstract class Enum implements \JsonSerializable, \Stringable
      */
     private static function assertValidValueReturningKey($value): string
     {
-        if (false === ($key = static::search($value))) {
+        if (null === ($key = static::search($value))) {
             throw new \UnexpectedValueException("Value '$value' is not part of the enum " . static::class);
         }
 
@@ -268,11 +268,12 @@ abstract class Enum implements \JsonSerializable, \Stringable
      *
      * @psalm-param mixed $value
      * @psalm-pure
-     * @return string|false
      */
-    public static function search($value)
+    public static function search($value): ?string
     {
-        return \array_search($value, static::toArray(), true);
+        $index = \array_search($value, static::toArray(), true);
+
+        return false === $index ? null : $index;
     }
 
     /**

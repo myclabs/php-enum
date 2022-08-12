@@ -229,8 +229,8 @@ class EnumTest extends \PHPUnit\Framework\TestCase
             array(null, 'PROBLEMATIC_NULL'),
             array('', 'PROBLEMATIC_EMPTY_STRING'),
             array(false, 'PROBLEMATIC_BOOLEAN_FALSE'),
-            array('bar I do not exist', false),
-            array(array(), false),
+            array('bar I do not exist', null),
+            array(array(), null),
         );
     }
 
