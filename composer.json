@@ -37,5 +37,19 @@
         "phpunit/phpunit": "^9.5",
         "squizlabs/php_codesniffer": "1.*",
         "vimeo/psalm": "^4.6.2"
+    },
+    "scripts": {
+        "code-quality": [
+            "@composer install --ansi",
+            "@phpstan-analyse",
+            "@cs-check",
+            "@phpstan-check",
+            "@psalm-check"
+        ],
+        "cs-fix": "vendor/bin/php-cs-fixer fix -vv",
+        "cs-check": "vendor/bin/php-cs-fixer fix -vv --dry-run",
+        "phpstan-check": "vendor/bin/phpstan analyse",
+        "phpunit": "vendor/bin/phpunit",
+        "psalm-check": "vendor/bin/psalm"
     }
 }
