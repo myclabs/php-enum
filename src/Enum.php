@@ -69,7 +69,6 @@ abstract class Enum implements \JsonSerializable, \Stringable
             $value = $value->getValue();
         }
 
-        /** @psalm-suppress ImplicitToStringCast assertValidValueReturningKey returns always a string but psalm has currently an issue here */
         $this->key = static::assertValidValueReturningKey($value);
 
         /** @psalm-var T $value */
@@ -106,7 +105,6 @@ abstract class Enum implements \JsonSerializable, \Stringable
         if ($this->key === null) {
             /**
              * @psalm-suppress InaccessibleProperty key is not readonly as marked by psalm
-             * @psalm-suppress PossiblyFalsePropertyAssignmentValue deserializing a case that was removed
              */
             $this->key = static::assertValidValueReturningKey($this->value);
         }
@@ -132,6 +130,7 @@ abstract class Enum implements \JsonSerializable, \Stringable
     #[\ReturnTypeWillChange]
     public function getValue()
     {
+        /** @psalm-suppress ImpureVariable */
         return $this->value;
     }
 
@@ -142,15 +141,16 @@ abstract class Enum implements \JsonSerializable, \Stringable
      */
     public function getKey(): string
     {
+        /** @psalm-suppress ImpureVariable */
         return $this->key;
     }
 
     /**
      * @psalm-pure
-     * @psalm-suppress InvalidCast
      */
     public function __toString(): string
     {
+        /** @psalm-suppress ImpureVariable */
         return (string) $this->value;
     }
 

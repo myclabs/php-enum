@@ -5,9 +5,11 @@
       <code>new static($array[$name])</code>
       <code>new static($value)</code>
     </UnsafeGenericInstantiation>
-    <UnusedPsalmSuppress occurrences="2">
+    <UnusedPsalmSuppress occurrences="4">
       <code>ImpureStaticProperty</code>
-      <code>InvalidCast</code>
+      <code>ImpureVariable</code>
+      <code>ImpureVariable</code>
+      <code>ImpureVariable</code>
     </UnusedPsalmSuppress>
   </file>
 </files>
