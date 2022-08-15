@@ -192,3 +192,8 @@ Usages and the change needed:
 [Shepherd Image]: https://shepherd.dev/github/myclabs/php-enum/coverage.svg
 
 [Shepherd Link]: https://shepherd.dev/github/myclabs/php-enum
+
+## Contributors
+
+This project exists thanks to [all the people](https://github.com/myclabs/php-enum/graphs/contributors) who contribute. [[Contribute](CONTRIBUTING.md)].
+
