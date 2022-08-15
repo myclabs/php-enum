@@ -32,6 +32,7 @@
         "ext-json": "*"
     },
     "require-dev": {
+        "friendsofphp/php-cs-fixer": "^3.4",
         "phpstan/phpstan": "^1.8",
         "phpunit/phpunit": "^9.5",
         "squizlabs/php_codesniffer": "1.*",

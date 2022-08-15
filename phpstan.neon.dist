@@ -10,6 +10,9 @@ parameters:
         - static-analysis
         - stubs
         - tests
+        - bin/dev/php-cs-fixer-update-base-line
+        - .php-cs-fixer.dist.php
+        - .php-cs-fixer-finder.php
 
     parallel:
         processTimeout: 300.0

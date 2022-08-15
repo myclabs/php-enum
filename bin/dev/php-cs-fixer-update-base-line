@@ -1,0 +1,32 @@
+#!/usr/bin/env php
+<?php
+
+use PhpCsFixer\Finder;
+
+require_once __DIR__ . '/../../vendor/autoload.php';
+
+/** @var Finder $finder */
+$finder = require __DIR__ . '/../../.php-cs-fixer-finder.php';
+$baselineFile = __DIR__ . '/../../.php-cs-fixer-baseline.json';
+$files = [];
+
+foreach ($finder as $file) {
+    /** @var \SplFileinfo $file */
+    $filePath = $file->getPathname();
+
+    if (is_dir($filePath)) {
+        continue;
+    }
+
+    $content = file_get_contents($filePath);
+    if (false === $content) {
+        throw new \RuntimeException(sprintf('Cannot get content of file: %s', $filePath));
+    }
+    $files[$filePath] = [
+        'hash' => crc32($content),
+    ];
+}
+
+ksort($files);
+file_put_contents($baselineFile, json_encode($files, \JSON_THROW_ON_ERROR | \JSON_PRETTY_PRINT));
+echo sprintf("Ok, %s files added to baseline\n", count($files));

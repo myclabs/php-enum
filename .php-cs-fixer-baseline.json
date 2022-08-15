@@ -1,0 +1,38 @@
+{
+    ".php-cs-fixer-finder.php": {
+        "hash": 2889318273
+    },
+    ".php-cs-fixer.dist.php": {
+        "hash": 3617877428
+    },
+    "bin\/dev\/php-cs-fixer-update-base-line": {
+        "hash": 2767858916
+    },
+    "src\/Enum.php": {
+        "hash": 656222739
+    },
+    "src\/PHPUnit\/Comparator.php": {
+        "hash": 3128575651
+    },
+    "static-analysis\/EnumIsPure.php": {
+        "hash": 2609997503
+    },
+    "stubs\/Stringable.php": {
+        "hash": 3604208188
+    },
+    "tests\/EnumConflict.php": {
+        "hash": 1158864299
+    },
+    "tests\/EnumFixture.php": {
+        "hash": 3647806639
+    },
+    "tests\/EnumTest.php": {
+        "hash": 4104425462
+    },
+    "tests\/InheritedEnumFixture.php": {
+        "hash": 938532675
+    },
+    "tests\/bootstrap.php": {
+        "hash": 19189324
+    }
+}
