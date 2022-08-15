@@ -108,7 +108,7 @@ abstract class Enum implements \JsonSerializable, \Stringable
              * @psalm-suppress InaccessibleProperty key is not readonly as marked by psalm
              * @psalm-suppress PossiblyFalsePropertyAssignmentValue deserializing a case that was removed
              */
-            $this->key = static::search($this->value);
+            $this->key = static::assertValidValueReturningKey($this->value);
         }
     }
 
@@ -248,7 +248,7 @@ abstract class Enum implements \JsonSerializable, \Stringable
      */
     public static function assertValidValue($value): void
     {
-        self::assertValidValueReturningKey($value);
+        static::assertValidValueReturningKey($value);
     }
 
     /**
@@ -259,7 +259,7 @@ abstract class Enum implements \JsonSerializable, \Stringable
      *
      * @param mixed $value
      */
-    private static function assertValidValueReturningKey($value): string
+    protected static function assertValidValueReturningKey($value): string
     {
         if (null === ($key = static::search($value))) {
             throw new \UnexpectedValueException("Value '$value' is not part of the enum " . static::class);
