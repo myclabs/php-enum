@@ -1,0 +1,266 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to static method MyCLabs\\\\Enum\\\\Enum\\<mixed\\>\\:\\:assertValidValueReturningKey\\(\\) on a separate line has no effect\\.$#"
+			count: 1
+			path: src/Enum.php
+
+		-
+			message: "#^Method MyCLabs\\\\Enum\\\\Enum\\:\\:__callStatic\\(\\) has parameter \\$arguments with no value type specified in iterable type array\\.$#"
+			count: 1
+			path: src/Enum.php
+
+		-
+			message: "#^PHPDoc tag @var above assignment does not specify variable name\\.$#"
+			count: 1
+			path: src/Enum.php
+
+		-
+			message: "#^Property MyCLabs\\\\Enum\\\\Enum\\<T\\>\\:\\:\\$key \\(string\\) does not accept string\\|false\\.$#"
+			count: 1
+			path: src/Enum.php
+
+		-
+			message: "#^Unsafe call to private method MyCLabs\\\\Enum\\\\Enum\\<T\\>\\:\\:assertValidValueReturningKey\\(\\) through static\\:\\:\\.$#"
+			count: 2
+			path: src/Enum.php
+
+		-
+			message: "#^Method MyCLabs\\\\Enum\\\\PHPUnit\\\\Comparator\\:\\:assertEquals\\(\\) has parameter \\$actual with generic class MyCLabs\\\\Enum\\\\Enum but does not specify its types\\: T$#"
+			count: 1
+			path: src/PHPUnit/Comparator.php
+
+		-
+			message: "#^Method MyCLabs\\\\Enum\\\\PHPUnit\\\\Comparator\\:\\:assertEquals\\(\\) has parameter \\$expected with generic class MyCLabs\\\\Enum\\\\Enum but does not specify its types\\: T$#"
+			count: 1
+			path: src/PHPUnit/Comparator.php
+
+		-
+			message: "#^Method MyCLabs\\\\Enum\\\\PHPUnit\\\\Comparator\\:\\:formatEnum\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: src/PHPUnit/Comparator.php
+
+		-
+			message: "#^Method MyCLabs\\\\Enum\\\\PHPUnit\\\\Comparator\\:\\:formatEnum\\(\\) has parameter \\$enum with generic class MyCLabs\\\\Enum\\\\Enum but does not specify its types\\: T$#"
+			count: 1
+			path: src/PHPUnit/Comparator.php
+
+		-
+			message: "#^Function MyCLabs\\\\Tests\\\\Enum\\\\StaticAnalysis\\\\enumFetchViaExplicitMagicCallIsPure\\(\\) return type with generic class MyCLabs\\\\Tests\\\\Enum\\\\StaticAnalysis\\\\PureEnum does not specify its types\\: T$#"
+			count: 1
+			path: static-analysis/EnumIsPure.php
+
+		-
+			message: "#^Function MyCLabs\\\\Tests\\\\Enum\\\\StaticAnalysis\\\\enumFetchViaMagicMethodIsPure\\(\\) return type with generic class MyCLabs\\\\Tests\\\\Enum\\\\StaticAnalysis\\\\PureEnum does not specify its types\\: T$#"
+			count: 1
+			path: static-analysis/EnumIsPure.php
+
+		-
+			message: "#^Class MyCLabs\\\\Tests\\\\Enum\\\\EnumConflict extends generic class MyCLabs\\\\Enum\\\\Enum but does not specify its types\\: T$#"
+			count: 1
+			path: tests/EnumConflict.php
+
+		-
+			message: "#^Class MyCLabs\\\\Tests\\\\Enum\\\\EnumFixture extends generic class MyCLabs\\\\Enum\\\\Enum but does not specify its types\\: T$#"
+			count: 1
+			path: tests/EnumFixture.php
+
+		-
+			message: "#^Call to an undefined static method MyCLabs\\\\Tests\\\\Enum\\\\EnumFixture\\:\\:UNKNOWN\\(\\)\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:assertJsonEqualsJson\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:assertJsonEqualsJson\\(\\) has parameter \\$json1 with no type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:assertJsonEqualsJson\\(\\) has parameter \\$json2 with no type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:invalidValueProvider\\(\\) return type has no value type specified in iterable type array\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:isValidProvider\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:searchProvider\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testAssertValidValue\\(\\) has parameter \\$isValid with no type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testAssertValidValue\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testBadStaticAccess\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testBooleanEnum\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testConstructWithSameEnumArgument\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testCreatingEnumWithInvalidValue\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testCreatingEnumWithInvalidValue\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testEnumValuesInheritance\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testEquals\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testEqualsComparesProblematicValuesProperly\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testEqualsConflictValues\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testGetKey\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testGetValue\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testIsValid\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testIsValid\\(\\) has parameter \\$isValid with no type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testIsValid\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testIsValidKey\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testJsonSerialize\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testKeys\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testNullableEnum\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testSearch\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testSearch\\(\\) has parameter \\$expected with no type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testSearch\\(\\) has parameter \\$value with no type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testSerialize\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testStaticAccess\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testToArray\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testToString\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testToString\\(\\) has parameter \\$enumObject with no type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testToString\\(\\) has parameter \\$expected with no type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testUnserialize\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testUnserializeVersionWithoutKey\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:testValues\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php
+
+		-
+			message: "#^Method MyCLabs\\\\Tests\\\\Enum\\\\EnumTest\\:\\:toStringProvider\\(\\) has no return type specified\\.$#"
+			count: 1
+			path: tests/EnumTest.php

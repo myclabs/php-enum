@@ -1,0 +1,15 @@
+includes:
+	- phpstan-baseline.neon
+
+parameters:
+    level: 7
+    reportUnmatchedIgnoredErrors: false
+
+    paths:
+        - src
+        - static-analysis
+        - stubs
+        - tests
+
+    parallel:
+        processTimeout: 300.0
