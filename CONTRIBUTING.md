@@ -35,3 +35,11 @@ You can use to fix coding standard if needed:
 ```shell
 composer cs-fix
 ```
+
+Baselines
+---------
+Take into account that "baselines" of checkers added only for:
+- ignoring of existing mistakes on the moment of checkers adding
+- ignoring of known problems but which should not be fixed. 
+
+**Don't update baselines without real reason!** 
