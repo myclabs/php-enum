@@ -24,13 +24,31 @@
             "MyCLabs\\Tests\\Enum\\": "tests/"
         }
     },
+    "config": {
+        "sort-packages": true
+    },
     "require": {
         "php": "^7.3 || ^8.0",
         "ext-json": "*"
     },
     "require-dev": {
+        "phpstan/phpstan": "^1.8",
         "phpunit/phpunit": "^9.5",
         "squizlabs/php_codesniffer": "1.*",
         "vimeo/psalm": "^4.6.2"
+    },
+    "scripts": {
+        "code-quality": [
+            "@composer install --ansi",
+            "@psalm-check",
+            "@phpstan-check"
+        ],
+        "test": [
+            "@composer install --ansi",
+            "@phpunit"
+        ],
+        "phpstan-check": "vendor/bin/phpstan analyse",
+        "phpunit": "vendor/bin/phpunit",
+        "psalm-check": "vendor/bin/psalm"
     }
 }

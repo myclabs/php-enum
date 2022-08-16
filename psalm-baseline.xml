@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<files psalm-version="4.26.0@6998fabb2bf528b65777bf9941920888d23c03ac">
+  <file src="src/Enum.php">
+    <UnsafeGenericInstantiation occurrences="2">
+      <code>new static($array[$name])</code>
+      <code>new static($value)</code>
+    </UnsafeGenericInstantiation>
+    <UnusedPsalmSuppress occurrences="2">
+      <code>ImpureStaticProperty</code>
+      <code>InvalidCast</code>
+    </UnusedPsalmSuppress>
+  </file>
+</files>
