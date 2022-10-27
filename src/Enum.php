@@ -209,9 +209,8 @@ abstract class Enum implements \JsonSerializable, \Stringable
      * Check if is valid enum value
      *
      * @param $value
-     * @psalm-param mixed $value
+     * @psalm-param T $value
      * @psalm-pure
-     * @psalm-assert-if-true T $value
      * @return bool
      */
     public static function isValid($value)
