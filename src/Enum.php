@@ -72,7 +72,6 @@ abstract class Enum implements \JsonSerializable, \Stringable
         /** @psalm-suppress ImplicitToStringCast assertValidValueReturningKey returns always a string but psalm has currently an issue here */
         $this->key = static::assertValidValueReturningKey($value);
 
-        /** @psalm-var T */
         $this->value = $value;
     }
 
@@ -126,7 +125,6 @@ abstract class Enum implements \JsonSerializable, \Stringable
 
     /**
      * @psalm-pure
-     * @psalm-suppress InvalidCast
      * @return string
      */
     public function __toString()
@@ -176,6 +174,7 @@ abstract class Enum implements \JsonSerializable, \Stringable
 
         /** @psalm-var T $value */
         foreach (static::toArray() as $key => $value) {
+            /** @psalm-suppress UnsafeGenericInstantiation */
             $values[$key] = new static($value);
         }
 
@@ -186,7 +185,6 @@ abstract class Enum implements \JsonSerializable, \Stringable
      * Returns all possible values as an array
      *
      * @psalm-pure
-     * @psalm-suppress ImpureStaticProperty
      *
      * @psalm-return array<string, mixed>
      * @return array Constant name in key, constant value in value
@@ -297,6 +295,7 @@ abstract class Enum implements \JsonSerializable, \Stringable
                 $message = "No static method or enum constant '$name' in class " . static::class;
                 throw new \BadMethodCallException($message);
             }
+            /** @psalm-suppress UnsafeGenericInstantiation */
             return self::$instances[$class][$name] = new static($array[$name]);
         }
         return clone self::$instances[$class][$name];
@@ -309,6 +308,7 @@ abstract class Enum implements \JsonSerializable, \Stringable
      * @return mixed
      * @link http://php.net/manual/en/jsonserializable.jsonserialize.php
      * @psalm-pure
+     * @psalm-suppress UndefinedAttributeClass ReturnTypeWillChange is not available on <PHP8
      */
     #[\ReturnTypeWillChange]
     public function jsonSerialize()
