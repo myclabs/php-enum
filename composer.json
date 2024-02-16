@@ -3,7 +3,7 @@
     "type": "library",
     "description": "PHP Enum implementation",
     "keywords": ["enum"],
-    "homepage": "http://github.com/myclabs/php-enum",
+    "homepage": "https://github.com/myclabs/php-enum",
     "license": "MIT",
     "authors": [
         {
