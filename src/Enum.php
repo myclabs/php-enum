@@ -279,6 +279,29 @@ abstract class Enum implements \JsonSerializable, \Stringable
     }
 
     /**
+     * Constant value desc array
+     * @return array
+     */
+    public static function valueDesc()
+    {
+        return [];
+    }
+
+    /**
+     * Get constant value desc
+     * @param $value
+     * @return mixed
+     */
+    public static function getDesc($value)
+    {
+        if (!isset(static::valueDesc()[$value])) {
+            throw new \UnexpectedValueException("Value '$value' is not part of the enum " . static::class);
+        }
+
+        return static::valueDesc()[$value];
+    }
+
+    /**
      * Returns a value when called statically like so: MyEnum::SOME_VALUE() given SOME_VALUE is a class constant
      *
      * @param string $name
