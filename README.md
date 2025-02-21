@@ -1,8 +1,8 @@
 # PHP Enum implementation inspired from SplEnum
 
 [![GitHub Actions][GA Image]][GA Link]
-[![Latest Stable Version](https://poser.pugx.org/myclabs/php-enum/version.png)](https://packagist.org/packages/myclabs/php-enum)
-[![Total Downloads](https://poser.pugx.org/myclabs/php-enum/downloads.png)](https://packagist.org/packages/myclabs/php-enum)
+[![Latest Stable Version](https://poser.pugx.org/myclabs/php-enum/version.svg)](https://packagist.org/packages/myclabs/php-enum)
+[![Total Downloads](https://poser.pugx.org/myclabs/php-enum/downloads.svg)](https://packagist.org/packages/myclabs/php-enum)
 [![Psalm Shepherd][Shepherd Image]][Shepherd Link]
 
 Maintenance for this project is [supported via Tidelift](https://tidelift.com/subscription/pkg/packagist-myclabs-php-enum?utm_source=packagist-myclabs-php-enum&utm_medium=referral&utm_campaign=readme).
